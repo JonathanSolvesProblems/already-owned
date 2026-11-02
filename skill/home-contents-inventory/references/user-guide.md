@@ -16,7 +16,7 @@ Anyone who keeps their phone photos and receipts on the NAS and would have to pr
 - It never deletes, moves or overwrites a file, and asks before creating any album, tag, folder or file.
 - It never sends anything off the NAS.
 - If it cannot find proof for an item, it says so instead of using a similar photo. A photo taken after the loss is listed as a damage photo, never as proof you owned the item.
-- It does not photograph anything for you. When a receipt has no matching photo, it asks you to take one.
+- It does not photograph anything for you. When a receipt has no matching photo during an update, it asks you to take one; after a loss, the receipt alone stays on the list as proof of purchase.
 
 ## Things you can say
 

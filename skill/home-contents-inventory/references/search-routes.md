@@ -9,8 +9,10 @@ Read this before steps U3, U6b and C4b. Choose the route from what is actually k
 | A brand, model or text printed on it (from a receipt line or from the user) | Text visible in the photo | Labels, boxes and screens carry the model text; recognized objects do not. |
 | A common object type whose name is on the index category list (sofa, television, bicycle, washing machine) | Recognized object, using the exact category name | The library index already labels these. Never guess a category name that is not on the list from U2 or C3. |
 | A purchase date from a matched receipt | Time window from the purchase date to 60 days after | New things get photographed soon after they arrive (unboxing, setup, first use). |
-| Only the room | Time window of the room's other photos, then recognized object | Room photos often sit together by date or folder. |
+| Only the room | Ask the vision model about the room's photos returned for other items (the second row of this table); if the room has returned none, no results | Room photos show several belongings at once; a new search finds nothing a description of those photos would not. |
 | Nothing but the user's words | Recognized object for the type the user named if it is on the category list, then ask the user at U8 or C7 | Never guess a brand to search for. |
+
+When both a brand and a category apply to an item, the recognized object route goes first and the text route is the fallback: a category hit is cheap and reliable, and a brand name is rarely legible in a photo of the item in use.
 
 Rules for every route:
 

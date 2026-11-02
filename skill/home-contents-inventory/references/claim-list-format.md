@@ -5,7 +5,7 @@ Use this table for the inventory (update and ask modes) and for the claim (claim
 | # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
-When a list is passed to an expert inside an instruction, each row is one line with these twelve values separated by semicolons, in this order, and the expert renders the table.
+When a list is passed to an expert inside an instruction, it stays on the one line of the instruction: each row begins with the word Row and its number followed by a colon, holds these twelve values in this order separated by semicolons, and the next row follows after a full stop and a space. The expert renders the table. Because the semicolon separates the values, the notes inside Notes are separated by commas, never by a semicolon.
 
 Column rules:
 
@@ -18,7 +18,7 @@ Column rules:
 - **Pre-loss photo**: file name and capture date of the clearest photo. In claim mode, captured before the loss time.
 - **Receipt**: file name of the matched receipt, or empty.
 - **Proof level**: one of `photo and receipt`, `photo only`, `receipt only`, `none`.
-- **Notes**: the real path of the pre-loss photo, written as "path: " followed by the path, so a later claim can find it without a search; anything the user added; "receipt read from photo text" where that happened; "receipt dated after first photo, confirmed by the owner" for a resolved date conflict; "owner to itemize" for an entry that is not one object; "photo shows damage" where the only photo was flagged; and, in claim mode, "damage photo: " followed by the file name.
+- **Notes**: separated by commas: the real path of the pre-loss photo, written as "path: " followed by the path, so a later claim can find it without a search; the room the user named when it differs from the photo's; anything the user added; "receipt read from photo text" where that happened; "receipt dated after first photo, confirmed by the owner" for a resolved date conflict; "owner to itemize" for an entry that is not one object; "photo shows damage" where the only photo was flagged; and, in claim mode, "damage photo: " followed by the file name.
 
 Totals:
 
