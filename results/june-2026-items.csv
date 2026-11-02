@@ -1,0 +1,28 @@
+number,item,qty,replacement_cad,keywords
+1,"Leather reclining sofa, 3-seat (brown)",1,1800,sofa|couch|recliner
+2,"Flat-screen TV, about 55 inch",1,700,tv|television|screen
+3,Gaming chair,1,300,chair|gaming
+4,Wooden armchair,1,175,armchair|chair
+5,Wooden bed frame (oak headboard and footboard),1,400,bed|headboard
+6,Wooden console and side tables,2,200,console|side table|table
+7,Coffee or accent table,1,150,coffee table|table
+8,Wooden side table (hex),1,150,hex|side table|table
+9,Pull-up and dip bar (power tower),1,400,power tower|pull-up|pullup|dip
+10,Adjustable dumbbell set,1,300,dumbbell|weights|gym
+11,"Stored items on shelving (tools, fan, books, household)",1,550,shelving|shelf|storage|tools|fan
+12,Bookshelf (wood),1,200,bookshelf|bookcase|shelf
+13,Storage shelving units,2,100,shelving|shelf|storage
+14,Stick vacuum (Dyson),1,800,dyson|vacuum
+15,Flight or AV road case,1,250,flight case|road case|case
+16,"Camera rig (shoulder rig, matte box, follow focus)",1,300,rig|matte box|follow focus|camera
+17,Metal or chrome shelving unit,1,150,chrome|wire shelf|shelving
+18,Floor lamps,2,60,lamp|floor lamp
+19,Mini-fridge (Danby),1,200,fridge|danby|refrigerator
+20,Washer and dryer (Amana),1,1800,washer|dryer|laundry|amana
+21,Bedding and blankets (bagged),1,300,bedding|blanket|duvet
+22,Boxes of personal belongings (misc.),1,400,box|boxes
+23,"Bagged contents, several bags (clothing, handbags, household)",1,500,bag|bags|clothing|clothes|handbag
+24,Boot dryer,1,120,boot dryer|boot
+25,Clothes iron or garment steamer,1,80,iron|steamer
+26,Monitor desk arm or mount,1,90,monitor arm|monitor|mount
+27,Picture and diploma frames,1,80,frame|diploma|picture frame

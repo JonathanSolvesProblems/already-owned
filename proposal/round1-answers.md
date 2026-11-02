@@ -20,7 +20,7 @@ Two modes. Update (weekly): it finds belongings in new photos, pairs them with r
 
 ## 5. What substantive difference does your idea offer compared with existing tools or conventional AI solutions?
 
-Inventory apps (Encircle, HomeZada) only help if you photographed or scanned every item into their cloud before the loss. This Skill uses photos you already took, enforces "before the loss" as a hard cut-off, never invents a value, and keeps your belongings, receipts and camera footage at home.
+Inventory apps (Encircle, HomeZada) only help if you photographed or scanned every item into their cloud before the loss. This Skill uses photos you already took, enforces "before the loss" as a hard cut-off, never invents a value, and keeps your belongings, receipts and camera footage at home. Searching my own library by file name finds 0 of the 27 items.
 
 ## 6. Which UGREEN AI NAS capabilities will be used, and at which step in the workflow?
 
