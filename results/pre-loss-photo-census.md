@@ -1,6 +1,6 @@
 # Pre-loss photo census: the answer key for the June 2026 replay
 
-Made 2026-11-02 by hand, from the 169 unique photos captured before 2026-06-20 00:00 that are reachable from the PC (a census script that reads each photo's capture time, then contact sheets with `tools/contact_sheet.py`, then every candidate opened at full size). The phone's own camera roll for 2024 to June 2026 is not on the PC, so this is a floor, not the full library. File names are the phone's own; no file here carries an address.
+Made 2026-11-02 by hand, first from the 169 unique photos captured before 2026-06-20 00:00 on the PC, then from the phone's own camera roll (1,708 photos, Oct 2023 to June 19, 2026, pulled over USB with a copy script). Method: a census script that reads each photo's capture time, contact sheets with `tools/contact_sheet.py`, a reviewer pass over every sheet, then every new hit opened at full size. File names are the phone's own; no file here carries an address.
 
 The replay on the NAS testing day is scored against this table: a Skill result for an item is a true positive when the photo it returns shows that item and was captured before the loss, whether or not it is the same file listed here.
 
@@ -21,25 +21,27 @@ The replay on the NAS testing day is scored against this table: a Skill result f
 | 11 | Stored items on shelving (tools, fan, books, household) | yes | 20251211_160200.jpg (2025-12-11) | 20260617_063812.jpg | fan, tool set, books, boxes |
 | 12 | Bookshelf (wood) | yes | 20251211_160200.jpg (2025-12-11) | | full of books, left of frame |
 | 13 | Storage shelving units (2) | yes | 20251211_160200.jpg (2025-12-11) | 20260617_063812.jpg | two wooden shelving units |
-| 14 | Stick vacuum (Dyson) | no | | | not in any pre-loss photo on the PC |
+| 14 | Stick vacuum (Dyson) | likely | 20241125_135533.jpg (2024-11-25, phone) | | only the cleaner head is in frame, Dyson-shaped, brand not readable |
 | 15 | Flight or AV road case | yes | 20260617_063812.jpg (2026-06-17) | 20251211_160200.jpg | black case with metal corners on the shelf |
 | 16 | Camera rig (shoulder rig, matte box, follow focus) | no | | | a tripod and a camera bag appear (20251211_160630.jpg), not the rig |
 | 17 | Metal or chrome shelving unit | yes | 20251211_160058.jpg (2025-12-11) | 20260617_063925.jpg, 20260617_064159.jpg | chrome wire shelving with board games; also the laundry room |
-| 18 | Floor lamps (2) | plausible | 20251128_184517.jpg (2025-11-28) | 20251211_160701.jpg | a floor lamp is visible upstairs; whether it is one of the two basement lamps cannot be told |
+| 18 | Floor lamps (2) | yes | 20250716_234520.jpg (2025-07-16, phone) | 20251128_184517.jpg, 20251211_160701.jpg | pole lamp with round base beside the brown sofa; Amazon invoices for floor lamps 2024-11-22 and 2025-11-21 |
 | 19 | Mini-fridge (Danby) | yes | 20251211_160058.jpg (2025-12-11) | 20260617_193210.jpg | black compact fridge, door open in the June photo |
 | 20 | Washer and dryer (Amana) | yes | 20251211_160135.jpg (2025-12-11) | 20260617_063925.jpg | laundry room |
 | 21 | Bedding and blankets (bagged) | yes | 20260617_114945.jpg (2026-06-17) | | in a box, three days before the loss |
 | 22 | Boxes of personal belongings | yes | 20260617_114716.jpg (2026-06-17) | 20251211_160200.jpg | moving boxes on the console |
 | 23 | Bagged contents (clothing, handbags, household) | yes | 20260617_064044.jpg (2026-06-17) | 20260617_114947.jpg | closet with bags and clothes |
-| 24 | Boot dryer | no | | | |
+| 24 | Boot dryer | yes | 20250929_093107.jpg (2025-09-29, phone) | | MaxxDry dryer with boxing gloves on it, upstairs |
 | 25 | Clothes iron or garment steamer | no | | | |
-| 26 | Monitor desk arm or mount | plausible | 20251211_160058.jpg (2025-12-11) | | the TV sits on a desk mount in the December photo; not certain it is the claimed arm |
+| 26 | Monitor desk arm or mount | plausible | 20250104_173347.jpg (2025-01-04, phone) | 20251211_160058.jpg | a white single-monitor arm; the Amazon invoice is for a black dual mount bought 2025-03-07, after this photo, so this row is the Skill's date-conflict case |
 | 27 | Picture and diploma frames | plausible | 20251211_160630.jpg (2025-12-11) | | two small frames on the office shelf; the diplomas themselves are not seen |
 
 ## Totals
 
-- Confirmed: 21 of 27 items have at least one pre-loss photo on the PC.
-- Plausible: 3 (items 18, 26, 27). Counted only if the NAS returns a photo a reviewer agrees shows the item.
-- Not found on the PC: 3 (items 14, 16, 24, 25 are four lines; 16 and 14 are the ones most likely to be on the phone, since both were photographed when bought).
+- Confirmed: 22 of 27 items have a pre-loss photo that shows the item (20 from the PC, plus floor lamps and the boot dryer from the phone).
+- Plausible: 3 (items 14, 26, 27). Counted only if the NAS returns a photo a reviewer agrees shows the item.
+- Not found anywhere: 2 (item 16 camera rig, item 25 iron or steamer).
 
-So the ceiling for the replay, with only the photos already on the PC, is 21 to 24 of 27. With the phone library loaded it may be higher. Any replay result above 24 on the PC set alone would mean the Skill matched a wrong photo and must be checked.
+So the replay's ceiling is 22 to 25 of 27. A result above 25 means the Skill matched a wrong photo and must be checked. (An earlier version of this file said 21 confirmed on the PC; recounting the table gives 20.)
+
+Other phone photos that matter for the test day: 20240806_131009.jpg (2024-08-06, the TV in the basement), 20240905_155112.jpg (Danby label readable), 20250316_120827.jpg (the gym floor tiles laid out the day after the 2025-03-15 Amazon order, the receipt-first route). The reviewer also listed 142 phone photos that show ID cards, bank screens, addresses, plates or signed letters; they are kept out of the upload by `tmp/census-phone/sensitive.txt`.
