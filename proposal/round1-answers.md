@@ -8,7 +8,7 @@ It keeps an insurance-ready list of what you own, built from the photos and rece
 
 ## 2. Who is the target user and problem?
 
-Homeowners and renters. My basement flooded twice in six months. Each time my insurer asked for every damaged item with proof I owned it. I rebuilt the June list by hand: 27 items, $10,915. Every photo on it was taken after the water, so none proved ownership before the loss.
+Homeowners and renters. My basement flooded twice in six months. Each time my insurer asked for every damaged item with proof I owned it. I rebuilt the June list by hand: 27 items, $10,915. Every photo on it was taken after the water, so none proved prior ownership.
 
 ## 3. What is your proposed solution?
 
@@ -16,37 +16,37 @@ Two modes. Update (weekly): it finds belongings in new photos, pairs them with r
 
 ## 4. What is the Core User Flow?
 
-"I had a flood on June 20 in the basement" → Skill confirms rooms and cut-off → finds pre-loss photo and receipt per item → user confirms rows and adds missing values → approves writes → claim document, claim album and tags saved in Home Contents/Claims.
+"I had a flood on June 20 in the basement" → Skill confirms rooms and cut-off → finds pre-loss photo and receipt per item → user confirms rows, adds missing values → approves writes → claim document and album saved in Home Contents/Claims.
 
 ## 5. What substantive difference does your idea offer compared with existing tools or conventional AI solutions?
 
-Inventory apps (Encircle, HomeZada) only help if you photographed or scanned every item into their cloud before the loss. This Skill uses photos you already took, enforces "before the loss" as a hard cut-off, never invents a value, and keeps your belongings, receipts and camera footage at home. Searching my own library by file name finds 0 of the 27 items.
+Searching my own library by file name finds 0 of the 27 items. Inventory apps (Encircle, HomeZada) only help if you photographed or scanned every item into their cloud before the loss. This Skill uses photos you already took, enforces "before the loss" as a hard cut-off, never invents a value, and keeps everything on the NAS.
 
 ## 6. Which UGREEN AI NAS capabilities will be used, and at which step in the workflow?
 
-- Photos (photo-agent): object and text search, local vision model to confirm and describe items, albums.
-- Documents (document-agent): receipt extraction, claim drafting, translation.
-- Knowledge (knowledge-agent): voice walk-through transcription, saving lists.
-- Files (file-agent): finding receipts, folders, tags.
-- Surveillance (security-monitor-agent): loss-window events, claim mode only.
+- photo-agent: object and OCR search, local vision model confirming and describing items (U2, U3, U5, C4); albums (U10, C9).
+- document-agent: receipt extraction (U6, C6), claim drafting and translation (C8).
+- knowledge-agent: walk-through transcription (C2), saving lists (U12, C9).
+- file-agent: receipts, folders, tags (U1, U4, U9, U11, C9).
+- security-monitor-agent: loss-window events (C5, theft cases).
 
 ## 7. What was your technical approach? Describe the planned Skill workflow, supported NAS CLI capabilities, expert agent orchestration, required inputs, permissions, AI model choices, and data handling, as applicable.
 
-One SKILL.md delegating to five registered experts across seven CLIs, never calling a CLI directly. The model chooses each item's search route (object, label text, receipt date window, room) from what it knows, and falls back once before reporting no result. Each row carries a proof level. All writes need approval; nothing is deleted, moved or overwritten. Local model only; no data leaves the NAS.
+One SKILL.md delegating to five registered experts across seven CLIs, never calling a CLI directly. The model chooses each item's search route (object, label text, receipt date window, room) and falls back once before reporting no result. Each row carries a proof level; every delegation state is handled; a failed write stops only dependent steps. All writes need approval; nothing is deleted, moved or overwritten. Local vision model; the Skill sends nothing outside the NAS.
 
 ## 8. What is the current development status?
 
-Implemented: the full Skill package; the official checker returns static-pass with zero warnings. Pending NAS validation: search recall on real libraries, receipt extraction quality, and album and tag writes.
+Implemented: 21 steps, 18 delegations, three references; the official checker returns static-pass with zero warnings. Pending NAS validation: search recall on real libraries, receipt extraction quality, and album and tag writes.
 
 ## 9. What is your final validation plan?
 
 - Core test 1: replay my June 2026 claim with only pre-loss photos loaded; count how many of the 27 items get pre-loss proof, against a filename-and-date search.
-- Core test 2: replay my December 2025 claim the same way.
+- Core test 2: update mode on December 2025 photos and receipts; album, tags and list must exist after approval.
 - Edge case: an item with no pre-loss photo must be reported as unproven, never matched to a similar item.
 
 ## 10. Are there any known limitations of your Project?
 
-Recall depends on the NAS recognition index; small or hidden items may never appear in photos. Values exist only when receipts or the user supply them. Skills cannot run on a schedule, so updates are user-started. Camera evidence needs UGREEN cameras covering the room.
+Recall depends on the NAS recognition index; small or hidden items may never appear in photos. Skills cannot run on a schedule, so updates are user-started. Camera evidence needs UGREEN cameras covering the room.
 
 ## Third-party components
 
@@ -56,4 +56,4 @@ None. The Skill uses only UGREEN NAS capabilities and the NAS local model. No ex
 
 Jonathan Andrei, individual entrant.
 
-Electronic signature: Jonathan Andrei, October 29, 2026
+Electronic signature: Jonathan Andrei, November 2, 2026
