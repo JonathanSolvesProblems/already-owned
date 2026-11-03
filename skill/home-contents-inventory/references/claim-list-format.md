@@ -5,7 +5,7 @@ Use this table for the inventory (update and ask modes) and for the claim (claim
 | # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
-When a list is passed to an expert inside an instruction, it stays on the one line of the instruction: each row begins with the word Row and its number followed by a colon, holds these twelve values in this order separated by semicolons, and the next row follows after a full stop and a space. The expert renders the table. Because the semicolon separates the values, the notes inside Notes are separated by commas, never by a semicolon.
+When a list is passed to an expert inside an instruction, it uses the row format under "Writing an instruction" below. Because the semicolon separates the values there, the notes inside Notes are separated by commas, never by a semicolon.
 
 Column rules:
 
@@ -27,3 +27,15 @@ Totals:
 Privacy:
 
 - The list names files and belongings only. It holds no street address, account number or policy number unless the user typed it in for the claim heading.
+
+## Writing an instruction
+
+Every instruction in SKILL.md is a template. Before it is sent, each phrase "named in this step", "listed in this step", "given in this step", "confirmed with the user" and "the date of today" is replaced with the actual value, written out inside the single quotes, so the expert receives one self-contained task.
+
+- Routes are written in words, never as a command option.
+- A single quote inside a value is written with the standard shell escape. A double quote, as in the inch mark of a 55" screen, is allowed.
+- A list of rows (U12, C8, C9) stays on the one line of the instruction: each row begins with the word Row and its number followed by a colon, its twelve values are separated by semicolons in the column order above, and the next row follows after a full stop and a space. The expert is asked to render the rows as a Markdown table with the column names given.
+- Inside a value, a semicolon is written as a comma, a pipe as the word or, and an angle bracket as the word under or over.
+- Never put a table, a line break, a pipe or an angle bracket inside an instruction.
+
+Worked example: the C4b instruction for one sofa is sent with "the household items listed in this step" replaced by "a brown leather reclining three-seat sofa", "the loss date and time given in this step" replaced by "2026-06-20 02:00 local time", and "the search route named in this step" replaced by "recognized object sofa".

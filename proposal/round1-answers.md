@@ -12,7 +12,7 @@ Homeowners and renters. My basement flooded twice in six months. Each time my in
 
 ## 3. What is your proposed solution?
 
-Three modes. Update (weekly): it finds belongings in new photos, pairs them with receipts, and saves them as a dated album, file tags and a dated list. Claim: given a date and rooms, it finds photos captured before the loss, receipts, damage photos and, for a break-in, camera events, then writes the contents list. Ask: reads the saved list.
+Three modes. Update (weekly): finds belongings in new photos, pairs them with receipts, saves a dated album, file tags and a dated list. Claim: given a date and rooms, finds photos captured before the loss, receipts, damage photos and, for a break-in, camera events, then writes the contents list. Ask: reads the saved list.
 
 ## 4. What is the Core User Flow?
 
@@ -24,7 +24,7 @@ Searching my own library by file name finds 0 of the 27 items. Inventory apps (E
 
 ## 6. Which UGREEN AI NAS capabilities will be used, and at which step in the workflow?
 
-- photo-agent: object and OCR search, local vision model confirming and describing items (U2, U3, U5, C4a, C4b); albums (U10, C9).
+- photo-agent: object, OCR and capture-date search, local vision model describing items (U2, U3, U5, C4a, C4b); albums (U10, C9).
 - document-agent: receipt extraction (U6, C6), claim drafting and translation (C8).
 - knowledge-agent: walk-through transcription (C2), saving lists (U12, C9).
 - file-agent: receipts, folders, tags (U1, U4, U9, U11, C9).
@@ -32,11 +32,11 @@ Searching my own library by file name finds 0 of the 27 items. Inventory apps (E
 
 ## 7. What was your technical approach? Describe the planned Skill workflow, supported NAS CLI capabilities, expert agent orchestration, required inputs, permissions, AI model choices, and data handling, as applicable.
 
-Five registered experts across seven CLIs, never calling a CLI directly. The model chooses each item's search route (object, label text, receipt date, room) and falls back once before reporting no result. Each row carries a proof level; every delegation state is handled; a failed write stops only dependent steps. All writes need approval; nothing is deleted, moved or overwritten. Local vision model; the Skill sends nothing outside the NAS.
+Five registered experts across seven CLIs, never calling a CLI directly. The model chooses each item's search route (object, label text, receipt date, room) and falls back once before reporting no result. Each row carries a proof level; every delegation state is handled; a failed write stops only dependent steps. All writes need approval; nothing is deleted, moved or overwritten. NAS local models only; nothing leaves the NAS.
 
 ## 8. What is the current development status?
 
-Implemented: 24 steps, 21 delegations, three references; checker static-pass; both modes dry-run against a mock NAS. Pending NAS validation: search recall on real libraries, receipt extraction quality, and album and tag writes.
+Implemented: 24 steps, 21 delegations, three references; checker static-pass; update and claim modes dry-run against a mock NAS. Pending NAS validation: search recall on real libraries, receipt extraction quality, album and tag writes.
 
 ## 9. What is your final validation plan?
 
@@ -46,7 +46,7 @@ Implemented: 24 steps, 21 delegations, three references; checker static-pass; bo
 
 ## 10. Are there any known limitations of your Project?
 
-Recall depends on the NAS recognition index; small or hidden items may never appear in photos. Skills cannot run on a schedule, so updates are user-started. Camera evidence needs cameras covering the room.
+Recall depends on the NAS recognition index and costs one vision call per candidate photo; small or hidden items may never appear in photos. Skills cannot run on a schedule, so updates are user-started. Camera evidence needs cameras covering the room.
 
 ## Third-party components
 

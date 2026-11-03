@@ -5,7 +5,7 @@ Read this before steps U3, U6b and C4b. Choose the route from what is actually k
 | What is known about the item | Route | Why |
 | --- | --- | --- |
 | A photo file name from an inventory row | File name | One lookup; the vision model only confirms the item is visible. No search needed. |
-| Photos of the same room already returned for other items | Ask the vision model about those real paths | One description per photo and no new search; most basement items share the same few photos. |
+| Photos of the same room already returned for other items | Ask the vision model about those real paths: one delegation per room, listing every item of that room still without proof and the real paths of every photo the room has returned, with the route "ask the vision model about the photos at the real paths listed in this step"; it counts as one route for each item listed | One description per photo and no new search; most basement items share the same few photos. |
 | A brand, model or text printed on it (from a receipt line or from the user) | Text visible in the photo | Labels, boxes and screens carry the model text; recognized objects do not. |
 | A common object type whose name is on the index category list (sofa, television, bicycle, washing machine) | Recognized object, using the exact category name | The library index already labels these. Never guess a category name that is not on the list from U2 or C3. |
 | A purchase date from a matched receipt | Time window from the purchase date to 60 days after | New things get photographed soon after they arrive (unboxing, setup, first use). |
@@ -22,3 +22,11 @@ Rules for every route:
 - An entry that does not name one object type (boxes and bags, bedding, assorted tools) is never searched; it gets proof level none and the note "owner to itemize".
 - If two routes return no results, report no results for that item and move on. Do not substitute a similar item.
 - Questions about individual items are collected and asked once, at U8 or C7, never one pause per item.
+
+## From photos to rows
+
+The Skill, not the expert, turns the returned photos into rows:
+
+- Photos whose descriptions agree on type, colour, material and room are one item. Identical items side by side are one row with the count in Qty; items of the same type with clearly different features are separate rows; when unsure, the question goes to U8 or C7.
+- The clearest photo of an item is the one whose description names the most of its features.
+- An item whose photo file name already appears on the existing list is that same item, not a new one. An item of the same type in the same room as an existing row is shown at U8 as a possible duplicate.
