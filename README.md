@@ -29,7 +29,7 @@ Three modes, chosen from what you say.
 
 - **Update**, about weekly. "Update my home inventory." It finds belongings in the photos added since last time, pairs them with receipts, asks you to confirm once, then adds a dated page to the inventory, plus a dated album and a file tag. The inventory is a ledger: each run saves only what changed and rewrites nothing, so it grows between losses and the date an item was first written down is evidence in its own right.
 - **Ask**. "What do I own in the basement?" Answered from the ledger. No search, no write.
-- **Claim**, after a loss. "I had a flood on June 20 in the basement, list what I lost." It fixes the cut-off first, then finds for each item a photo captured **before** the loss, the receipt if one exists, the damage photos taken after, and camera events for a break-in. You confirm the rows once. It then saves one claim folder you can attach as it is: the contents list, a copy of every exhibit, and a SHA-256 value per file.
+- **Claim**, after a loss. "I had a flood on June 20 in the basement." It fixes the cut-off first. You say what was lost by typing it or by walking through the room with a voice note, which the NAS transcribes. It finds each item in a photo captured **before** the loss, adds the receipt if one exists, files the damage photos taken after, and, if you agree, the camera events around the loss. It then shows you belongings that appear in those same photos and that you did not name, because nobody remembers a whole room. On a NAS with no saved inventory it builds the list from the pre-loss photos itself. You confirm once, and it saves one claim folder you can attach as it is: the contents list, a copy of every exhibit including your voice note, and the capture time, camera and SHA-256 of each file.
 
 What it never does:
 
@@ -95,8 +95,9 @@ Where the model decides, in [SKILL.md](skill/home-contents-inventory/SKILL.md) a
 ## Limits
 
 - Recall depends on the NAS recognition index. Two of my 27 items appear in no photo at all, and no Skill can prove those.
-- Each candidate photo costs one description by the vision model, so routes are capped (12 photos per item in claim mode, 40 per category in update mode).
+- Each candidate photo costs one description by the vision model, so routes are capped (12 photos per search in claim mode, 40 per category in update mode, and a question before any run over 150 photos).
 - Skills cannot run on a schedule, so the weekly update is started by the user.
+- A single instruction to the NAS is kept to fifteen rows, so a long list is saved in parts. Whether the platform accepts longer instructions is untested.
 - Camera evidence needs a camera that covers the room.
 - Nothing here has run on a real NAS yet. Round 1 gives no hardware access.
 - The illustrations on the replay page are made with AI and stand in for my own photos, which stay on my drive.

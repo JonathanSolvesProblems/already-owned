@@ -8,7 +8,7 @@ Effect and approval are the catalog's own values. Read steps need no approval. E
 | --- | --- | --- | --- | --- |
 | U1, A1, C3 read the ledger | `file-agent` | `file-workflow` get-user-dir, `ug-filesystem` find, ls, cat | read | none |
 | U2, C3 category names | `photo-agent` | `ug-photo` object-albums, search-classify, search-picture | read | none |
-| U3 photos per category | `photo-agent` | `ug-photo` search-picture by recognized object, by text in the photo, by capture time, vision-vlm, meta | read | none |
+| U3 photos per category, and C3 when no inventory exists | `photo-agent` | `ug-photo` search-picture by recognized object, by text in the photo, by capture time, vision-vlm, meta | read | none |
 | U4, C6 receipt files | `file-agent` | `ug-filesystem` find by type and date | read | none |
 | U5, C6 photographed receipts | `photo-agent` | `ug-photo` search-picture by text in the photo, vision-ocr | read | none |
 | U6, C6 purchase lines | `document-agent` | `ug-document` extract with the receipt and invoice schemas | read | none |
@@ -20,11 +20,12 @@ Effect and approval are the catalog's own values. Read steps need no approval. E
 | C2 find and transcribe a recording | `file-agent`, `knowledge-agent` | `ug-filesystem` find by type, `ug-knowledge` audio-transcription | read | none |
 | C4a damage photos | `photo-agent` | `ug-photo` search-picture by capture time, vision-vlm, meta | read | none |
 | C4b pre-loss proof | `photo-agent` | `ug-photo` search-picture by file name, recognized object, text in the photo, capture time, vision-vlm, meta | read | none |
-| C4b second pass | `photo-agent` | `ug-photo` vision-vlm on paths already returned | read | none |
+| C4b second pass | `photo-agent` | `ug-photo` vision-vlm and meta on paths already returned | read | none |
+| U6b, C6 receipt-first photo search | `photo-agent` | `ug-photo` search-picture by text in the photo and by capture time, vision-vlm | read | none |
 | C5 camera events | `security-monitor-agent` | `ug-surveillance` cameras, event-timeline, event-evidence with snapshots for user review | read | none |
-| C8 draft, translated copy | `document-agent` | `ug-document` writing, translate | mixed | gateway when a file is produced |
+| C8 draft, translated copy | `document-agent` | `ug-document` writing, translate | mixed | gateway |
 | C9 claim folder | `file-agent` | `ug-filesystem` mkdir | state change | gateway |
-| C9 exhibit copies | `file-agent` | `ug-filesystem` cpmv as a copy, then sha256sum on each original and each copy | state change, then read | gateway |
+| C9 exhibit copies, the voice note included | `file-agent` | `ug-filesystem` cpmv as a copy, then sha256sum on each original and each copy | state change, then read | gateway |
 | C9 hashes when copies are declined | `file-agent` | `ug-filesystem` sha256sum | read | none |
 | C9 claim document | `knowledge-agent` | `ug-knowledge` save-text | state change | workflow |
 | C9 claim album | `photo-agent` | `ug-photo` create-album | state change | workflow |
@@ -47,6 +48,6 @@ Seven of the nine published CLIs are used, through five of the registered expert
 | --- | --- | --- |
 | Add a photo to an existing album | create-album only | One dated album per run, and one file tag that links every inventory photo across runs |
 | Run on a schedule | no scheduler | The weekly update is started by the user |
-| Learn which model answered | no action reports it | Every reading instruction says to use only the local model and to return what it cannot handle as not processed |
+| Choose or confirm the model for every expert | no action covers every expert | Every reading instruction says to use only the local model and to return what it cannot handle as not processed; those files are left out and listed, and no other model is asked |
 | Read purchase lines from a photographed receipt | extract takes document files | The recognized text of the photo is read instead, and the row is marked "receipt read from photo text" |
 | Read a price off the market | none, and out of scope | Values come from a receipt or from the user, never from a model |

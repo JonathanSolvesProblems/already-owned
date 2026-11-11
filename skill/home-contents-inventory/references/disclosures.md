@@ -14,11 +14,11 @@ All of it. The Skill, its three modes (update, ask, claim), the search-route rul
 
 None are in the package. It is Markdown only: no script, executable, library, model weight or dataset.
 
-The one tool it was built with is the official UGOS Skill Creation Tool (`uliya-skill-kit`, supplied by UGREEN for the Hackathon and used under its terms). Its checker reports static-pass with no errors and no warnings for this package.
+The one tool the package depends on is the official UGOS Skill Creation Tool (`uliya-skill-kit` 0.7.3, the version in the name of the download UGREEN supplies for the Hackathon, used under its terms). Its checker reports static-pass with no errors and no warnings for this package.
 
 ## External services, credentials and data flows
 
-- No external service is called and no data leaves the NAS. Every instruction that reads a photo, a document or a recording tells the expert to use only the NAS local model and to return what it cannot handle as not processed; the Skill then pauses and asks the user before any other model is used.
+- No external service is called and no data leaves the NAS. Every instruction that reads a photo, a document or a recording tells the expert to use only the NAS local model and to return what it cannot handle as not processed. Such files are left out and listed in the report. The Skill never asks for another model.
 - The Skill needs no account, key, token or password, and stores none.
 - It reads only the photos, documents and, in claim mode, the camera events of the current user.
 - It writes only what the user approves, one approval per write: one folder (Home Contents, with a Claims folder inside it and one folder per loss inside that), dated Markdown lists and claim documents in those folders, copies of the cited photos and receipts inside the folder of each loss, dated albums, and one file tag (home-contents).
@@ -27,7 +27,7 @@ The one tool it was built with is the official UGOS Skill Creation Tool (`uliya-
 
 - At run time: the NAS local model only, through the registered experts (photo recognition and description, text recognition, receipt extraction, drafting, translation, transcription). No third-party model.
 - During development: an AI coding assistant helped draft and revise the Markdown of this package, ran the kit checker, and played the NAS in dry runs of the workflow against a mock library to find defects. The idea, the claim data, the test design, the review of every line and the decisions are mine.
-- Outside the package: the drawings on the project's proposal and replay page were made with an image model run on my own computer (Z-Image Turbo, Apache 2.0). They stand in for my own photos. No image is in this package.
+- Outside the package: the drawings on the project's proposal and replay page were made with an image model run on my own computer (Z-Image Turbo by Tongyi-MAI, Apache 2.0, through ComfyUI, GPL-3.0). They stand in for my own photos. No image is in this package.
 
 ## Install, set up, test, remove
 

@@ -12,7 +12,7 @@ What to load on a test NAS, what to say, and what must come back. A result that 
 
 ## The measurement this Skill is built around
 
-The answer key is my own contents claim of June 2026: 27 items lost to water, a list I wrote by hand for my insurer before this Skill existed.
+The answer key is a real contents claim of my own: 27 items lost to water, a list written by hand for the insurer before this Skill existed.
 
 | Measure | Result | How it was obtained |
 | --- | --- | --- |
@@ -42,12 +42,23 @@ The answer key is my own contents claim of June 2026: 27 items lost to water, a 
 | 11 | A copy whose SHA-256 differs from its original | Reported by name and listed as not verified. |
 | 12 | More than twelve candidate photos on one search | The twelve latest and the earliest are described, and the report says how many more matched. |
 | 13 | A claim on a NAS with no saved inventory | The claim still runs from the items the user names, and the Home Contents folder is created with the claim folder. |
-| 14 | A file the local model cannot handle | Returned as not processed; the Skill asks before any other model is used, and on a no lists the file in the report. |
-| 15 | "File this week's receipts" in a week with no new photos | No photo search, the receipts are still read, and their rows go to the confirmation step. |
+| 14 | A file the local model cannot handle | Returned as not processed, left out, and listed in the report. No other model is asked. |
+| 15 | "File this week's receipts" in a week with no new photos | The photo description step is left out, the receipts are still read, and their rows go to the confirmation step. No album is made. |
 | 16 | A pre-loss photo of the same kind of item in a different room | One question, never a silent match. |
 | 17 | An update a week later with two new items | The new page holds two rows, numbered on from the last. The save instruction carries two rows, not the whole list. |
-| 18 | A first run or a claim with more than twenty-five rows | Saved in parts of twenty-five, each with its own approval. |
+| 18 | A first run or a claim with more than fifteen rows | Saved in parts of fifteen, each with its own approval; the last part carries the totals and the exhibit list. |
 | 19 | An item first recorded on a page dated before the loss | Its claim row says since when it was on the inventory. |
+
+## Cases added for the claim interaction
+
+| # | Situation | Expected |
+| --- | --- | --- |
+| 20 | The user records a voice note walking through the room | It is transcribed, the items named become the list to confirm, and the recording is an exhibit with its SHA-256. |
+| 21 | A belonging visible in a pre-loss photo that the user never named | Shown once as "also seen before the loss" with its photo. It becomes a row only if the user says it was lost. |
+| 22 | A claim on a NAS with no saved inventory and nothing named | The Skill builds the list from pre-loss photos of the affected rooms, asks before a large run, and the user picks what was lost. |
+| 23 | An update whose photo count is over 150 | The Skill shows the count and asks before describing anything. |
+| 24 | A receipt arrives for an item that already has a photo-only row | The row keeps its number, gains the receipt, and is saved on the new page as a changed row. |
+| 25 | Two update runs on the same day, the second with one new row | The second page and album carry the time after the date; nothing is overwritten. |
 
 ## What a pass looks like
 

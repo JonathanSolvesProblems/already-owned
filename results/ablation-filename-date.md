@@ -1,6 +1,6 @@
 # Ablation: the same items searched by file name and date only
 
-Run 2026-11-02 with `tools/ablation_filename.py` over 210 photos captured before 2026-06-20 00:00 (the June 20, 2026 loss), on the pre-loss photos reachable from this PC. To be re-run on the NAS testing day with `ug-filesystem find` over the full library, which is what a NAS without the AI index offers.
+Run 2026-11-11 with `tools/ablation_filename.py` over 210 photos captured before 2026-06-20 00:00 (the June 20, 2026 loss), on the pre-loss photos reachable from this PC. To be re-run on the NAS testing day with `ug-filesystem find` over the full library, which is what a NAS without the AI index offers.
 
 Method: for each of the 27 claim items, a case-insensitive search of its keywords in the photo file names, and separately in the folder names, with no recognition index, no OCR and no vision model. A hit means at least one pre-loss file name or folder name contains a keyword.
 

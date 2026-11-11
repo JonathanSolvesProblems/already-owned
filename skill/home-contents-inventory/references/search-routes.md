@@ -4,7 +4,7 @@ Read this before steps U3, U6b and C4b. Choose the route from what is actually k
 
 | What is known about the item | Route | Why |
 | --- | --- | --- |
-| A photo file name from an inventory row | File name | One lookup; the vision model only confirms the item is visible. No search needed. |
+| A photo file name from an inventory row | File name; a row whose type is on the category list also joins that category's delegation, so its last seen date is current | One lookup; the vision model only confirms the item is visible. |
 | Photos of the same room already returned for other items | Ask the vision model about those real paths: one delegation per room, listing every item of that room still without proof and the real paths of every photo the room has returned, sent with the second-pass instruction in C4b; it runs no new search and does not count toward the two-route stop | One description per photo and no new search; most basement items share the same few photos. |
 | A brand, model or text printed on it (from a receipt line or from the user) | Text visible in the photo | Labels, boxes and screens carry the model text; recognized objects do not. |
 | A common object type whose name is on the index category list (sofa, television, bicycle, washing machine) | Recognized object, using the exact category name | The library index already labels these. Never guess a category name that is not on the list from U2 or C3. |
@@ -33,4 +33,5 @@ The Skill, not the expert, turns the returned photos into rows:
 
 - Photos whose descriptions agree on type, colour, material and room are one item. Identical items side by side are one row with the count in Qty; items of the same type with clearly different features are separate rows; when unsure, the question goes to U8 or C7.
 - The clearest photo of an item is the one whose description names the most of its features.
+- In claim mode, a durable item an expert names in a pre-loss photo that is not on the list is kept as "also seen before the loss" and shown to the user at C7. It becomes a row only if the user says it was lost.
 - An item whose photo file name already appears on the existing list is that same item, not a new one. An item of the same type in the same room as an existing row is shown at U8 as a possible duplicate.
