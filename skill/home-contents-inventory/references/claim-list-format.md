@@ -18,11 +18,15 @@ Column rules:
 - **Pre-loss photo**: file name and capture date of the clearest photo. In claim mode, captured before the loss time.
 - **Receipt**: file name of the matched receipt, or empty.
 - **Proof level**: one of `photo and receipt`, `photo only`, `receipt only`, `none`.
-- **Notes**: separated by commas: the real path of the pre-loss photo, written as "path: " followed by the path, so a later claim can find it without a search; the room the user named when it differs from the photo's; anything the user added; "receipt read from photo text" where that happened; "receipt dated after first photo, confirmed by the owner" for a resolved date conflict; "owner to itemize" for an entry that is not one object; "photo shows damage" where the only photo was flagged; and, in claim mode, "damage photo: " followed by the file name.
+- **Notes**: separated by commas: the real path of the pre-loss photo, written as "path: " followed by the path, so a later claim can find it without a search; "first seen: " and "last seen: " followed by the earliest and the latest pre-loss capture dates of the item, when more than one photo shows it; the room the user named when it differs from the photo's; anything the user added; "receipt read from photo text" where that happened; "receipt dated after first photo, confirmed by the owner" for a resolved date conflict; "owner to itemize" for an entry that is not one object; "photo shows damage" where the only photo was flagged; and, in claim mode, "damage photo: " followed by the file name.
 
 Totals:
 
 - Sum **Price paid** and **Replacement value** separately, per currency, only over rows that have a value. State how many rows have no value.
+
+Exhibits (claim mode):
+
+- Below the table, the claim document lists every exhibit in the claim folder (pre-loss photos, damage photos, receipts) with its file name and SHA-256 value, as returned by the file expert. A value is never typed or guessed; a file whose duplicate did not match its original is listed as not verified.
 
 Privacy:
 

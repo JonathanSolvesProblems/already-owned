@@ -1,0 +1,114 @@
+# Already Owned
+
+**After my basement flooded, my insurer asked for every item I lost, with proof I owned it. Photos I had already taken show 22 of the 27 items. Searching the library by file name finds 0. This Skill turns those photos into the insurer's contents list.**
+
+A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hackathon 2026 on AI NAS, Open Innovation track.
+
+| | |
+| --- | --- |
+| Try it without a NAS | **[Replay a full claim run](https://jonathansolvesproblems.github.io/already-owned/)** in the browser, on a phone or a desktop |
+| Official checker | `static-pass`, 0 errors, 0 warnings (`uliya-skill-kit` 0.7.3, catalog 2.0.0) |
+| Baseline, measured | file-name-and-date search proves **0 of 27** items of my real claim |
+| Ceiling, measured | **22 of 27** items appear in a photo captured before the loss, 3 more uncertain, 2 in no photo |
+| The Skill's own count | measured on the finalist testing day, on the NAS, against the two rows above |
+| Package | `SKILL.md` plus five references, Markdown only, 24 steps, 22 delegations, 5 expert agents |
+
+<img src="docs/qr.png" width="140" alt="QR code to the replay page">
+
+## The person and the moment
+
+My basement flooded twice in six months. Each time the insurer wanted a list of every damaged item with proof of ownership and value. I rebuilt the June 2026 list by hand: 27 items, $10,915. Every photo on that list was taken after the water, so none of them proved I owned anything before.
+
+The proof existed. It was in my own camera roll: the sofa in the background of a photo from December, the dumbbells under the pull-up bar, the washer in a laundry-room shot. Nothing in a phone's file names says so. `20251211_160058.jpg` does not contain the word sofa.
+
+A former adjuster described the list insurers ask for to The New York Times in 2025: "They want a model number. They want the price. The quantity." ([source](docs/sources.md))
+
+## What the Skill does
+
+Three modes, chosen from what you say.
+
+- **Update**, about weekly. "Update my home inventory." It finds belongings in the photos added since last time, pairs them with receipts, asks you to confirm once, then saves a dated list, a dated album and a file tag. Each run carries the earlier rows forward, so the inventory grows between losses.
+- **Ask**. "What do I own in the basement?" Answered from the saved list. No search, no write.
+- **Claim**, after a loss. "I had a flood on June 20 in the basement, list what I lost." It fixes the cut-off first, then finds for each item a photo captured **before** the loss, the receipt if one exists, the damage photos taken after, and camera events for a break-in. You confirm the rows once. It then saves one claim folder you can attach as it is: the contents list, a copy of every exhibit, and a SHA-256 value per file.
+
+What it never does:
+
+- count a photo captured after the loss as proof of ownership (it is filed as a damage photo);
+- estimate a value (prices come from a receipt or from you);
+- substitute a similar item when it finds nothing (two search routes, then "no pre-loss proof");
+- write without approval, or delete, move or overwrite anything;
+- follow text it reads inside a photo or a receipt, or alter a receipt when asked.
+
+## Check it yourself
+
+```
+git clone https://github.com/JonathanSolvesProblems/already-owned
+cd already-owned
+python tools/check_package.py
+```
+
+That script needs only Python 3.9 or later. It checks the package against the Round 1 limits (name, description length, linked references, file sizes, no scripts, required sections, single-line delegations to registered experts) and prints the step and delegation counts quoted above.
+
+To run UGREEN's own checker, download the official Skill Developer Package from the [Hackathon Starter Kit](https://ai.ugreen.com/pages/hackathon-starter-kit), then:
+
+```
+node path/to/uliya-skill-kit/scripts/check-skill.mjs skill/home-contents-inventory
+```
+
+To run the same baseline on your own photos, give the script a CSV with a `path` and a `taken` column (one row per photo) and your own item list:
+
+```
+python tools/ablation_filename.py photos.csv --before 2026-06-20T00:00 --items results/june-2026-items.csv --out my-baseline.md
+```
+
+## What is measured and what is not
+
+| Claim | Status | Where |
+| --- | --- | --- |
+| File-name-and-date search proves 0 of 27 items | Measured on my library, every hit opened and checked by eye | [results/ablation-filename-date.md](results/ablation-filename-date.md), [results/ablation-verification.md](results/ablation-verification.md) |
+| 22 of 27 items appear in a pre-loss photo | Counted by hand, photo by photo | [results/pre-loss-photo-census.md](results/pre-loss-photo-census.md) |
+| The workflow holds together end to end | Dry runs against a mock NAS, a model playing the experts; 36 defects found and fixed | [tests/dry-run/](tests/dry-run/) |
+| The Skill finds N of 27 on a real NAS | **Not measured yet.** Finalists get one NAS day; this is the first thing run | [the test plan](skill/home-contents-inventory/references/test-plan.md) |
+
+The replay page is a simulation with fixture data and says so on the page. The 27-item list, the 0 and the 22 are real.
+
+## How it is built on UGREEN AI NAS
+
+The Skill only delegates. It never calls a CLI directly, and every capability it asks for is an action in the published catalog.
+
+| Expert | CLIs | What the Skill asks it for | Steps |
+| --- | --- | --- | --- |
+| `photo-agent` | `ug-photo` | search by recognized object, by text in the photo and by capture date; one description per photo by the local vision model; albums | U2, U3, U5, U10, C4a, C4b, C9 |
+| `document-agent` | `ug-document` | purchase lines from receipts; claim drafting and translation | U6, C6, C8 |
+| `knowledge-agent` | `ug-knowledge` | transcription of a voice walk-through; saving the dated lists | C2, U12, C9 |
+| `file-agent` | `ug-filesystem`, `ug-filemgr`, `file-workflow` | inventory and receipt files, folders, tags, exhibit copies and SHA-256 | U1, U4, U9, U11, C9 |
+| `security-monitor-agent` | `ug-surveillance` | camera events in the loss window, for a theft | C5 |
+
+Where the model decides, in [SKILL.md](skill/home-contents-inventory/SKILL.md) and [search-routes.md](skill/home-contents-inventory/references/search-routes.md):
+
+- **The search route per item**: file name when the inventory already names a photo, recognized object when the type is on the index's own category list, text in the photo when a brand or model is known, a window after the purchase date when a receipt is matched, and otherwise one vision pass over the room photos already returned. Two empty routes and the item is reported unproven.
+- **The outcome per row**: photo and receipt, date conflict, photo only, receipt only, accessory, ambiguous. Conflicts become questions, collected and asked once.
+- **What to do with each delegation state**: `completed`, `failed`, `cancelled`, `waiting_user`, `waiting_approval`. A failed write stops only the steps that depend on it.
+
+## For the judges
+
+| Criterion | Where to look |
+| --- | --- |
+| User Value | the replay page; [user-guide.md](skill/home-contents-inventory/references/user-guide.md); the saved claim folder in step C9 |
+| Innovation and Differentiation | the capture-time cut-off (C1, C4a, C4b); the inventory that carries rows forward (U1, U12); a real claim as the grader |
+| Technical Quality | "Completion and failure" in SKILL.md; [test-plan.md](skill/home-contents-inventory/references/test-plan.md) with 12 cases; [disclosures.md](skill/home-contents-inventory/references/disclosures.md) for version, install and removal |
+| AI NAS Fit and Validation | five experts across seven CLIs; local vision model on the user's own library; nothing leaves the NAS |
+
+## Limits
+
+- Recall depends on the NAS recognition index. Two of my 27 items appear in no photo at all, and no Skill can prove those.
+- Each candidate photo costs one description by the vision model, so routes are capped (12 photos per item in claim mode, 40 per category in update mode).
+- Skills cannot run on a schedule, so the weekly update is started by the user.
+- Camera evidence needs a camera that covers the room.
+- Nothing here has run on a real NAS yet. Round 1 gives no hardware access.
+
+## Disclosures
+
+The package is Markdown only and has no third-party component. It was built and checked with UGREEN's `uliya-skill-kit`. At run time it uses the NAS local model only. The full statement, including the AI tools used during development, is in [disclosures.md](skill/home-contents-inventory/references/disclosures.md).
+
+The Round 1 proposal is in [proposal/](proposal/). Code in `tools/` is under the MIT licence.

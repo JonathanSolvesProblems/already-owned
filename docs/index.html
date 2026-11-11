@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Already Owned: replay a contents claim</title>
+<meta name="description" content="A Skill for UGREEN AI NAS that keeps an insurer-ready contents list from the photos you already took. Step through a full claim run.">
+<style>
+:root{
+  --paper:#f3efe6; --card:#fbf9f4; --ink:#1d1c19; --soft:#5d594f; --rule:#d6cfbf;
+  --before:#0b5d3b; --before-bg:#e1eee6; --after:#9a3b1f; --after-bg:#f6e3da;
+  --wait:#8a6a12; --wait-bg:#f5ebcd; --mono:ui-monospace,"Cascadia Mono",Consolas,Menlo,monospace;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--sans)}
+a{color:var(--before)}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+header{padding:44px 0 18px;border-bottom:2px solid var(--ink)}
+.kicker{font:600 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+h1{font:700 clamp(38px,9vw,68px)/.98 var(--serif);margin:14px 0 14px;letter-spacing:-.02em}
+h1 em{font-style:italic;color:var(--before)}
+.lede{font:400 clamp(18px,3.4vw,22px)/1.45 var(--serif);max-width:38em;margin:0 0 20px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--ink);background:var(--card)}
+.facts div{padding:14px 14px 12px;border-right:1px solid var(--ink)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font:700 clamp(24px,5vw,34px)/1 var(--serif)}
+.facts span{display:block;font-size:13px;color:var(--soft);margin-top:6px;line-height:1.35}
+h2{font:700 clamp(24px,5vw,32px)/1.1 var(--serif);margin:44px 0 6px}
+.sub{color:var(--soft);margin:0 0 16px;max-width:42em}
+
+/* the timeline: every photo is a tick, the loss is the cut */
+.line{position:relative;height:118px;margin:8px 0 4px;border:1px solid var(--ink);background:var(--card);overflow:hidden}
+.line .axis{position:absolute;left:0;right:0;top:64px;border-top:1px solid var(--ink)}
+.line .cut{position:absolute;top:0;bottom:0;left:78%;border-left:2px dashed var(--after)}
+.line .cutlabel{position:absolute;left:78%;top:6px;transform:translateX(-100%);padding-right:8px;font:600 11px/1.25 var(--mono);color:var(--after);text-align:right}
+.line .zone{position:absolute;bottom:6px;font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.line .zb{left:10px;color:var(--before)} .line .za{right:10px;color:var(--after)}
+.tick{position:absolute;top:44px;width:3px;height:40px;border-radius:1px;background:var(--rule);transition:background .35s,height .35s,top .35s}
+.tick.b.on{background:var(--before);top:36px;height:56px}
+.tick.a.on{background:var(--after);top:36px;height:56px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--soft);margin-bottom:18px}
+.legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+
+.stage{border:1px solid var(--ink);background:var(--card)}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--ink);flex-wrap:wrap}
+.step-id{font:700 13px/1 var(--mono);background:var(--ink);color:var(--paper);padding:6px 8px}
+.step-name{font:600 15px/1.2 var(--sans);flex:1;min-width:10em}
+.count{font:12px/1 var(--mono);color:var(--soft)}
+.body{padding:14px 12px 4px;min-height:230px}
+.msg{margin:0 0 12px;max-width:44em}
+.who{font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--soft);display:block;margin-bottom:4px}
+.msg.user p{background:var(--ink);color:var(--paper);padding:10px 12px;margin:0;display:inline-block}
+.msg.skill p{border-left:3px solid var(--before);padding:2px 0 2px 12px;margin:0}
+.deleg{font:12.5px/1.5 var(--mono);background:#ece7da;border:1px solid var(--rule);padding:9px 10px;margin:0 0 6px;overflow-wrap:anywhere}
+.deleg b{color:var(--before)}
+.state{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.06em;padding:5px 7px;margin:0 6px 12px 0;text-transform:uppercase}
+.state.completed{background:var(--before-bg);color:var(--before)}
+.state.waiting{background:var(--wait-bg);color:var(--wait)}
+.state.none{background:var(--after-bg);color:var(--after)}
+.res{margin:0 0 12px;padding-left:18px}
+.res li{margin:2px 0}
+.note{font-size:13.5px;color:var(--soft);border-top:1px dashed var(--rule);padding-top:8px;margin:4px 0 12px}
+.nav{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--ink);align-items:center}
+button{font:600 15px/1 var(--sans);padding:12px 16px;border:1px solid var(--ink);background:var(--card);color:var(--ink);cursor:pointer;border-radius:0}
+button.primary{background:var(--before);border-color:var(--before);color:#fff}
+button.approve{background:var(--wait);border-color:var(--wait);color:#fff;margin:0 0 12px}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible,a:focus-visible{outline:3px solid var(--wait);outline-offset:2px}
+.dots{flex:1;display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.dots i{width:9px;height:9px;border:1px solid var(--ink);display:block}
+.dots i.done{background:var(--ink)} .dots i.cur{background:var(--before);border-color:var(--before)}
+
+/* the claim document */
+.doc{border:1px solid var(--ink);background:#fff;padding:18px 14px;margin-top:10px}
+.doc h3{font:700 22px/1.15 var(--serif);margin:0 0 4px}
+.doc .meta{font:12.5px/1.5 var(--mono);color:var(--soft);margin:0 0 12px}
+.rows{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:2.2em 1fr auto;gap:2px 10px;padding:9px 0;border-top:1px solid var(--rule);align-items:baseline}
+.row .n{font:600 12px/1.6 var(--mono);color:var(--soft)}
+.row .item{font-weight:600}
+.row .ev{grid-column:2 / 4;font:12.5px/1.5 var(--mono);color:var(--soft);overflow-wrap:anywhere}
+.chip{font:600 10.5px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:5px 6px;white-space:nowrap}
+.chip.pr{background:var(--before);color:#fff}
+.chip.p{background:var(--before-bg);color:var(--before)}
+.chip.r{background:var(--wait-bg);color:var(--wait)}
+.chip.x{background:var(--after-bg);color:var(--after)}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 6px}
+.filter button{font-size:13px;padding:8px 10px}
+.filter button[aria-pressed=true]{background:var(--ink);color:var(--paper)}
+.totals{font:13px/1.5 var(--mono);border-top:2px solid var(--ink);margin-top:10px;padding-top:10px}
+
+.never{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--ink);background:var(--card)}
+.never div{padding:14px;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule)}
+.never b{display:block;font:700 17px/1.2 var(--serif);margin-bottom:4px}
+.never span{font-size:14.5px;color:var(--soft)}
+table{border-collapse:collapse;width:100%;background:var(--card);border:1px solid var(--ink);font-size:14.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:600 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--soft)}
+td code{font:12.5px var(--mono)}
+footer{margin:48px 0 0;padding:18px 0 40px;border-top:2px solid var(--ink);font-size:14px;color:var(--soft)}
+.sim{font:600 12px/1.45 var(--mono);background:var(--wait-bg);color:#5c4708;padding:9px 11px;margin:0 0 12px;border-left:4px solid var(--wait)}
+@media (max-width:620px){
+  .facts{grid-template-columns:1fr}.facts div{border-right:0;border-bottom:1px solid var(--ink)}.facts div:last-child{border-bottom:0}
+  .never{grid-template-columns:1fr}
+  .row{grid-template-columns:1.8em 1fr}.row .chip{grid-column:2;justify-self:start}.row .ev{grid-column:2}
+  table.cap thead{display:none} table.cap td{display:block;border-bottom:0;padding:3px 10px} table.cap tr{display:block;border-bottom:1px solid var(--rule);padding:8px 0}
+  .dots{display:none}.nav{justify-content:space-between}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="kicker">A Skill for UGREEN AI NAS &middot; home-contents-inventory</div>
+  <h1>Already <em>Owned</em></h1>
+  <p class="lede">After a flood, fire or theft, the insurer asks for every item you lost, with proof you owned it. This Skill writes that list from the photos and receipts already on your NAS, and counts only photos taken <strong>before</strong> the loss.</p>
+  <div class="facts">
+    <div><b>0 of 27</b><span>items on my real flood claim found by searching file names and dates. Measured on my own library.</span></div>
+    <div><b>22 of 27</b><span>items that do appear in a photo I had already taken before the water. Counted by hand, photo by photo.</span></div>
+    <div><b>4 approvals</b><span>and nothing else is written. Local model, nothing deleted or moved, every exhibit copied with a SHA-256 value.</span></div>
+  </div>
+</header>
+
+<main>
+<h2>Replay a claim</h2>
+<p class="sub">Step through one full run of claim mode, from the first sentence to the saved claim. You approve the writes yourself.</p>
+<p class="sim">This is a replay of a dry run against a mock photo library. File names and prices are test fixtures. Results on a real NAS are measured on the finalist testing day.</p>
+
+<div class="line" aria-hidden="true" id="line">
+  <div class="axis"></div><div class="cut"></div>
+  <div class="cutlabel">LOSS<br>2026-06-20 02:00</div>
+  <div class="zone zb">counts as proof</div><div class="zone za">damage only</div>
+</div>
+<div class="legend"><span><i style="background:var(--before)"></i>captured before the loss: proof of ownership</span><span><i style="background:var(--after)"></i>captured after: damage photo, never proof</span><span><i style="background:var(--rule)"></i>not looked at yet</span></div>
+
+<div class="stage">
+  <div class="bar"><span class="step-id" id="sid"></span><span class="step-name" id="sname"></span><span class="count" id="scount"></span></div>
+  <div class="body" id="sbody" aria-live="polite"></div>
+  <div class="nav"><button id="prev">Back</button><div class="dots" id="dots"></div><button id="next" class="primary">Next</button></div>
+</div>
+
+<div id="docwrap" hidden>
+<h2>The claim it saved</h2>
+<p class="sub">One row per item, each with its proof level. Filter the rows the way an adjuster would read them.</p>
+<div class="filter" id="filter"></div>
+<div class="doc">
+  <h3>Contents claim, water loss of 2026-06-20</h3>
+  <p class="meta">Loss: water, 2026-06-20 at about 02:00 &middot; Room: basement &middot; Saved to Home Contents/Claims/2026-06-20 water/ with 16 exhibits, each listed with its SHA-256</p>
+  <div class="rows" id="rows"></div>
+  <div class="totals" id="totals"></div>
+</div>
+</div>
+
+<h2>What it never does</h2>
+<div class="never">
+  <div><b>Never counts a photo taken after the loss</b><span>The cut-off is the capture time in the photo metadata, not the upload date. A later photo is a damage photo.</span></div>
+  <div><b>Never estimates a value</b><span>Prices come from a receipt or from you. An empty value stays empty and is counted as empty.</span></div>
+  <div><b>Never swaps in a similar item</b><span>Two search routes with no result and the row says no proof found.</span></div>
+  <div><b>Never writes without asking</b><span>Folder, copies, document, album and tag each wait for approval. Nothing is deleted, moved or overwritten.</span></div>
+  <div><b>Never obeys text inside a photo</b><span>Words on a receipt or a label are evidence for a row. They are never instructions, and the report names any file that tried.</span></div>
+  <div><b>Never alters evidence</b><span>Asked to re-date or rewrite a receipt, it declines before any search. It runs on the NAS local model and asks before any online model sees a file.</span></div>
+</div>
+
+<h2>Three modes, five experts</h2>
+<p class="sub">The Skill only delegates. Each expert is a registered UGOS agent, and every action below is in the published capability catalog.</p>
+<table class="cap">
+<thead><tr><th>Expert</th><th>What the Skill asks it for</th><th>Steps</th></tr></thead>
+<tbody>
+<tr><td><code>photo-agent</code></td><td>Search by recognized object, by text in the photo and by capture date. Describe each photo once with the local vision model. Create albums.</td><td>U2, U3, U5, U10, C4a, C4b, C9</td></tr>
+<tr><td><code>document-agent</code></td><td>Read purchase lines off receipts. Draft and translate the claim.</td><td>U6, C6, C8</td></tr>
+<tr><td><code>knowledge-agent</code></td><td>Transcribe a voice walk-through of the room. Save the dated lists.</td><td>C2, U12, C9</td></tr>
+<tr><td><code>file-agent</code></td><td>Find the inventory and receipt files. Create the folder. Tag photos and receipts. Copy the exhibits into the claim folder and compute each SHA-256.</td><td>U1, U4, U9, U11, C9</td></tr>
+<tr><td><code>security-monitor-agent</code></td><td>Camera events for the loss window, for a theft or break-in.</td><td>C5</td></tr>
+</tbody>
+</table>
+<p class="sub" style="margin-top:14px"><strong>Update</strong>, about weekly: new photos and receipts become rows, an album and tags. <strong>Ask</strong>: "what do I own in the basement" is answered from the saved list. <strong>Claim</strong>: what you just replayed.</p>
+</main>
+
+<footer>
+  <p>Already Owned is an entry in the UGREEN Hackathon 2026 on AI NAS by Jonathan Andrei. <a href="https://github.com/JonathanSolvesProblems/already-owned">Read the Skill, the measurements and the dry runs on GitHub.</a></p>
+</footer>
+</div>
+
+<script>
+// ticks: position in percent, b = before the loss, a = after. shown[] says which step lights them.
+const TICKS = [
+  [6,'b',5],[9,'b',6],[13,'b',5],[17,'b',6],[21,'b',6],[24,'b',5],[29,'b',6],[33,'b',7],[37,'b',5],[41,'b',6],
+  [44,'b',6],[49,'b',7],[53,'b',6],[57,'b',5],[61,'b',6],[64,'b',7],[68,'b',6],[71,'b',6],[74,'b',5],[76,'b',7],
+  [80,'a',4],[82,'a',4],[84,'a',4],[87,'a',4],[90,'a',4],[93,'a',6]
+];
+const STEPS = [
+ { id:'C1', name:'Collect the loss', html:`
+  <div class="msg user"><span class="who">You</span><p>I had a flood on June 20 around 2 am in the basement. List what I lost.</p></div>
+  <div class="msg skill"><span class="who">Skill</span><p>Loss: water, 2026-06-20 at about 02:00. I take 02:00 as the cut-off, the earliest time you gave. Room: basement. Only photos captured before that moment count as proof you owned something. Is that right?</p></div>
+  <div class="msg user"><span class="who">You</span><p>Yes.</p></div>
+  <p class="note">No search has run yet. The cut-off is fixed first, so nothing found later can move it.</p>`},
+ { id:'C3', name:'Read the saved inventory', html:`
+  <div class="deleg">delegate --target <b>file-agent</b> --instruction 'Resolve the personal space of the current user, then find the folder named Home Contents ... Read only: create, move or change nothing.'</div>
+  <span class="state completed">completed</span>
+  <ul class="res"><li>Home contents list 2026-06-14.md, 5 rows in the basement, each with the path of its photo.</li></ul>
+  <div class="msg skill"><span class="who">Skill</span><p>Your inventory has 5 basement items: sofa, TV, stick vacuum, pull-up station, gaming chair. Was anything else down there?</p></div>
+  <div class="msg user"><span class="who">You</span><p>Armchair, bed frame, two side tables, coffee table, dumbbells, bookshelf, two floor lamps, mini-fridge, washer and dryer, monitor arm, boot dryer, steamer, frames, bedding, boxes.</p></div>
+  <p class="note">The weekly update mode is why 5 rows were already waiting with their photo paths. Those 5 need one lookup, not a search.</p>`},
+ { id:'C4a', name:'Find the damage photos, once', html:`
+  <div class="deleg">delegate --target <b>photo-agent</b> --instruction 'Find photos in the library of the current user captured between 2026-06-20 02:00 and 2026-07-20. Describe each once with the local vision model and keep those that show water, fire, smoke, damaged household items, or the basement ... Read only.'</div>
+  <span class="state completed">completed</span>
+  <ul class="res"><li>5 photos captured June 21 to 23: standing water, a soaked sofa, a wet camera rig.</li></ul>
+  <p class="note">These are filed as damage photos. They sit on the wrong side of the line, so they can never become proof of ownership.</p>`},
+ { id:'C4b', name:'Inventory rows, by file name', html:`
+  <div class="deleg">delegate --target <b>photo-agent</b> --instruction 'Find photos ... captured strictly before 2026-06-20 02:00 that may show any of: brown leather reclining sofa, flat-screen TV, Dyson stick vacuum, pull-up and dip station, gaming chair, using the search route: file names 20240815_190211.jpg, 20240903_121544.jpg, 20250412_101233.jpg, 20250118_164002.jpg ...'</div>
+  <span class="state completed">completed</span>
+  <ul class="res"><li>All 5 confirmed visible by the vision model. Capture dates from 2024-08-15 to 2025-04-12.</li></ul>
+  <p class="note">The model chose this route because the inventory row already names the photo. Cheapest route first.</p>`},
+ { id:'C4b', name:'New items, by recognized object', html:`
+  <div class="deleg">delegate --target <b>photo-agent</b> --instruction '... that may show any of: two side tables, adjustable dumbbell set, two floor lamps, mini-fridge, washer, dryer, using the search route: recognized object table, dumbbell, lamp, refrigerator, washing machine ...'</div>
+  <span class="state completed">completed</span>
+  <ul class="res"><li>Side tables, dumbbells, lamps, fridge, washer and dryer: each found in a photo from before the loss.</li><li>The pre-loss photo shows one floor lamp. You said two. That becomes a question for later, not a guess.</li></ul>
+  <p class="note">Only category names the NAS index really has are used. The Skill asked for that list first.</p>`},
+ { id:'C4b', name:'Second pass and the two-route stop', html:`
+  <div class="deleg">delegate --target <b>photo-agent</b> --instruction '... that may show any of: monitor arm, armchair, bed frame, coffee table, bookshelf, boot dryer, garment steamer, using the search route: ask the vision model about the photos at the real paths listed in this step ...'</div>
+  <span class="state completed">completed</span>
+  <ul class="res"><li>Monitor arm: visible in the gaming chair photo from 2025-01-18.</li></ul>
+  <span class="state none">no results</span>
+  <ul class="res"><li>Armchair, bed frame, coffee table, bookshelf, boot dryer, steamer: two routes tried, nothing found. Reported as no proof found. No similar item is substituted.</li><li>Bedding, boxes, frames: not one object type, so never searched. Marked "owner to itemize".</li></ul>`},
+ { id:'C6', name:'Find the receipts', html:`
+  <div class="deleg">delegate --target <b>document-agent</b> --instruction 'Extract the purchased line items from the receipt and invoice files at the real paths listed ... keep only lines that name one of the affected items ... Report each file that could not be read as a failure with its path.'</div>
+  <span class="state completed">completed</span>
+  <ul class="res"><li>Dyson invoice 2024-09-02, 799.99. Pull-up station order 2025-04-08, 389.00.</li><li>Sofa receipt, a phone photo: read from the photo text, 1,799.99, dated after the sofa first appears in a photo. Date conflict, asked later.</li><li>Mini-fridge scan: could not be read. Listed as a failure with its path.</li></ul>`},
+ { id:'C7', name:'One confirmation, every question at once', html:`
+  <div class="msg skill"><span class="who">Skill</span><p>26 rows are ready. Three questions. One: the photo shows one floor lamp, how many were there? Two: the sofa receipt is dated after its first photo, is it the same sofa? Three: bedding, boxes and frames cannot be searched as named, itemize them or keep them as unproven lines? Add a value to any row you wish. I will not estimate one.</p></div>
+  <div class="msg user"><span class="who">You</span><p>Two lamps. Same sofa. Keep those three as they are. Sofa 1,800, TV 700, chair 300.</p></div>
+  <p class="note">Questions are collected and asked once, not one pause per item. Nothing has been written to the NAS yet.</p>`},
+ { id:'C9', name:'Four writes, four approvals', approve:[
+   ['file-agent','create the folder Home Contents/Claims/2026-06-20 water'],
+   ['file-agent','place a copy of the 16 exhibits in that folder and compute the SHA-256 of each original and each copy (16 of 16 match)'],
+   ['knowledge-agent','save Contents claim 2026-06-20.md in that folder'],
+   ['photo-agent','create the album Claim 2026-06-20 with 13 photos: 8 from before the loss, 5 damage photos']] },
+ { id:'Done', name:'The report', html:`
+  <div class="msg skill"><span class="who">Skill</span><p>Saved. The claim folder holds the document and 16 exhibits, and all 16 SHA-256 pairs match. 3 items have a pre-loss photo and a receipt. 9 rows have a pre-loss photo only. 14 rows have no pre-loss proof, 3 of them not searchable as named. Values you confirmed: 2,800 CAD over 3 rows. 23 rows have no value. One failure: the mini-fridge receipt scan could not be read. Nothing was deleted, moved or overwritten, and nothing left the NAS.</p></div>
+  <p class="note">The report always separates proven rows from unproven ones. The claim document is below.</p>`}
+];
+const ROWS = [
+ [1,'Leather reclining sofa, 3-seat','pr','photo 2024-08-15 · receipt 1,799.99 CAD · value 1,800 CAD · date conflict confirmed by the owner'],
+ [2,'Flat-screen TV, about 55"','p','photo 2024-08-15 · value 700 CAD from the owner'],
+ [3,'Stick vacuum, Dyson V11','pr','photo 2024-09-03 · invoice 2024-09-02, 799.99 CAD'],
+ [4,'Pull-up and dip station','pr','photo 2025-04-12 · order 2025-04-08, 389.00 CAD'],
+ [5,'Gaming chair','p','photo 2025-01-18 · value 300 CAD from the owner'],
+ [6,'Wooden armchair','x','two routes, no pre-loss photo found'],
+ [7,'Bed frame, oak','x','two routes, no pre-loss photo found'],
+ [8,'Side tables, curved legs (2)','p','photo 2024-08-15, both visible side by side'],
+ [9,'Coffee table','x','damage photo only, 2026-06-21'],
+ [10,'Hex side table','x','two routes, no pre-loss photo found'],
+ [11,'Adjustable dumbbell set','p','photo 2026-04-10, marking 52.5 LB readable'],
+ [12,'Bookshelf','x','two routes, no pre-loss photo found'],
+ [13,'Storage shelving units (2)','x','two routes, no pre-loss photo found'],
+ [14,'Flight case','x','two routes, no pre-loss photo found'],
+ [15,'Camera rig','x','damage photo only, 2026-06-23'],
+ [16,'Chrome shelving','x','two routes, no pre-loss photo found'],
+ [17,'Floor lamps (2)','p','photo 2024-08-15 shows one, quantity confirmed by the owner'],
+ [18,'Mini-fridge','p','photo 2026-06-01 · receipt scan could not be read'],
+ [19,'Washer, Amana','p','photo 2026-05-17, brand readable on the panel'],
+ [20,'Dryer, Amana','p','photo 2026-05-17, same photo as the washer'],
+ [21,'Boot dryer','x','two routes, no pre-loss photo found'],
+ [22,'Garment steamer','x','two routes, no pre-loss photo found'],
+ [23,'Monitor arm','p','photo 2025-01-18, found in the gaming chair photo'],
+ [24,'Diploma frames','x','owner to itemize'],
+ [25,'Bedding','x','owner to itemize'],
+ [26,'Boxes and bags of belongings','x','owner to itemize']
+];
+const LABEL = { pr:'photo and receipt', p:'photo only', r:'receipt only', x:'no proof' };
+let i = 0, approved = 0;
+const $ = id => document.getElementById(id);
+
+const line = $('line');
+TICKS.forEach(([x, k, at]) => { const t = document.createElement('div'); t.className = 'tick ' + k; t.style.left = x + '%'; t.dataset.at = at; line.appendChild(t); });
+STEPS.forEach(() => $('dots').appendChild(document.createElement('i')));
+
+function render() {
+  const s = STEPS[i];
+  $('sid').textContent = s.id; $('sname').textContent = s.name; $('scount').textContent = (i + 1) + ' / ' + STEPS.length;
+  if (s.approve) {
+    let h = '<div class="msg skill"><span class="who">Skill</span><p>Four approvals follow: the folder, the copies, the document, the album.</p></div>';
+    s.approve.forEach(([agent, what], n) => {
+      if (n > approved) return;
+      h += `<div class="deleg">delegate --target <b>${agent}</b> ... 'This is a write, so request user approval first.'</div>`;
+      h += n < approved ? `<span class="state completed">completed</span><ul class="res"><li>Done: ${what}.</li></ul>`
+        : `<span class="state waiting">waiting_approval</span><ul class="res"><li>The ${agent.replace('-agent','')} expert wants to ${what}. Nothing is written yet.</li></ul><button class="approve" id="ap">Approve this write</button>`;
+    });
+    if (approved >= s.approve.length) h += '<p class="note">Each write waited for its own approval. Had you declined one, the run would stop and report what was already written.</p>';
+    $('sbody').innerHTML = h;
+    const ap = $('ap'); if (ap) ap.onclick = () => { approved++; render(); const n = $('ap') || $('next'); n.focus(); };
+  } else $('sbody').innerHTML = s.html;
+  const blocked = s.approve && approved < s.approve.length;
+  $('prev').disabled = i === 0;
+  $('next').disabled = blocked;
+  $('next').textContent = i === STEPS.length - 1 ? 'Replay' : 'Next';
+  [...$('dots').children].forEach((d, n) => d.className = n < i ? 'done' : n === i ? 'cur' : '');
+  const reached = [0, 1, 4, 5, 6, 7, 7, 7, 7, 7][i];
+  document.querySelectorAll('.tick').forEach(t => t.classList.toggle('on', +t.dataset.at <= reached));
+  $('docwrap').hidden = i < STEPS.length - 1;
+}
+$('next').onclick = () => { if (i === STEPS.length - 1) { i = 0; approved = 0; } else i++; render(); };
+$('prev').onclick = () => { if (i > 0) i--; render(); };
+
+let filt = 'all';
+function rows() {
+  $('rows').innerHTML = ROWS.filter(r => filt === 'all' || r[2] === filt).map(r =>
+    `<div class="row"><span class="n">${r[0]}</span><span class="item">${r[1]}</span><span class="chip ${r[2]}">${LABEL[r[2]]}</span><span class="ev">${r[3]}</span></div>`).join('');
+  const c = k => ROWS.filter(r => r[2] === k).length;
+  $('totals').textContent = `${c('pr')} photo and receipt · ${c('p')} photo only · ${c('x')} no pre-loss proof · price paid 2,988.98 CAD over 3 rows · replacement value 2,800 CAD over 3 rows · 23 rows have no value`;
+  $('filter').innerHTML = [['all','All 26'],['pr','Photo and receipt'],['p','Photo only'],['x','No proof']].map(([k, l]) =>
+    `<button data-k="${k}" aria-pressed="${k === filt}">${l}</button>`).join('');
+  $('filter').querySelectorAll('button').forEach(b => b.onclick = () => { filt = b.dataset.k; rows(); });
+}
+render(); rows();
+</script>
+</body>
+</html>
