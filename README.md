@@ -13,7 +13,7 @@ A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hac
 | Baseline, measured | file-name-and-date search proves **0 of 27** items of my real claim |
 | Ceiling, counted by hand | **22 of 27** items appear in a photo captured before the loss, 3 more uncertain, 2 in no photo |
 | The Skill's own count | **not measured yet**: it needs a NAS, and it is the first thing I run if I get a day on one |
-| Package | `SKILL.md` plus five references, Markdown only, 24 steps, 23 delegations, 5 expert agents |
+| Package | `SKILL.md` plus five references, Markdown only, 24 steps, 24 delegations, 5 expert agents |
 
 ## The person and the moment
 

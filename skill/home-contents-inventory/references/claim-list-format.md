@@ -11,7 +11,7 @@ Column rules:
 
 - **Item**: short noun phrase, for example "Leather reclining sofa, 3-seat".
 - **Description**: brand, model, colour, material and size, only as read from a photo or a receipt. Write "not visible" for anything that could not be read.
-- **Room**: as seen in the photo. If the user named a different room, keep the photo's room and note the user's in Notes.
+- **Room**: as seen in the photo. If the user named a different room, the match is confirmed with the user first; then keep the photo's room and note the user's in Notes.
 - **Qty**: identical items shown side by side are one row with the count here.
 - **Purchase date** and **Price paid**: from a matched receipt only, with its currency. Empty otherwise.
 - **Replacement value**: from the user only. Empty until the user gives it. Never estimated by the model.

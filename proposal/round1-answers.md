@@ -38,7 +38,7 @@ Delegation only, no direct CLI calls. The model picks each item's search route (
 
 ## 8. What is the current development status?
 
-Implemented: 24 steps, 23 delegations, five references; checker static-pass; both main modes dry-run against a mock NAS; baseline and answer key measured. Not implemented: scheduled runs. Pending NAS validation: recall on real libraries, receipt extraction, album, tag and copy writes.
+Implemented: 24 steps, 24 delegations, five references; checker static-pass; both main modes dry-run against a mock NAS; baseline and answer key measured. Not implemented: scheduled runs. Pending NAS validation: recall on real libraries, receipt extraction, album, tag and copy writes.
 
 ## 9. What is your final validation plan?
 
