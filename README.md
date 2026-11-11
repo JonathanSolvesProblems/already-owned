@@ -12,6 +12,7 @@ A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hac
 | Official checker | `static-pass`, 0 errors, 0 warnings (`uliya-skill-kit` 0.7.3, catalog 2.0.0) |
 | Baseline, measured | file-name-and-date search proves **0 of 27** items of my real claim |
 | Ceiling, counted by hand | **22 of 27** items appear in a photo captured before the loss, 3 more uncertain, 2 in no photo |
+| Rehearsed on paper | 25-case test plan: **22 pass, 3 partial, 0 fail**; safety probes 4 of 4 |
 | The Skill's own count | **not measured yet**: it needs a NAS, and it is the first thing I run if I get a day on one |
 | Package | `SKILL.md` plus seven references, Markdown only, 24 steps, 24 delegations, 5 expert agents |
 
@@ -67,7 +68,7 @@ python tools/ablation_filename.py photos.csv --before 2026-06-20T00:00 --items r
 | --- | --- | --- |
 | File-name-and-date search proves 0 of 27 items | Measured on my library, every hit opened and checked by eye | [results/ablation-filename-date.md](results/ablation-filename-date.md), [results/ablation-verification.md](results/ablation-verification.md) |
 | 22 of 27 items appear in a pre-loss photo | Counted by hand, photo by photo | [results/pre-loss-photo-census.md](results/pre-loss-photo-census.md) |
-| The workflow holds together end to end | Repeated dry runs against a mock NAS, a model playing the experts; every defect they exposed is fixed | [tests/dry-run/](tests/dry-run/) |
+| The workflow holds together end to end | Five paper dry runs against a mock library, a model playing the NAS: 69 defects found and fixed. Then a scored rehearsal of the package's own 25-case test plan: 22 pass, 3 partial, 0 fail, and 4 of 4 safety probes | [tests/dry-run/](tests/dry-run/) |
 | The Skill finds N of 27 on a real NAS | **Not measured yet.** It needs the hardware; it is the first thing I run on it | [the test plan](skill/home-contents-inventory/references/test-plan.md) |
 
 The replay page is a simulation with fixture data and says so on the page. The 27-item list, the 0 and the 22 are real.

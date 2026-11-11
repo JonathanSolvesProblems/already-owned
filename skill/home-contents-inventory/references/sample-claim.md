@@ -7,12 +7,12 @@ The claim folder, as it sits in Files:
 - Home Contents
   - Claims
     - 2026-03-14 water
-      - Contents claim 2026-03-14.md
+      - Contents claim 2026-03-14 part 1.md, Contents claim 2026-03-14 part 2.md
       - walk-through-2026-03-14.m4a, the owner's voice note
       - 20240815_190211.jpg, 20240903_121544.jpg, 20250412_101233.jpg and the other exhibit photos
       - vacuum-invoice-2024-09-02.pdf and the other receipts
 
-The document, Contents claim 2026-03-14.md:
+The document. With nine rows and eleven exhibits it is saved in two parts (rows first, then totals and exhibits); the two are shown here as one:
 
 > **Contents claim, water loss of 2026-03-14**
 >

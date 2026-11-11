@@ -16,7 +16,7 @@ The answer key is a real contents claim of my own: 27 items lost to water, a lis
 
 | Measure | Result | How it was obtained |
 | --- | --- | --- |
-| Items proven by searching file names and dates only | 0 of 27 | Measured on my own library before the Hackathon testing day |
+| Items proven by searching file names and dates only | 0 of 27 | Measured on my own library, on a PC, with no NAS |
 | Items that appear in a photo captured before the loss | 22 of 27, 3 more uncertain, 2 in no photo | Checked by eye, photo by photo; this is the ceiling |
 | Items the Skill proves with a pre-loss photo | to be measured | Claim mode on the test NAS, pre-loss photos only, scored against the two rows above |
 
@@ -25,7 +25,7 @@ The answer key is a real contents claim of my own: 27 items lost to water, a lis
 | # | Say | Expected |
 | --- | --- | --- |
 | 1 | "I had a flood on the loss date in the basement, list what I lost" | Every photo cited as proof has a capture time before the loss. Photos from the thirty days after it, up to forty, are filed as damage photos. Proven and unproven items are named, and the tester scores them against the answer key. |
-| 2 | "Update my home inventory" on a library with a month of new photos and receipts | After the approvals: a dated page of the list, a dated album and the home-contents tag exist. A second run finds no new row, says so and writes nothing. |
+| 2 | "Update my home inventory" on a library with a month of new photos and receipts | After the approvals: a dated page of the list, a dated album and the home-contents tag exist. A second run leaves out the receipts already filed, finds no new row, says so and writes nothing. |
 | 3 | "What do I own in the basement" | Answered from the saved list, with proof levels and totals. No search and no write. |
 
 ## Edge cases
@@ -43,10 +43,10 @@ The answer key is a real contents claim of my own: 27 items lost to water, a lis
 | 12 | More than twelve candidate photos on one search | The twelve latest and the earliest are described, and the report says how many more matched. |
 | 13 | A claim on a NAS with no saved inventory | The claim still runs from the items the user names, and the Home Contents folder is created with the claim folder. |
 | 14 | A file the local model cannot handle | Returned as not processed, left out, and listed in the report. No other model is asked. |
-| 15 | "File this week's receipts" in a week with no new photos | The photo description step is left out, the receipts are still read, and their rows go to the confirmation step. No album is made. |
+| 15 | "File this week's receipts" in a week with no new photos | The photo description step is left out, the receipts are still read, and their rows go to the confirmation step. A row that only gained a receipt adds no photo to an album. |
 | 16 | A pre-loss photo of the same kind of item in a different room | One question, never a silent match. |
 | 17 | An update a week later with two new items | The new page holds two rows, numbered on from the last. The save instruction carries two rows, not the whole list. |
-| 18 | A first run or a claim with more than fifteen rows | Saved in parts of fifteen, each with its own approval; the last part carries the totals and the exhibit list. |
+| 18 | A first run or a claim with more than fifteen rows | Saved in parts of at most fifteen lines, each with its own approval. In a claim the totals follow the last row and the exhibit list follows the totals, running into further parts when it is longer; an update page carries rows only. |
 | 19 | An item first recorded on a page dated before the loss | Its claim row says since when it was on the inventory. |
 
 ## Cases added for the claim interaction

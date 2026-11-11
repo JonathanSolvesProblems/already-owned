@@ -10,6 +10,8 @@ Every number or quotation used in the proposal, the README or the replay page, w
 | File-name-and-date search proves 0 of 27 | `results/ablation-filename-date.md`, hits checked by eye in `results/ablation-verification.md` |
 | 22 of 27 items appear in a pre-loss photo, 3 uncertain, 2 in none | `results/pre-loss-photo-census.md` |
 | 24 steps, 24 delegations, seven references, checker static-pass | `python tools/check_package.py`, and UGREEN's `check-skill.mjs` |
+| Five paper dry runs, 69 defects found and fixed | `tests/dry-run/findings.md` (24), `verification.md` (12), `runs-2026-11-11.md` (33) |
+| 25-case test plan rehearsed on paper: 22 pass, 3 partial, 0 fail; 4 of 4 safety probes | `tests/dry-run/runs-2026-11-11.md`, last section |
 
 ## Published sources
 

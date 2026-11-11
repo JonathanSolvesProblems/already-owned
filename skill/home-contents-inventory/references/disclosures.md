@@ -20,12 +20,12 @@ The one tool the package depends on is the official UGOS Skill Creation Tool (`u
 
 - The Skill calls no external service. Every instruction that reads a photo, a document or a recording asks for the NAS local model and tells the expert to return what it cannot handle as not processed; such files are left out and listed in the report. The Skill never asks for another model. If the owner has set the assistant itself to an online model, the Skill cannot override that choice.
 - The Skill needs no account, key, token or password, and stores none.
-- It reads only the photos, documents and, in claim mode, the camera events of the current user.
-- It writes only what the user approves, one approval per write: one folder (Home Contents, with a Claims folder inside it and one folder per loss inside that), dated Markdown lists and claim documents in those folders, copies of the cited photos and receipts inside the folder of each loss, dated albums, and one file tag (home-contents).
+- It reads only the photos, documents and voice notes of the current user and, in claim mode for a theft or when the user agrees, the user's own camera events.
+- It writes only what the user approves, and every write delegation asks for approval first: one folder (Home Contents, with a Claims folder inside it and one folder per loss inside that), dated Markdown lists and claim documents in those folders, copies of the cited photos, receipts and voice note inside the folder of each loss, dated albums, and one file tag (home-contents).
 
 ## AI tools used and their principal uses
 
-- At run time: the NAS local model only, through the registered experts (photo recognition and description, text recognition, receipt extraction, drafting, translation, transcription). No third-party model.
+- At run time: the Skill asks for the NAS local model only, through the registered experts (photo recognition and description, text recognition, receipt extraction, drafting, translation, transcription). It names no third-party model and calls none.
 - During development: an AI coding assistant helped draft and revise the Markdown of this package, ran the kit checker, and played the NAS in dry runs of the workflow against a mock library to find defects. The idea, the claim data, the test design, the review of every line and the decisions are mine.
 - Outside the package: the drawings on the project's proposal and replay page were made with an image model run on my own computer (Z-Image Turbo by Tongyi-MAI, Apache 2.0, through ComfyUI, GPL-3.0). They stand in for my own photos. No image is in this package.
 

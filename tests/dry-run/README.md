@@ -9,7 +9,7 @@ Round 1 gives no hardware access, so the workflow was exercised on paper before 
 | [update-mode.md](update-mode.md) | update mode on a first run |
 | [findings.md](findings.md) | 24 defects the first runs exposed, all applied to the Skill |
 | [verification.md](verification.md) | a second pass on the corrected Skill: 12 more defects, all applied |
-| [runs-2026-11-11.md](runs-2026-11-11.md) | three more runs on the day the package changed most: 33 more defects, all applied |
+| [runs-2026-11-11.md](runs-2026-11-11.md) | three more runs on the day the package changed most (33 more defects, all applied), then a scored rehearsal of the 25-case test plan: 22 pass, 3 partial, 0 fail |
 
 These transcripts record the Skill as it was on the day of each run, so step names differ in places from the current package: the old step C4 is now C4a and C4b, searches are grouped by route and room instead of one per item, the claim pack gained exhibit copies with SHA-256 values afterwards, and the saved list became a ledger of dated pages. The findings files say what changed and why.
 
