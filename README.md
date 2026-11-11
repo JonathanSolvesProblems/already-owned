@@ -16,6 +16,10 @@ A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hac
 | The Skill's own count | **not measured yet**: it needs a NAS, and it is the first thing I run if I get a day on one |
 | Package | `SKILL.md` plus seven references, Markdown only, 24 steps, 24 delegations, 5 expert agents |
 
+| | |
+| --- | --- |
+| ![22 of 27 items were already in my photos](preview/01-cover.png) | ![It shows you what you forgot](preview/04-what-you-forgot.png) |
+
 ## The person and the moment
 
 My basement flooded twice in six months. Each time the insurer wanted a list of every damaged item with proof of ownership and value. I rebuilt the June 2026 list by hand: 27 items, $10,915. Every photo on that list was taken after the water, so none of them proved I owned anything before.
