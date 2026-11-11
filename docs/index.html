@@ -36,7 +36,7 @@
   --edge:"Red Hat Mono",ui-monospace,Consolas,monospace; --hand:"Shantell Sans","Segoe Print",cursive;
 }
 @media (prefers-color-scheme:dark){
-  :root{ --ground:#231b17; --text:var(--cream); --soft:#d9c3a3; --panel:#30251f; --panel-text:var(--cream); --rule:rgba(249,234,212,.16); --grid:rgba(249,234,212,.045); --keep:#63d3a6; --slash-ink:#ff7566; --maroon:#f0a58f; }
+  :root{ --ground:#231b17; --text:var(--cream); --soft:#d9c3a3; --panel:#30251f; --panel-text:var(--cream); --rule:rgba(249,234,212,.16); --grid:rgba(249,234,212,.045); --keep:#63d3a6; --slash-ink:#ff7566; --maroon:#f0a58f; --check:#fbc23a; }
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
@@ -54,38 +54,41 @@ p{margin:0;text-wrap:pretty}
 .hero{position:relative;padding:26px 0 0}
 .by{font-size:15px;font-weight:500;position:relative;z-index:3}
 .by b{font-weight:700}
-h1{font-size:clamp(64px,17.5vw,168px);margin:18px 0 0 -4px;position:relative;z-index:3}
+h1{font-size:clamp(62px,17vw,168px);margin:30px 0 0 2px;position:relative;z-index:3}
 h1 span{display:block}
 h1 .circled{position:relative;display:inline-block}
-h1 .circled svg{position:absolute;left:-7%;top:-11%;width:114%;height:128%;overflow:visible;pointer-events:none}
-.loop{fill:none;stroke:var(--keep);stroke-width:4;stroke-linecap:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.1s .35s cubic-bezier(.6,.1,.2,1) forwards;vector-effect:non-scaling-stroke}
+h1 .circled svg{position:absolute;left:-8%;top:-17%;width:116%;height:140%;overflow:visible;pointer-events:none}
+.loop{fill:none;stroke:var(--keep);stroke-width:4.5;stroke-linecap:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.1s .35s cubic-bezier(.6,.1,.2,1) forwards;vector-effect:non-scaling-stroke}
 @keyframes draw{to{stroke-dashoffset:0}}
 .lede{font-size:clamp(19px,2.3vw,23px);line-height:1.4;max-width:21em;margin-top:20px;font-weight:500;position:relative;z-index:3}
 
 .sheet{background:var(--sheet);color:var(--rebate);padding:14px 0 10px;box-shadow:0 18px 30px -14px rgba(60,25,10,.55),0 2px 0 rgba(0,0,0,.25)}
-.hero .sheet{position:relative;z-index:2;margin:44px 0 0 -8px;width:max-content;transform:rotate(-2.4deg);transform-origin:left center}
+@media (prefers-color-scheme:dark){.sheet{outline:1px solid rgba(249,234,212,.28)}.band{border-top-color:var(--stock)!important}.stage{outline:1px solid rgba(249,234,212,.16)}}
+.hero .sheet{position:relative;z-index:2;margin:34px 0 0 -8px;width:max-content;transform:rotate(-2.4deg);transform-origin:left center}
 .strip{display:flex;gap:10px;padding:0 14px;position:relative}
 .strip + .strip{margin-top:12px}
-.frame{flex:0 0 auto;width:clamp(120px,31vw,196px);position:relative}
+.frame{flex:0 0 auto;width:clamp(84px,22.5vw,196px);position:relative}
 .frame img{aspect-ratio:3/2;object-fit:cover;width:100%;background:var(--cream)}
 .frame .no{display:flex;justify-content:space-between;padding:5px 2px 0;color:var(--rebate);font:400 10.5px/1 var(--edge);opacity:.85}
 .mark{position:absolute;left:-6px;top:-6px;width:calc(100% + 12px);height:calc(100% - 4px);overflow:visible;pointer-events:none}
 .mark path{fill:none;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .keep .mark path{stroke:var(--keep-lit)}
 .gone .mark path{stroke:var(--slash)}
-.frame .tag{position:absolute;left:4px;bottom:22px;background:var(--stock);color:var(--ink);font:500 13px/1.1 var(--hand);padding:3px 7px 4px;transform:rotate(-3deg);box-shadow:0 2px 0 rgba(0,0,0,.3);white-space:nowrap}
+.frame .tag{position:absolute;left:3px;bottom:20px;background:var(--stock);color:var(--ink);font:500 clamp(11px,3vw,13px)/1.1 var(--hand);padding:3px 7px 4px;transform:rotate(-3deg);box-shadow:0 2px 0 rgba(0,0,0,.3);white-space:nowrap}
 .gone .tag{background:var(--cream);transform:rotate(2deg)}
 .cut{flex:0 0 auto;width:0;border-left:3px dashed var(--slash);margin:-8px 4px 14px;position:relative}
+.cut.bare{margin:-14px 4px -14px}
+.hero .strip + .strip .cut{margin-bottom:-10px}
 .cut span{position:absolute;bottom:-34px;left:-4px;transform:translateX(-50%) rotate(-2deg);background:var(--slash);color:#fff;font:500 14px/1 var(--hand);padding:5px 9px 6px;white-space:nowrap;z-index:4}
 
-.facts{position:relative;z-index:3;display:grid;gap:22px;margin-top:62px;padding-bottom:8px}
+.facts{position:relative;z-index:3;display:grid;gap:22px;margin-top:66px;padding-bottom:8px}
 .fact{display:grid;grid-template-columns:minmax(7.4rem,max-content) 1fr;gap:4px 14px;align-items:baseline;max-width:34em}
 .fact b{font:800 clamp(44px,9vw,76px)/.9 var(--display);letter-spacing:-.03em;grid-row:span 2;white-space:nowrap}
 .fact b small{font-size:.42em;letter-spacing:-.01em;font-weight:500}
 .fact p{font-size:17px;font-weight:500;line-height:1.35;align-self:end}
 .fact .how{font-size:14.5px;color:var(--soft);font-weight:400;align-self:start}
 .plain{position:relative;z-index:3;margin-top:22px;max-width:36em;font-size:15.5px;line-height:1.5}
-.actions{display:grid;gap:12px;margin:26px 0 0;position:relative;z-index:3}
+.actions{display:grid;gap:12px;margin:24px 0 0;position:relative;z-index:3}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 17px/1 var(--body);padding:16px 22px;border:2px solid var(--ink);background:var(--ink);color:var(--stock);text-decoration:none;cursor:pointer;border-radius:3px;min-height:52px}
 .btn.alt{background:transparent;color:var(--text);border-color:var(--text)}
 .btn:active{transform:translateY(1px)}
@@ -100,7 +103,7 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 
 /* ---------- the claim: an order envelope ---------- */
 .envelope{background:var(--panel);color:var(--panel-text);margin-top:26px;position:relative;box-shadow:0 22px 34px -20px rgba(60,25,10,.6)}
-.envelope::before{content:"";position:absolute;left:0;right:0;top:0;height:14px;background:repeating-linear-gradient(90deg,var(--maroon) 0 14px,transparent 14px 28px)}
+.envelope::before{content:"";position:absolute;left:0;right:0;top:0;height:14px;background:repeating-linear-gradient(90deg,var(--check,#793026) 0 14px,transparent 14px 28px)}
 .env-head{padding:34px 18px 14px;display:grid;gap:6px;border-bottom:2px solid var(--panel-text)}
 .env-head h3{font-size:clamp(24px,4.6vw,34px)}
 .env-head p{font:400 13px/1.5 var(--edge)}
@@ -137,11 +140,12 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .band{background:var(--sheet);color:var(--cream);margin-top:88px;padding:48px 0 40px;position:relative;border-top:8px solid var(--maroon)}
 .band h2{color:var(--stock)}
 .band .intro{color:var(--cream)}
-.roll{margin:14px -20px 0;overflow-x:auto;padding:14px 0 40px;scrollbar-width:none}
+.roll{margin:14px -20px 0;overflow-x:auto;padding:14px 0 40px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+.swipe{font:500 15px/1 var(--hand);color:var(--stock);margin:-22px 0 14px}
 .roll::-webkit-scrollbar{display:none}
 .roll .strip{padding:0 20px;width:max-content}
-.roll .frame{width:clamp(96px,23vw,150px);opacity:.3;transition:opacity .4s}
-.roll .frame.seen{opacity:1}
+.roll .frame{width:clamp(96px,23vw,150px)}
+.roll .frame .no{opacity:1}
 .roll .mark path{stroke-dasharray:900;stroke-dashoffset:900;transition:stroke-dashoffset .7s ease-out}
 .roll .frame.seen .mark path{stroke-dashoffset:0}
 .stage{margin-top:18px;background:#241c19;border-top:4px solid var(--stock)}
@@ -151,7 +155,7 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .stage-head .count{font:400 13px/1 var(--edge);color:var(--rebate)}
 .stage-body{padding:4px 16px 8px;min-height:300px}
 .say{margin:0 0 14px;max-width:40em}
-.say .who{display:block;font:400 12px/1 var(--edge);color:var(--rebate);margin-bottom:6px}
+.say .who{display:block;font:400 13px/1 var(--edge);color:var(--cream);margin-bottom:6px}
 .say.you p{display:inline-block;background:var(--cream);color:var(--ink);padding:10px 14px;font-weight:500;border-radius:2px;box-shadow:0 2px 0 rgba(0,0,0,.4);transform:rotate(-.4deg)}
 .say.skill p{border-left:4px solid var(--keep-lit);padding:2px 0 2px 14px}
 .deleg{font:400 13px/1.55 var(--edge);background:#0c0808;color:var(--rebate);padding:11px 12px;margin:0 0 8px;overflow-wrap:anywhere;border-radius:2px}
@@ -167,7 +171,7 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .nav{display:flex;gap:10px;align-items:center;padding:12px 16px 16px}
 .nav button{font:700 16px/1 var(--body);padding:15px 20px;min-height:50px;border:2px solid var(--cream);background:transparent;color:var(--cream);border-radius:3px;cursor:pointer}
 .nav .next{background:var(--cream);color:var(--ink);margin-left:auto}
-.nav button:disabled{opacity:.5;cursor:default}
+.nav button:disabled{opacity:.6;cursor:default}
 .pips{display:flex;gap:5px;flex:1;justify-content:center}
 .pips i{width:16px;height:5px;background:#4a3f3b;border-radius:2px}
 .pips i.done{background:var(--rebate)} .pips i.cur{background:var(--stock)}
@@ -189,13 +193,13 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .ex-photo .frame{width:210px}
 .slip{background:var(--cream);color:var(--ink);font:400 13px/1.7 var(--edge);padding:16px 18px 20px;width:250px;position:relative;transform:rotate(1.4deg);box-shadow:0 12px 18px -12px rgba(60,25,10,.6);clip-path:polygon(0 0,100% 0,100% 94%,94% 100%,88% 94%,82% 100%,76% 94%,70% 100%,64% 94%,58% 100%,52% 94%,46% 100%,40% 94%,34% 100%,28% 94%,22% 100%,16% 94%,10% 100%,4% 94%,0 100%)}
 .slip p:first-child{font-weight:600}
-.slip .ask{display:inline-block;margin-top:8px;font:500 16px/1 var(--hand);color:var(--maroon);text-decoration:line-through;text-decoration-color:var(--slash);text-decoration-thickness:3px}
+.slip .ask{display:inline-block;margin-top:8px;font:500 16px/1 var(--hand);color:#793026;text-decoration:line-through;text-decoration-color:var(--slash);text-decoration-thickness:2px}
 .slip .no{font:800 26px/1 var(--display);color:var(--slash-ink);margin-left:12px;display:inline-block;transform:rotate(-6deg)}
 @media (prefers-color-scheme:dark){.slip .ask{color:#793026}.slip .no{color:#a81f18}}
 .cells{display:grid;grid-template-columns:auto 1fr;width:min(100%,300px);background:var(--panel);color:var(--panel-text);border:2px solid var(--panel-text);font:700 14px/1.2 var(--body);transform:rotate(-1deg);box-shadow:0 12px 18px -12px rgba(60,25,10,.6)}
 .cells span{padding:14px 12px}
 .cells .empty{border-left:2px solid var(--panel-text);font:500 16px/1.2 var(--hand);color:var(--soft);background:repeating-linear-gradient(-45deg,transparent 0 7px,var(--rule) 7px 8px)}
-.also{margin-top:34px;max-width:34em;font-size:18px;font-weight:500;padding-top:18px;border-top:2px solid var(--text)}
+.also{margin-top:34px;max-width:34em;font-size:18px;font-weight:500;padding-top:18px;border-top:2px solid var(--text);text-wrap:balance}
 /* ---------- what is real ---------- */
 .real{margin-top:26px;border-collapse:collapse;width:100%;max-width:46em}
 .real th,.real td{text-align:left;vertical-align:top;padding:13px 12px 13px 0;border-top:1px solid var(--text);font-size:16px}
@@ -210,22 +214,27 @@ footer p + p{margin-top:8px}
 .close .hand-note{display:table}
 footer .credit{color:var(--soft);font-size:14.5px}
 
-@media (max-width:420px){ .pips{display:none} }
+@media (max-width:420px){ .pips i{width:9px} .nav button{padding:15px 16px} }
 @media (min-width:860px){
   .hero{padding-top:40px}
-  .hero .sheet{margin:-36px 0 0 36%;transform:rotate(-3deg)}
+  .hero .sheet{margin:-190px 0 0 46%;transform:rotate(-3deg)}
+  .facts{margin-top:84px!important}
   .lede{margin-top:26px;max-width:17em}
   .facts{grid-template-columns:1fr 1fr;gap:34px;margin-top:70px}
   .camera{display:block}
   .actions{display:flex;flex-wrap:wrap}
   body{font-size:18px}
-  .row{grid-template-columns:96px 1.2fr 1.6fr auto;align-items:center;gap:6px 18px}
+  .row{grid-template-columns:96px 1fr 1.25fr 150px;align-items:center;gap:6px 18px}
+  .level{font-size:13.5px;padding:7px 10px 8px}
   .thumb,.thumb img{width:96px}
   .thumb{grid-row:auto}
   .level{justify-self:end}
   .env-head,.filters,.rows,.totals,.exhibits{padding-left:30px;padding-right:30px}
   .stage-head,.stage-body,.nav{padding-left:28px;padding-right:28px}
   .exhibits-3{grid-template-columns:1.25fr 1fr 1fr;gap:40px;align-items:start}
+  .ex{grid-template-rows:200px auto}
+  .ex > :first-child{align-self:end}
+  .also{max-width:none}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -241,6 +250,10 @@ footer .credit{color:var(--soft);font-size:14.5px}
     <img class="camera" src="art/camera.jpg" width="480" height="320" alt="A compact film camera, drawn in two inks. Illustration made with AI.">
     <h1><span><span class="circled">Already<svg viewBox="0 0 400 130" preserveAspectRatio="none" aria-hidden="true"><path class="loop" d="M52 22 C150 2 300 4 372 30 C402 46 398 96 352 112 C262 132 108 130 34 108 C-2 92 0 40 40 24 C70 14 96 12 120 12"/></svg></span></span><span>Owned</span></h1>
     <p class="lede">After a flood, the insurer wants proof you owned what you lost. The proof is usually sitting in your camera roll. This add-on is built to find it.</p>
+    <div class="actions">
+      <a class="btn" href="#claim">See the claim it writes</a>
+      <a class="btn alt" href="#replay">Replay the run</a>
+    </div>
   </div>
 
   <div class="sheet" id="hero-sheet" role="img" aria-label="A contact sheet. Photos taken before the loss are boxed in marker. Photos taken after are crossed out."></div>
@@ -250,11 +263,7 @@ footer .credit{color:var(--soft);font-size:14.5px}
       <div class="fact"><b>22<small> of 27</small></b><p>things I lost were already in photos I had taken before the water.</p><p class="how">Counted by hand, photo by photo. It is the most any tool could find.</p></div>
       <div class="fact"><b>0<small> of 27</small></b><p>turned up when I searched the same library by file name and date.</p><p class="how">A phone names a photo 20251211_160058.jpg. It never says sofa.</p></div>
     </div>
-    <p class="plain">The 22 is counted by hand and the 0 is measured, both on my real claim. The add-on's own count is not measured yet: it needs the hardware. Everything below this line is a practice run on a made-up library.</p>
-    <div class="actions">
-      <a class="btn" href="#claim">See the claim it writes</a>
-      <a class="btn alt" href="#replay">Replay the run</a>
-    </div>
+    <p class="plain">Both numbers are from my real claim. The add-on's own count is not measured yet, because it needs the hardware.</p>
   </div>
 </header>
 
@@ -283,6 +292,7 @@ footer .credit{color:var(--soft);font-size:14.5px}
     <h2>Replay the run</h2>
     <p class="intro">Ten steps, from one sentence to the saved folder. You approve the writes yourself.</p>
     <div class="roll"><div class="strip" id="roll"></div></div>
+    <p class="swipe" id="swipe"></p>
     <div class="stage">
       <div class="stage-head"><span class="id" id="sid"></span><h3 id="sname"></h3><span class="count" id="scount"></span></div>
       <div class="stage-body" id="sbody" aria-live="polite"></div>
@@ -342,10 +352,10 @@ const CUT = '<div class="cut"><span>20 June, 2 am: the water</span></div>';
 
 // hero sheet: two strips, the cut between before and after
 const HERO = [
-  [['sofa','11','keep','sofa, 11 Dec','A leather sofa'],['washer','12','keep','','A washer and dryer'],['lamp','13','keep','lamp','A floor lamp'],['tv','14','keep','','A television']],
-  [['dumbbells','21','keep','','Dumbbells'],['chair','22','keep','chair, Jan','A gaming chair'],'cut',['flood-sofa','23','gone','21 June','The sofa standing in flood water'],['flood-boxes','24','gone','','Boxes in flood water']]
+  [['sofa','11','keep','sofa, 11 Dec','A leather sofa'],['washer','12','keep','','A washer and dryer'],['lamp','13','keep','lamp','A floor lamp'],'cutbare',['flood-sofa','14','gone','21 June','The sofa standing in flood water']],
+  [['dumbbells','21','keep','','Dumbbells'],['chair','22','keep','chair, Jan','A gaming chair'],['tv','23','keep','','A television'],'cut',['flood-boxes','24','gone','','Boxes in flood water']]
 ];
-$('hero-sheet').innerHTML = HERO.map((s, r) => `<div class="strip">${s.map((f, i) => f === 'cut' ? CUT : frame(f, r * 4 + i)).join('')}</div>`).join('');
+$('hero-sheet').innerHTML = HERO.map((s, r) => `<div class="strip">${s.map((f, i) => f === 'cut' ? CUT : f === 'cutbare' ? '<div class="cut bare"></div>' : frame(f, r * 5 + i)).join('')}</div>`).join('');
 
 // replay roll: frames light up as the steps reach them
 const ROLL = [['sofa','03','keep','','Sofa',3],['tv','04','keep','','Television',3],['chair','05','keep','','Gaming chair',3],['dumbbells','06','keep','','Dumbbells',4],['lamp','07','keep','','Floor lamp',4],['fridge','08','keep','','Mini-fridge',4],['washer','09','keep','','Washer and dryer',4],'cut',['flood-sofa','10','gone','','Sofa in flood water',2],['flood-boxes','11','gone','','Boxes in flood water',2]];
@@ -426,7 +436,12 @@ function render(){
   $('next').disabled = !!s.approve && approved < s.approve.length;
   $('next').textContent = i === STEPS.length - 1 ? 'Start over' : 'Next';
   [...$('pips').children].forEach((d, n) => d.className = n < i ? 'done' : n === i ? 'cur' : '');
-  document.querySelectorAll('#roll .frame').forEach(f => f.classList.toggle('seen', +f.dataset.at <= REACH[i] && +f.dataset.at > 0));
+  const fr = [...document.querySelectorAll('#roll .frame')];
+  fr.forEach(f => f.classList.toggle('seen', +f.dataset.at <= REACH[i] && +f.dataset.at > 0));
+  const n = fr.filter(f => f.classList.contains('seen')).length;
+  $('swipe').textContent = n ? `${n} of ${fr.length} frames marked so far. Swipe the strip to see them.` : 'Ten frames, none marked yet. Swipe the strip.';
+  const now = fr.find(f => +f.dataset.at === REACH[i] && (i === 0 || REACH[i] !== REACH[i - 1]));
+  if (now && i > 0) now.parentElement.parentElement.scrollTo({ left: Math.max(0, now.offsetLeft - 24), behavior: 'smooth' });
 }
 $('next').onclick = () => { if (i === STEPS.length - 1){ i = 0; approved = 0; } else i++; render(); };
 $('prev').onclick = () => { if (i > 0) i--; render(); };
@@ -434,7 +449,7 @@ $('prev').onclick = () => { if (i > 0) i--; render(); };
 const ROWS = [
  [1,'Leather reclining sofa, three seats','pr','photo 2024-08-15, receipt 1,799.99 CAD, value 1,800 CAD','sofa'],
  [2,'Flat-screen TV, about 55 inch','p','photo 2024-08-15, value 700 CAD from the owner','tv'],
- [3,'Stick vacuum','pr','photo 2024-09-03, invoice 2024-09-02, 799.99 CAD',''],
+ [3,'Stick vacuum','pr','photo 2024-09-03, invoice 2024-09-02, 799.99 CAD','vacuum'],
  [4,'Pull-up and dip station','pr','photo 2025-04-12, order 2025-04-08, 389.00 CAD',''],
  [5,'Gaming chair','p','photo 2025-01-18, value 300 CAD from the owner','chair'],
  [6,'Wooden armchair','x','two routes, no pre-loss photo found',''],
@@ -462,13 +477,13 @@ const ROWS = [
 const LABEL = { pr:'photo and receipt', p:'photo only', x:'no proof' };
 let all = false;
 function rows(){
-  const SAMPLE = [1, 3, 2, 11, 6, 9];
+  const SAMPLE = [1, 2, 3, 6, 9, 11];
   const shown = all ? ROWS : SAMPLE.map(n => ROWS[n - 1]);
   $('rows').innerHTML = shown.map(r => {
     const proven = r[2] !== 'x';
     const thumb = proven && r[4] ? `<div class="thumb"><img src="art/${r[4]}.jpg" width="480" height="320" loading="lazy" alt=""><svg viewBox="0 0 200 132" preserveAspectRatio="none" aria-hidden="true"><path d="${box(r[0] + 40)}"/></svg></div>`
       : proven ? '<div class="thumb filed">photo on file</div>' : '<div class="thumb none">no photo</div>';
-    const ev = r[3].replace(/(\d{4}-\d{2}-\d{2}|[\d,]+\.\d{2} CAD|[\d,]+ CAD)/g, '<span class="nw">$1</span>');
+    const ev = r[3].split(', ').map(c => c.length < 30 ? `<span class="nw">${c}</span>` : c).join(', ');
     return `<li class="row">${thumb}<h4><i>${String(r[0]).padStart(2,'0')}</i>${r[1]}</h4><p class="ev">${ev}</p><span class="level ${r[2]}">${LABEL[r[2]]}</span></li>`;
   }).join('');
   const c = k => ROWS.filter(r => r[2] === k).length;
