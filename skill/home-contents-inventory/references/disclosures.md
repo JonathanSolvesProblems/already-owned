@@ -18,7 +18,7 @@ The one tool the package depends on is the official UGOS Skill Creation Tool (`u
 
 ## External services, credentials and data flows
 
-- No external service is called and no data leaves the NAS. Every instruction that reads a photo, a document or a recording tells the expert to use only the NAS local model and to return what it cannot handle as not processed. Such files are left out and listed in the report. The Skill never asks for another model.
+- The Skill calls no external service. Every instruction that reads a photo, a document or a recording asks for the NAS local model and tells the expert to return what it cannot handle as not processed; such files are left out and listed in the report. The Skill never asks for another model. If the owner has set the assistant itself to an online model, the Skill cannot override that choice.
 - The Skill needs no account, key, token or password, and stores none.
 - It reads only the photos, documents and, in claim mode, the camera events of the current user.
 - It writes only what the user approves, one approval per write: one folder (Home Contents, with a Claims folder inside it and one folder per loss inside that), dated Markdown lists and claim documents in those folders, copies of the cited photos and receipts inside the folder of each loss, dated albums, and one file tag (home-contents).
@@ -32,6 +32,6 @@ The one tool the package depends on is the official UGOS Skill Creation Tool (`u
 ## Install, set up, test, remove
 
 - **Install**: add the package to the NAS the way UGOS installs any Skill package. It is one folder with SKILL.md and seven references; there is nothing to compile or configure, and it depends on nothing outside the NAS.
-- **Set up**: none. The first update run asks how far back to look and creates the Home Contents folder after approval.
+- **Set up**: nothing to configure in the Skill. Two things on the NAS must be ready, or the searches return nothing: the Photos app must have finished recognising the library (objects and text), and the phone's photos must be backed up to the NAS. The first update run asks how far back to look and creates the Home Contents folder after approval. A voice walk-through is recorded on the phone and reaches the NAS the same way the photos do, or is saved to the user's space by hand.
 - **Test**: the cases, the data they need and the expected results are in the test plan reference. In short, three requests cover the modes. "Update my home inventory" must end with a dated list, a dated album and tagged files. "What do I own in the basement" must answer from the saved list without searching. "I had a flood on a given date in the basement, list what I lost" must return only photos captured before that date as proof, and report an item with no such photo as unproven.
 - **Remove**: uninstall the Skill. It leaves no background task, setting or credential. What it created stays, because it belongs to the user: the Home Contents folder with its lists, claim documents and exhibit copies, the dated albums and the home-contents tag. Each can be deleted by hand in Files and Photos; the Skill itself never deletes anything.

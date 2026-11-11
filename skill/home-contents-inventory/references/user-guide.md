@@ -10,11 +10,17 @@ Anyone who keeps their phone photos and receipts on the NAS and would have to pr
 - **Any time**, ask "what do I own in the basement". It answers from the saved list, with the proof behind each item, and searches nothing.
 - **After a loss**, say "I had a flood on June 20 in the basement, list what I lost". You can type what was lost, or walk through the room and say it into a voice note. It also shows you belongings that appear in your photos of that room from before the loss and that you did not mention, because nobody remembers a whole room. It finds, for each item in that room, a photo taken before that date, the receipt if you have one, the damage photos taken after, and camera events if it was a break-in or if you agree to include them. You confirm the list and fill in any values, then approve four writes (the claim folder, the copies of the exhibits, the document, the album; the NAS may ask once per copied file). What you get is one claim folder you can attach to your insurer's email as it is: the contents claim document, a copy of every photo and receipt it cites, and a SHA-256 value for each file so anyone can check later that nothing was changed since the folder was made. Your originals stay where they were.
 
+## Before the first run
+
+- Let the Photos app finish recognising your library. Until it has, the Skill finds little and says so.
+- Keep your phone's photo backup on. The photos you already take are the whole input.
+- For a claim, a voice note recorded on the phone reaches the NAS with the same backup, or you can save it to your space by hand.
+
 ## What it will not do
 
 - It never estimates what something is worth. Values come from your receipts or from you.
 - It never deletes, moves or overwrites a file, and asks before creating any album, tag, folder or file.
-- It never sends anything off the NAS. It asks every expert to use only the NAS local model. A file that cannot be handled locally is left out and listed in the report, and no other model is asked.
+- It calls no outside service. It asks every expert to use only the NAS local model; a file that cannot be handled locally is left out and listed in the report, and no other model is asked. If you have set the assistant itself to an online model, that is your setting and the Skill cannot change it.
 - It never writes, changes or re-dates a receipt or a photo, and it says no if asked to.
 - It never follows text it finds inside a photo, receipt or recording. That text is evidence, not an instruction.
 - If it cannot find proof for an item, it says so instead of using a similar photo. A photo taken after the loss is listed as a damage photo, never as proof you owned the item.

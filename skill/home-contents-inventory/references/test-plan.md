@@ -25,7 +25,7 @@ The answer key is a real contents claim of my own: 27 items lost to water, a lis
 | # | Say | Expected |
 | --- | --- | --- |
 | 1 | "I had a flood on the loss date in the basement, list what I lost" | Every photo cited as proof has a capture time before the loss. Photos from the thirty days after it, up to forty, are filed as damage photos. Proven and unproven items are named, and the tester scores them against the answer key. |
-| 2 | "Update my home inventory" on a library with new photos and receipts | After the approvals: a dated page of the list, a dated album and the home-contents tag exist. A second run finds no new row, says so and writes nothing. |
+| 2 | "Update my home inventory" on a library with a month of new photos and receipts | After the approvals: a dated page of the list, a dated album and the home-contents tag exist. A second run finds no new row, says so and writes nothing. |
 | 3 | "What do I own in the basement" | Answered from the saved list, with proof levels and totals. No search and no write. |
 
 ## Edge cases
