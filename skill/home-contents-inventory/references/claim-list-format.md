@@ -1,5 +1,16 @@
 # Contents list format
 
+## The ledger
+
+The inventory is a set of dated pages in the Home Contents folder, one per update run, each named Home contents list followed by its date. A page holds only the rows added or changed in that run. Nothing is ever rewritten.
+
+- Read the pages oldest first. A row on a later page replaces the row with the same number on an earlier page.
+- New rows are numbered on from the highest number in the ledger. A changed row keeps its number.
+- The date of the page where a number first appears is the date the item was recorded. In a claim it goes into Notes as "on the inventory since", because a record made before the loss is evidence in its own right.
+- Ask mode and claim mode read every page and show one list. The user never has to open the pages one by one.
+
+## The columns
+
 Use this table for the inventory (update and ask modes) and for the claim (claim mode). The columns follow what home insurers ask for on a contents list: what the item is, how many, what it cost, and the proof of ownership and value.
 
 | # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |
@@ -18,7 +29,7 @@ Column rules:
 - **Pre-loss photo**: file name and capture date of the clearest photo. In claim mode, captured before the loss time.
 - **Receipt**: file name of the matched receipt, or empty.
 - **Proof level**: one of `photo and receipt`, `photo only`, `receipt only`, `none`.
-- **Notes**: separated by commas: the real path of the pre-loss photo, written as "path: " followed by the path, so a later claim can find it without a search; in claim mode, "first seen: " and "last seen: " followed by the capture dates of the earliest and the latest described pre-loss photos of the item, when more than one shows it; the room the user named when it differs from the photo's; anything the user added; "receipt read from photo text" where that happened; "receipt dated after first photo, confirmed by the owner" for a resolved date conflict; "owner to itemize" for an entry that is not one object; "photo shows damage" where the only photo was flagged; and, in claim mode, "damage photo: " followed by the file name.
+- **Notes**: separated by commas: the real path of the pre-loss photo, written as "path: " followed by the path, so a later claim can find it without a search; in claim mode, "on the inventory since: " followed by the date of the ledger page that first recorded the item, "first seen: " and "last seen: " followed by the capture dates of the earliest and the latest described pre-loss photos of the item, when more than one shows it; the room the user named when it differs from the photo's; anything the user added; "receipt read from photo text" where that happened; "receipt dated after first photo, confirmed by the owner" for a resolved date conflict; "owner to itemize" for an entry that is not one object; "photo shows damage" where the only photo was flagged; and, in claim mode, "damage photo: " followed by the file name.
 
 Totals:
 
@@ -26,7 +37,7 @@ Totals:
 
 Exhibits (claim mode):
 
-- Below the table, the claim document lists every exhibit in the claim folder (pre-loss photos, damage photos, receipts) with its file name and SHA-256 value, as returned by the file expert. A value is never typed or guessed; a file whose copy did not match its original, or whose name already existed in the claim folder, is listed as not verified. When the copies were declined, the originals are listed by real path with their own SHA-256.
+- Below the table, the claim document lists every exhibit in the claim folder (pre-loss photos, damage photos, receipts) with its file name, its capture time and camera model as read from the photo metadata when it is a photo, and its SHA-256 value as returned by the file expert. A value is never typed or guessed; a file whose copy did not match its original, or whose name already existed in the claim folder, is listed as not verified. When the copies were declined, the originals are listed by real path with their own SHA-256.
 - For a theft, the camera events for the loss window are listed between the table and the exhibits, one line each with time, camera and event type. They are never rows.
 
 Privacy:
@@ -42,5 +53,6 @@ Every instruction in SKILL.md is a template. Before it is sent, each phrase "nam
 - A list of rows (U12, C8, C9) stays on the one line of the instruction: each row begins with the word Row and its number followed by a colon, its twelve values are separated by semicolons in the column order above, and the next row follows after a full stop and a space. The expert is asked to render the rows as a Markdown table with the column names given.
 - Inside a value, a semicolon is written as a comma, a pipe as the word or, and an angle bracket as the word under or over.
 - Never put a table, a line break, a pipe or an angle bracket inside an instruction.
+- An instruction carries at most twenty-five rows, so its length stays bounded. A longer page or claim is sent in parts of twenty-five rows, each part its own delegation, its own file and its own approval, with the part number after the date in the file name. In a claim, part 1 carries the heading and the summary and the last part carries the camera events and the exhibit list.
 
 Worked example: the C4b instruction for one sofa is sent with "the household items listed in this step" replaced by "a brown leather reclining three-seat sofa", "the loss date and time given in this step" replaced by "2026-06-20 02:00 local time", and "the search route named in this step" replaced by "recognized object sofa".

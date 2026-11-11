@@ -13,7 +13,7 @@ A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hac
 | Baseline, measured | file-name-and-date search proves **0 of 27** items of my real claim |
 | Ceiling, counted by hand | **22 of 27** items appear in a photo captured before the loss, 3 more uncertain, 2 in no photo |
 | The Skill's own count | **not measured yet**: it needs a NAS, and it is the first thing I run if I get a day on one |
-| Package | `SKILL.md` plus five references, Markdown only, 24 steps, 24 delegations, 5 expert agents |
+| Package | `SKILL.md` plus seven references, Markdown only, 24 steps, 24 delegations, 5 expert agents |
 
 ## The person and the moment
 
@@ -27,8 +27,8 @@ A former adjuster described the list insurers ask for to The New York Times in 2
 
 Three modes, chosen from what you say.
 
-- **Update**, about weekly. "Update my home inventory." It finds belongings in the photos added since last time, pairs them with receipts, asks you to confirm once, then saves a dated list, a dated album and a file tag. Each run carries the earlier rows forward, so the inventory grows between losses.
-- **Ask**. "What do I own in the basement?" Answered from the saved list. No search, no write.
+- **Update**, about weekly. "Update my home inventory." It finds belongings in the photos added since last time, pairs them with receipts, asks you to confirm once, then adds a dated page to the inventory, plus a dated album and a file tag. The inventory is a ledger: each run saves only what changed and rewrites nothing, so it grows between losses and the date an item was first written down is evidence in its own right.
+- **Ask**. "What do I own in the basement?" Answered from the ledger. No search, no write.
 - **Claim**, after a loss. "I had a flood on June 20 in the basement, list what I lost." It fixes the cut-off first, then finds for each item a photo captured **before** the loss, the receipt if one exists, the damage photos taken after, and camera events for a break-in. You confirm the rows once. It then saves one claim folder you can attach as it is: the contents list, a copy of every exhibit, and a SHA-256 value per file.
 
 What it never does:
@@ -67,7 +67,7 @@ python tools/ablation_filename.py photos.csv --before 2026-06-20T00:00 --items r
 | --- | --- | --- |
 | File-name-and-date search proves 0 of 27 items | Measured on my library, every hit opened and checked by eye | [results/ablation-filename-date.md](results/ablation-filename-date.md), [results/ablation-verification.md](results/ablation-verification.md) |
 | 22 of 27 items appear in a pre-loss photo | Counted by hand, photo by photo | [results/pre-loss-photo-census.md](results/pre-loss-photo-census.md) |
-| The workflow holds together end to end | Dry runs against a mock NAS, a model playing the experts; 36 defects found and fixed | [tests/dry-run/](tests/dry-run/) |
+| The workflow holds together end to end | Repeated dry runs against a mock NAS, a model playing the experts; every defect they exposed is fixed | [tests/dry-run/](tests/dry-run/) |
 | The Skill finds N of 27 on a real NAS | **Not measured yet.** It needs the hardware; it is the first thing I run on it | [the test plan](skill/home-contents-inventory/references/test-plan.md) |
 
 The replay page is a simulation with fixture data and says so on the page. The 27-item list, the 0 and the 22 are real.
@@ -83,6 +83,8 @@ The Skill only delegates. It never calls a CLI directly, and every capability it
 | `knowledge-agent` | `ug-knowledge` | transcription of a voice walk-through; saving the dated lists | C2, U12, C9 |
 | `file-agent` | `ug-filesystem`, `ug-filemgr`, `file-workflow` | inventory and receipt files, folders, tags, exhibit copies and SHA-256 | U1, U4, U9, U11, C9 |
 | `security-monitor-agent` | `ug-surveillance` | camera events in the loss window, for a theft | C5 |
+
+The package also carries a [capability map](skill/home-contents-inventory/references/capability-map.md) (every step against the catalog's actions, effects and approval levels) and a [sample claim](skill/home-contents-inventory/references/sample-claim.md) showing what the user ends up holding.
 
 Where the model decides, in [SKILL.md](skill/home-contents-inventory/SKILL.md) and [search-routes.md](skill/home-contents-inventory/references/search-routes.md):
 

@@ -25,7 +25,7 @@ The answer key is my own contents claim of June 2026: 27 items lost to water, a 
 | # | Say | Expected |
 | --- | --- | --- |
 | 1 | "I had a flood on the loss date in the basement, list what I lost" | Every photo cited as proof has a capture time before the loss. Photos from the thirty days after it, up to forty, are filed as damage photos. Proven and unproven items are named, and the tester scores them against the answer key. |
-| 2 | "Update my home inventory" on a library with new photos and receipts | After the approvals: a dated list, a dated album and the home-contents tag exist. A second run finds no new row, says so and writes nothing. |
+| 2 | "Update my home inventory" on a library with new photos and receipts | After the approvals: a dated page of the list, a dated album and the home-contents tag exist. A second run finds no new row, says so and writes nothing. |
 | 3 | "What do I own in the basement" | Answered from the saved list, with proof levels and totals. No search and no write. |
 
 ## Edge cases
@@ -45,9 +45,12 @@ The answer key is my own contents claim of June 2026: 27 items lost to water, a 
 | 14 | A file the local model cannot handle | Returned as not processed; the Skill asks before any other model is used, and on a no lists the file in the report. |
 | 15 | "File this week's receipts" in a week with no new photos | No photo search, the receipts are still read, and their rows go to the confirmation step. |
 | 16 | A pre-loss photo of the same kind of item in a different room | One question, never a silent match. |
+| 17 | An update a week later with two new items | The new page holds two rows, numbered on from the last. The save instruction carries two rows, not the whole list. |
+| 18 | A first run or a claim with more than twenty-five rows | Saved in parts of twenty-five, each with its own approval. |
+| 19 | An item first recorded on a page dated before the loss | Its claim row says since when it was on the inventory. |
 
 ## What a pass looks like
 
 - Every write delegation waited for approval (the claim folder and its parent folders are one request), and nothing was deleted, moved or overwritten.
 - The final report separates proven rows from unproven ones and lists every failure by step and file.
-- The claim folder opens on another device with every exhibit in it, and the SHA-256 values in the document match the files.
+- The claim folder opens on another device with every exhibit in it, the SHA-256 values in the document match the files, and every exhibit photo is listed with its capture time and camera model.
