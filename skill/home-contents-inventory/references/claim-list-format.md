@@ -69,16 +69,18 @@ One folder per loss, inside Home Contents / Claims, that the user can hand over 
 
 ## Writing an instruction
 
-Every instruction in SKILL.md is a template. Before it is sent, each phrase "named in this step", "listed in this step", "given in this step", "confirmed with the user" and "the date of today" is replaced with the actual value, written out inside the single quotes, so the expert receives one self-contained task.
+Every instruction in SKILL.md is a template with slots in braces, such as {paths}, {loss time} or {rows}. Before it is sent, each slot is replaced with the real value, written out inside the single quotes, so the expert receives one self-contained task. No brace is ever sent.
 
-- Routes are written in words, never as a command option.
+- {date range} is written as words the sentence can carry: "between 2026-05-01 and 2026-06-01", or "at any date".
+- {today} is the date of the run. It carries the time of day as four digits after the date when a page of that date already exists, and the word part and a digit when the list is sent in parts. {loss date} in a claim file name carries the part the same way.
+- {route} is written in words ("recognized object sofa", "text visible in the photo: the model name"), never as a command option.
 - A single quote inside a value is written with the standard shell escape. A double quote, as in the inch mark of a 55" screen, is allowed.
-- A list of rows (U12, C9) stays on the one line of the instruction: each row is the word Row, a colon, then its twelve values separated by semicolons in the column order above, the row number being the first value, and it ends with a full stop and a space. The expert is asked to render the rows as a Markdown table with the column names given.
-- A long value (rows, exhibits, paths) is never written in the middle of a sentence. The template phrase is replaced with "listed at the end of this instruction", and the list follows the last sentence after a label: Heading, Summary, Rows, Totals, Camera events, Exhibits or Paths. A part that has nothing for a label leaves the label out.
+- {rows} stays on the one line of the instruction: each row is the word Row, a colon, then its twelve values separated by semicolons in the column order above, the row number being the first value, and it ends with a full stop and a space. The expert is asked to render the rows as a Markdown table with the column names given.
+- A long value (rows, exhibits) is never written in the middle of a sentence. Its slot sits at the end of the instruction after a label: Heading, Summary, Rows, Totals, Camera events or Exhibits. A label that has nothing to carry is left out with its slot.
 - Inside a value, a semicolon is written as a comma, a pipe as the word or, and an angle bracket as the word under or over.
 - Never put a table, a line break, a pipe or an angle bracket inside an instruction.
-- An instruction carries at most fifteen lines in total, counting rows and exhibit lines together, so its length stays bounded (about 4,000 characters with real paths in Notes). A longer page or claim is sent in parts, each part its own delegation, its own file and its own approval. The part number is the word part and a digit, written after the date in the file name. In a claim, part 1 carries the heading and the summary; the rows follow in order; then come the totals, the camera events and the exhibit lines, continuing into further parts as needed.
-- A list of paths (copies, hashes, an album) carries at most forty paths. Copies and hashes continue in further delegations. An album takes the first forty photos, pre-loss photos first, and the report says how many were left out.
+- An instruction carries at most fifteen lines in total, counting rows and exhibit lines together, so its length stays bounded (about 4,000 characters with real paths in Notes). A longer page or claim is sent in parts, each part its own delegation, its own file and its own approval. In a claim, part 1 carries the heading and the summary; the rows follow in order; then come the totals, the camera events and the exhibit lines, continuing into further parts as needed.
+- {paths} carries at most forty paths. Copies and hashes continue in further delegations. An album takes the first forty photos, pre-loss photos first, and the report says how many were left out.
 - Whether the NAS accepts longer instructions is checked on real hardware before these limits are raised.
 
-Worked example: the C4b instruction for one sofa is sent with "the household items listed in this step" replaced by "a brown leather reclining three-seat sofa", "the loss date and time given in this step" replaced by "2026-06-20 02:00 local time", and "the search route named in this step" replaced by "recognized object sofa".
+Worked example: the C4b instruction for one sofa is sent with {loss time} replaced by "2026-06-20 02:00 local time", {items} by "a brown leather reclining three-seat sofa", and {route} by "recognized object sofa".

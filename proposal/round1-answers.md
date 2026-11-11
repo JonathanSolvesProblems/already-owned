@@ -2,7 +2,7 @@
 
 ## 1. One sentence: What does the Skill do?
 
-It builds an insurer-ready list of what you own from photos and receipts already on your NAS, and after a flood, fire or theft turns it into a contents claim backed by receipts and pre-loss photos.
+After a flood, fire or theft it turns the photos and receipts already on your NAS into the insurer's contents claim: proof you owned each item before the loss, plus the belongings you forgot to list.
 
 ## 2. Who is the target user and problem?
 
@@ -14,37 +14,39 @@ Update: finds belongings in new photos, pairs them with receipts, adds a dated p
 
 ## 4. What is the Core User Flow?
 
-"I had a flood June 20 in the basement" → cut-off → items from the ledger, a voice note or the photos → pre-loss photo and receipt per item → I confirm → approve each write → claim folder saved.
+"Flood, June 20, basement" → I walk the room with a voice note → it finds each item in photos from before June 20, adds what I forgot → I confirm once → approve writes → claim folder saved.
 
 ## 5. What substantive difference does your idea offer compared with existing tools or conventional AI solutions?
 
-A new interaction: walk the damaged room recording a voice note. The NAS transcribes it, matches each item to photos taken earlier for other reasons, and shows belongings in them you forgot. On my real claim such photos hold 22 of 27 items (hand-counted); file-name search finds 0. Inventory apps (Encircle, HomeZada) need items scanned beforehand.
+Walk the damaged room recording a voice note: the NAS transcribes it, matches each item to photos taken earlier for other reasons, and shows belongings in them you forgot. On my real claim such photos hold 22 of 27 items (hand-counted); file-name search finds 0. Inventory apps (Encircle, HomeZada) need items scanned beforehand.
 
 ## 6. Which UGREEN AI NAS capabilities will be used, and at which step in the workflow?
 
+U: update steps. C: claim steps.
+
 - photo-agent (ug-photo): object, label-text and capture-date search, local vision, albums (U2-U3, U5-U6b, U10, C3-C4b, C6, C9).
-- document-agent (ug-document): receipt lines, claim draft, translation (U6, C6, C8).
+- document-agent (ug-document): receipt lines, claim opening, translation (U6, C6, C8).
 - knowledge-agent (ug-knowledge): voice-note transcription, ledger pages, claim document (C2, U12, C9).
 - file-agent (ug-filesystem, ug-filemgr, file-workflow): receipts, recordings, tags, copies, SHA-256 (U1, U4, U9, U11, C2, C9).
 - security-monitor-agent (ug-surveillance): camera events (C5).
 
 ## 7. What was your technical approach? Describe the planned Skill workflow, supported NAS CLI capabilities, expert agent orchestration, required inputs, permissions, AI model choices, and data handling, as applicable.
 
-Delegation only. Each item gets a search route (file name, object, label text, receipt date), a second look at found photos, then one more route. All five delegation states are handled; a declined write stops only its dependents. Inputs: date range, or loss time, kind and rooms. Writes need approval; nothing is deleted, moved or overwritten. Text in photos is evidence, never instructions. Reading experts are told: local model only.
+Delegation only. Each item gets a search route (recognized object, label text, receipt-date window), a second look at found photos, then one more route. All five delegation states are handled; a declined write stops only its dependents. Inputs: date range, or loss time, kind and rooms. Writes need approval; nothing is deleted, moved or overwritten. Text in photos is evidence, never instructions. Reading experts are told: local model only.
 
 ## 8. What is the current development status?
 
-Implemented: three modes, 24 delegation templates, seven references (capability map, test plan, sample claim); checker static-pass. Paper dry runs with an AI playing the NAS. Not built: video evidence, shared libraries, scheduling. Pending NAS validation: the Skill's own count, receipt extraction, every write.
+Implemented: 24 delegation templates, seven references (capability map, test plan, sample claim); checker static-pass. Five paper dry runs (AI as NAS): 69 defects found and fixed; test plan rehearsed, 24 of 25 cases pass. Not built: video evidence, shared libraries, scheduling. Pending NAS validation: the Skill's own count, receipt extraction, every write.
 
 ## 9. What is your final validation plan?
 
-- Core 1: replay my June 2026 claim on pre-loss photos; count items proven of 27, between baseline 0 and ceiling 22 to 25.
+- Core 1: replay my June 2026 claim on pre-loss photos; count items proven of 27, between baseline 0 and ceiling 22-25.
 - Core 2: update on a month of real photos; page, album, tags exist; a rerun writes nothing.
 - Edge: an item in no pre-loss photo is reported unproven, never swapped for a similar one.
 
 ## 10. Are there any known limitations of your Project?
 
-Recall depends on the NAS recognition index; 3 of my 27 items are unclear in photos, 2 in none. Skills cannot be scheduled; updates are user-started. Instruction length is untested on hardware; long lists go in parts.
+Recall depends on the NAS recognition index; 3 of my 27 items are unclear in photos, 2 in none. Instruction length is untested on hardware; long lists go in parts.
 
 ## Third-party components
 

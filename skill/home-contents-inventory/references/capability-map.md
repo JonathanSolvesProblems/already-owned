@@ -19,7 +19,7 @@ Effect and approval are the catalog's own values. Read steps need no approval. E
 | U12 ledger page | `knowledge-agent` | `ug-knowledge` save-text | state change | workflow |
 | C2 find and transcribe a recording | `file-agent`, `knowledge-agent` | `file-workflow` get-user-dir, `ug-filesystem` find by type and date, `ug-knowledge` audio-transcription | read | none |
 | C4a damage photos | `photo-agent` | `ug-photo` search-picture by capture time, vision-vlm, meta | read | none |
-| C4b pre-loss proof | `photo-agent` | `ug-photo` search-picture by file name, recognized object, text in the photo, capture time, vision-vlm, meta | read | none |
+| C4b pre-loss proof | `photo-agent` | `ug-photo` search-picture by recognized object, text in the photo, capture time, vision-vlm, meta | read | none |
 | C4b second pass | `photo-agent` | `ug-photo` vision-vlm and meta on paths already returned | read | none |
 | U6b, C6 receipt-first photo search | `photo-agent` | `ug-photo` search-picture by text in the photo and by capture time, vision-vlm, meta | read | none |
 | C5 camera events | `security-monitor-agent` | `ug-surveillance` cameras, event-timeline, event-evidence with snapshots for user review | read | none |
@@ -30,7 +30,7 @@ Effect and approval are the catalog's own values. Read steps need no approval. E
 | C9 claim document | `knowledge-agent` | `ug-knowledge` save-text | state change | workflow |
 | C9 claim album | `photo-agent` | `ug-photo` create-album | state change | workflow |
 
-Seven of the nine published CLIs are used, through five of the registered experts. The two not used are the music and video players, which have nothing to say about what a household owns.
+Seven of the nine published CLIs are used, through five of the registered experts. The two not used are the music and video players.
 
 ## Actions the Skill deliberately never asks for
 
