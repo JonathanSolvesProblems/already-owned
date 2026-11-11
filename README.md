@@ -1,6 +1,8 @@
 # Already Owned
 
-**After my basement flooded, my insurer asked for every item I lost, with proof I owned it. Photos I had already taken show 22 of the 27 items. Searching the library by file name finds 0. This Skill turns those photos into the insurer's contents list.**
+**After my basement flooded, my insurer asked for every item I lost, with proof I owned it. Photos I had already taken show 22 of the 27 items. Searching the same library by file name finds 0. This Skill is built to find them and write the insurer's contents list.**
+
+[![Already Owned: a contact sheet where photos taken before the loss are boxed in marker and photos taken after are crossed out](docs/og.png)](https://jonathansolvesproblems.github.io/already-owned/)
 
 A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hackathon 2026 on AI NAS, Open Innovation track.
 
@@ -9,11 +11,9 @@ A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hac
 | Try it without a NAS | **[Replay a full claim run](https://jonathansolvesproblems.github.io/already-owned/)** in the browser, on a phone or a desktop |
 | Official checker | `static-pass`, 0 errors, 0 warnings (`uliya-skill-kit` 0.7.3, catalog 2.0.0) |
 | Baseline, measured | file-name-and-date search proves **0 of 27** items of my real claim |
-| Ceiling, measured | **22 of 27** items appear in a photo captured before the loss, 3 more uncertain, 2 in no photo |
-| The Skill's own count | measured on the finalist testing day, on the NAS, against the two rows above |
-| Package | `SKILL.md` plus five references, Markdown only, 24 steps, 22 delegations, 5 expert agents |
-
-<img src="docs/qr.png" width="140" alt="QR code to the replay page">
+| Ceiling, counted by hand | **22 of 27** items appear in a photo captured before the loss, 3 more uncertain, 2 in no photo |
+| The Skill's own count | **not measured yet**: it needs a NAS, and it is the first thing I run if I get a day on one |
+| Package | `SKILL.md` plus five references, Markdown only, 24 steps, 23 delegations, 5 expert agents |
 
 ## The person and the moment
 
@@ -68,7 +68,7 @@ python tools/ablation_filename.py photos.csv --before 2026-06-20T00:00 --items r
 | File-name-and-date search proves 0 of 27 items | Measured on my library, every hit opened and checked by eye | [results/ablation-filename-date.md](results/ablation-filename-date.md), [results/ablation-verification.md](results/ablation-verification.md) |
 | 22 of 27 items appear in a pre-loss photo | Counted by hand, photo by photo | [results/pre-loss-photo-census.md](results/pre-loss-photo-census.md) |
 | The workflow holds together end to end | Dry runs against a mock NAS, a model playing the experts; 36 defects found and fixed | [tests/dry-run/](tests/dry-run/) |
-| The Skill finds N of 27 on a real NAS | **Not measured yet.** Finalists get one NAS day; this is the first thing run | [the test plan](skill/home-contents-inventory/references/test-plan.md) |
+| The Skill finds N of 27 on a real NAS | **Not measured yet.** It needs the hardware; it is the first thing I run on it | [the test plan](skill/home-contents-inventory/references/test-plan.md) |
 
 The replay page is a simulation with fixture data and says so on the page. The 27-item list, the 0 and the 22 are real.
 
@@ -90,15 +90,6 @@ Where the model decides, in [SKILL.md](skill/home-contents-inventory/SKILL.md) a
 - **The outcome per row**: photo and receipt, date conflict, photo only, receipt only, accessory, ambiguous. Conflicts become questions, collected and asked once.
 - **What to do with each delegation state**: `completed`, `failed`, `cancelled`, `waiting_user`, `waiting_approval`. A failed write stops only the steps that depend on it.
 
-## For the judges
-
-| Criterion | Where to look |
-| --- | --- |
-| User Value | the replay page; [user-guide.md](skill/home-contents-inventory/references/user-guide.md); the saved claim folder in step C9 |
-| Innovation and Differentiation | the capture-time cut-off (C1, C4a, C4b); the inventory that carries rows forward (U1, U12); a real claim as the grader |
-| Technical Quality | "Completion and failure" in SKILL.md; [test-plan.md](skill/home-contents-inventory/references/test-plan.md) with 12 cases; [disclosures.md](skill/home-contents-inventory/references/disclosures.md) for version, install and removal |
-| AI NAS Fit and Validation | five experts across seven CLIs; local vision model on the user's own library; nothing leaves the NAS |
-
 ## Limits
 
 - Recall depends on the NAS recognition index. Two of my 27 items appear in no photo at all, and no Skill can prove those.
@@ -106,6 +97,7 @@ Where the model decides, in [SKILL.md](skill/home-contents-inventory/SKILL.md) a
 - Skills cannot run on a schedule, so the weekly update is started by the user.
 - Camera evidence needs a camera that covers the room.
 - Nothing here has run on a real NAS yet. Round 1 gives no hardware access.
+- The illustrations on the replay page are made with AI and stand in for my own photos, which stay on my drive.
 
 ## Disclosures
 

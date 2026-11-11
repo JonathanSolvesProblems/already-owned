@@ -18,10 +18,10 @@ The one tool it was built with is the official UGOS Skill Creation Tool (`uliya-
 
 ## External services, credentials and data flows
 
-- No external service is called and no data leaves the NAS. Every instruction asks for the NAS local model; if an expert reports that an online model would process a photo or a receipt, the Skill pauses and asks the user first.
+- No external service is called and no data leaves the NAS. Every instruction that reads a photo, a document or a recording tells the expert to use only the NAS local model and to return what it cannot handle as not processed; the Skill then pauses and asks the user before any other model is used.
 - The Skill needs no account, key, token or password, and stores none.
 - It reads only the photos, documents and, in claim mode, the camera events of the current user.
-- It writes only what the user approves, one approval per write: one folder (Home Contents, with a Claims folder inside it), dated Markdown lists and claim documents in that folder, duplicates of the cited photos and receipts inside a claim folder, dated albums, and one file tag (home-contents).
+- It writes only what the user approves, one approval per write: one folder (Home Contents, with a Claims folder inside it and one folder per loss inside that), dated Markdown lists and claim documents in those folders, copies of the cited photos and receipts inside the folder of each loss, dated albums, and one file tag (home-contents).
 
 ## AI tools used and their principal uses
 
@@ -33,4 +33,4 @@ The one tool it was built with is the official UGOS Skill Creation Tool (`uliya-
 - **Install**: add the package to the NAS the way UGOS installs any Skill package. It is one folder with SKILL.md and five references; there is nothing to compile or configure, and it depends on nothing outside the NAS.
 - **Set up**: none. The first update run asks how far back to look and creates the Home Contents folder after approval.
 - **Test**: the cases, the data they need and the expected results are in the test plan reference. In short, three requests cover the modes. "Update my home inventory" must end with a dated list, a dated album and tagged files. "What do I own in the basement" must answer from the saved list without searching. "I had a flood on a given date in the basement, list what I lost" must return only photos captured before that date as proof, and report an item with no such photo as unproven.
-- **Remove**: uninstall the Skill. It leaves no background task, setting or credential. What it created stays, because it belongs to the user: the Home Contents folder, the dated albums and the home-contents tag. Each can be deleted by hand in Files and Photos; the Skill itself never deletes anything.
+- **Remove**: uninstall the Skill. It leaves no background task, setting or credential. What it created stays, because it belongs to the user: the Home Contents folder with its lists, claim documents and exhibit copies, the dated albums and the home-contents tag. Each can be deleted by hand in Files and Photos; the Skill itself never deletes anything.

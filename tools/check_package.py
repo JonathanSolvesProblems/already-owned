@@ -62,7 +62,7 @@ def main() -> int:
           "no angle bracket, pipe or command option inside an instruction")
     check("cli.invoke" not in text, "no direct CLI call")
     writes = [body for _, body in delegations
-              if re.search(r"\b(Create|Save|Place a duplicate|attach that tag)\b", body)]
+              if re.search(r"\b(Create|Save|Copy each file|attach that tag)\b", body)]
     check(all("request user approval first" in body for body in writes),
           "every write delegation asks for approval first", f"{len(writes)} writes")
 

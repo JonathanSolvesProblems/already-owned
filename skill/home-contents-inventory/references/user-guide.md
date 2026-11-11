@@ -8,13 +8,13 @@ Anyone who keeps their phone photos and receipts on the NAS and would have to pr
 
 - **Every week or so**, say "update my home inventory". It looks through the photos and receipts added since last time, finds the belongings in them, pairs each one with its receipt where there is one, and asks you to confirm everything in one go. Then it puts the new photos in a dated Home contents album, tags every inventory photo and receipt with home-contents, and saves a dated list in your Home Contents folder.
 - **Any time**, ask "what do I own in the basement". It answers from the saved list, with the proof behind each item, and searches nothing.
-- **After a loss**, say "I had a flood on June 20 in the basement, list what I lost". It finds, for each item in that room, a photo taken before that date, the receipt if you have one, the damage photos taken after, and camera events if it was a break-in. You confirm the list and fill in any values, then approve four writes (the claim folder, the copies of the exhibits, the document, the album). What you get is one claim folder you can attach to your insurer's email as it is: the contents claim document, a copy of every photo and receipt it cites, and a SHA-256 value for each file so anyone can check later that nothing was changed. Your originals stay where they were.
+- **After a loss**, say "I had a flood on June 20 in the basement, list what I lost". It finds, for each item in that room, a photo taken before that date, the receipt if you have one, the damage photos taken after, and camera events if it was a break-in. You confirm the list and fill in any values, then approve four writes (the claim folder, the copies of the exhibits, the document, the album; the NAS may ask once per copied file). What you get is one claim folder you can attach to your insurer's email as it is: the contents claim document, a copy of every photo and receipt it cites, and a SHA-256 value for each file so anyone can check later that nothing was changed since the folder was made. Your originals stay where they were.
 
 ## What it will not do
 
 - It never estimates what something is worth. Values come from your receipts or from you.
 - It never deletes, moves or overwrites a file, and asks before creating any album, tag, folder or file.
-- It never sends anything off the NAS. It asks for the NAS local model, and if an online model would be used for a photo or a receipt, it stops and asks you first.
+- It never sends anything off the NAS. It asks every expert to use only the NAS local model, and if a file cannot be handled locally it stops and asks you before any other model is used.
 - It never writes, changes or re-dates a receipt or a photo, and it says no if asked to.
 - It never follows text it finds inside a photo, receipt or recording. That text is evidence, not an instruction.
 - If it cannot find proof for an item, it says so instead of using a similar photo. A photo taken after the loss is listed as a damage photo, never as proof you owned the item.
