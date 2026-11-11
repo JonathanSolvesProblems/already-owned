@@ -31,21 +31,22 @@
 :root{
   --stock:#fbc23a; --ink:#1d1817; --maroon:#793026; --cream:#f9ead4;
   --sheet:#141010; --rebate:#cfcdc7; --keep:#2c6b50; --keep-lit:#63d3a6; --slash:#de2e25; --slash-ink:#a81f18;
-  --ground:var(--stock); --text:var(--ink); --soft:#4a3526; --panel:var(--cream); --panel-text:var(--ink); --rule:rgba(121,48,38,.2);
+  --ground:var(--stock); --text:var(--ink); --soft:#3a2a1e; --panel:var(--cream); --panel-text:var(--ink); --rule:rgba(121,48,38,.2); --grid:rgba(121,48,38,.075);
   --display:"Besley",Georgia,serif; --body:"Hanken Grotesk","Segoe UI",system-ui,sans-serif;
   --edge:"Red Hat Mono",ui-monospace,Consolas,monospace; --hand:"Shantell Sans","Segoe Print",cursive;
 }
 @media (prefers-color-scheme:dark){
-  :root{ --ground:#231b17; --text:var(--cream); --soft:#d9c3a3; --panel:#30251f; --panel-text:var(--cream); --rule:rgba(249,234,212,.14); --keep:#63d3a6; --slash-ink:#ff7566; --maroon:#f0a58f; }
+  :root{ --ground:#231b17; --text:var(--cream); --soft:#d9c3a3; --panel:#30251f; --panel-text:var(--cream); --rule:rgba(249,234,212,.16); --grid:rgba(249,234,212,.045); --keep:#63d3a6; --slash-ink:#ff7566; --maroon:#f0a58f; }
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
 body{margin:0;background:var(--ground);color:var(--text);font:17px/1.55 var(--body);overflow-x:clip;
-  background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:34px 34px;background-position:-1px -1px}
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:34px 34px;background-position:-1px -1px}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit;text-decoration-thickness:2px;text-underline-offset:3px}
 .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.02;margin:0;text-wrap:balance}
+h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.02;margin:0;text-wrap:balance;hyphens:none}
+.nw{white-space:nowrap}
 p{margin:0;text-wrap:pretty}
 :focus-visible{outline:3px solid var(--text);outline-offset:3px}
 
@@ -56,8 +57,8 @@ p{margin:0;text-wrap:pretty}
 h1{font-size:clamp(64px,17.5vw,168px);margin:18px 0 0 -4px;position:relative;z-index:3}
 h1 span{display:block}
 h1 .circled{position:relative;display:inline-block}
-h1 .circled svg{position:absolute;left:-5%;top:-4%;width:110%;height:112%;overflow:visible;pointer-events:none}
-.loop{fill:none;stroke:var(--keep);stroke-width:5;stroke-linecap:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.1s .35s cubic-bezier(.6,.1,.2,1) forwards;vector-effect:non-scaling-stroke}
+h1 .circled svg{position:absolute;left:-7%;top:-11%;width:114%;height:128%;overflow:visible;pointer-events:none}
+.loop{fill:none;stroke:var(--keep);stroke-width:4;stroke-linecap:round;stroke-dasharray:1400;stroke-dashoffset:1400;animation:draw 1.1s .35s cubic-bezier(.6,.1,.2,1) forwards;vector-effect:non-scaling-stroke}
 @keyframes draw{to{stroke-dashoffset:0}}
 .lede{font-size:clamp(19px,2.3vw,23px);line-height:1.4;max-width:21em;margin-top:20px;font-weight:500;position:relative;z-index:3}
 
@@ -73,22 +74,23 @@ h1 .circled svg{position:absolute;left:-5%;top:-4%;width:110%;height:112%;overfl
 .keep .mark path{stroke:var(--keep-lit)}
 .gone .mark path{stroke:var(--slash)}
 .frame .tag{position:absolute;left:4px;bottom:22px;background:var(--stock);color:var(--ink);font:500 13px/1.1 var(--hand);padding:3px 7px 4px;transform:rotate(-3deg);box-shadow:0 2px 0 rgba(0,0,0,.3);white-space:nowrap}
-.gone .tag{background:var(--cream);left:auto;right:4px;transform:rotate(2deg)}
+.gone .tag{background:var(--cream);transform:rotate(2deg)}
 .cut{flex:0 0 auto;width:0;border-left:3px dashed var(--slash);margin:-8px 4px 14px;position:relative}
-.cut span{position:absolute;top:-24px;left:-4px;transform:translateX(-50%) rotate(-2deg);background:var(--slash);color:#fff;font:500 14px/1 var(--hand);padding:5px 9px 6px;white-space:nowrap;z-index:4}
+.cut span{position:absolute;bottom:-34px;left:-4px;transform:translateX(-50%) rotate(-2deg);background:var(--slash);color:#fff;font:500 14px/1 var(--hand);padding:5px 9px 6px;white-space:nowrap;z-index:4}
 
-.facts{position:relative;z-index:3;display:grid;gap:22px;margin-top:48px;padding-bottom:8px}
-.fact{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:baseline;max-width:34em}
-.fact b{font:800 clamp(44px,9vw,76px)/.9 var(--display);letter-spacing:-.03em;grid-row:span 2}
+.facts{position:relative;z-index:3;display:grid;gap:22px;margin-top:62px;padding-bottom:8px}
+.fact{display:grid;grid-template-columns:minmax(7.4rem,max-content) 1fr;gap:4px 14px;align-items:baseline;max-width:34em}
+.fact b{font:800 clamp(44px,9vw,76px)/.9 var(--display);letter-spacing:-.03em;grid-row:span 2;white-space:nowrap}
 .fact b small{font-size:.42em;letter-spacing:-.01em;font-weight:500}
 .fact p{font-size:17px;font-weight:500;line-height:1.35;align-self:end}
 .fact .how{font-size:14.5px;color:var(--soft);font-weight:400;align-self:start}
-.actions{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 0;position:relative;z-index:3}
-.btn{display:inline-flex;align-items:center;gap:8px;font:700 17px/1 var(--body);padding:16px 22px;border:2px solid var(--ink);background:var(--ink);color:var(--stock);text-decoration:none;cursor:pointer;border-radius:3px;min-height:52px}
+.plain{position:relative;z-index:3;margin-top:22px;max-width:36em;font-size:15.5px;line-height:1.5}
+.actions{display:grid;gap:12px;margin:26px 0 0;position:relative;z-index:3}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:700 17px/1 var(--body);padding:16px 22px;border:2px solid var(--ink);background:var(--ink);color:var(--stock);text-decoration:none;cursor:pointer;border-radius:3px;min-height:52px}
 .btn.alt{background:transparent;color:var(--text);border-color:var(--text)}
 .btn:active{transform:translateY(1px)}
 @media (prefers-color-scheme:dark){.btn{background:var(--stock);color:var(--ink);border-color:var(--stock)}}
-.camera{position:absolute;right:-22px;top:150px;width:clamp(104px,24vw,230px);transform:rotate(9deg);z-index:1;box-shadow:0 14px 22px -12px rgba(60,25,10,.6);border:7px solid var(--cream)}
+.camera{display:none;position:absolute;right:3%;top:34px;width:200px;transform:rotate(9deg);z-index:1;box-shadow:0 14px 22px -12px rgba(60,25,10,.6);border:7px solid var(--cream)}
 
 /* ---------- section scaffolding ---------- */
 section{padding:76px 0 0}
@@ -102,19 +104,26 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .env-head{padding:34px 18px 14px;display:grid;gap:6px;border-bottom:2px solid var(--panel-text)}
 .env-head h3{font-size:clamp(24px,4.6vw,34px)}
 .env-head p{font:400 13px/1.5 var(--edge)}
-.filters{display:flex;gap:8px;flex-wrap:wrap;padding:14px 18px 4px}
-.filters button{font:700 14px/1 var(--body);padding:11px 13px;min-height:44px;border:2px solid var(--panel-text);background:transparent;color:var(--panel-text);border-radius:3px;cursor:pointer}
-.filters button[aria-pressed=true]{background:var(--panel-text);color:var(--panel)}
+.env-head p span{white-space:nowrap}
+.tally{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2px solid var(--panel-text)}
+.tally div{padding:14px 10px 12px 18px;border-right:1px solid var(--rule)}
+.tally div:last-child{border-right:0}
+.tally b{display:block;font:800 clamp(34px,8vw,52px)/.95 var(--display);letter-spacing:-.03em}
+.tally span{display:block;font-size:14px;font-weight:700;line-height:1.2;margin-top:4px}
+.tally .pr b,.tally .p b{color:var(--keep)} .tally .x b{color:var(--slash-ink)}
+.more{padding:6px 18px 18px}
+.more .btn{width:100%;border-color:var(--panel-text);color:var(--panel-text)}
 .rows{list-style:none;margin:0;padding:6px 18px 4px}
 .row{display:grid;grid-template-columns:72px 1fr;gap:4px 14px;padding:13px 0;border-top:1px solid var(--rule);align-items:start}
 .thumb{grid-row:span 3;position:relative;width:72px}
 .thumb img{aspect-ratio:3/2;object-fit:cover;width:72px;border:2px solid var(--panel-text)}
-.thumb.none{aspect-ratio:3/2;border:2px dashed var(--soft);display:grid;place-items:center;font:400 10px/1.15 var(--edge);text-align:center;color:var(--soft);padding:2px}
-.thumb svg{position:absolute;left:-5px;top:-5px;width:calc(100% + 10px);height:calc(100% + 10px);overflow:visible}
+.thumb.none{aspect-ratio:3/2;border:2px dashed var(--slash-ink);display:grid;place-items:center;font:600 10.5px/1.15 var(--edge);text-align:center;color:var(--slash-ink);padding:2px}
+.thumb.filed{aspect-ratio:3/2;border:2px solid var(--keep);background:rgba(44,107,80,.1);display:grid;place-items:center;font:600 10.5px/1.15 var(--edge);text-align:center;color:var(--keep);padding:2px}
+.thumb svg{position:absolute;left:-3px;top:-3px;width:calc(100% + 6px);height:calc(100% + 6px);overflow:visible}
 .thumb svg path{fill:none;stroke:var(--keep);stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .row h4{margin:0;font:700 16.5px/1.25 var(--body)}
 .row h4 i{font:400 12px/1 var(--edge);font-style:normal;margin-right:8px;color:var(--soft)}
-.row .ev{font:400 12.5px/1.45 var(--edge);color:var(--soft);overflow-wrap:anywhere}
+.row .ev{font:400 13px/1.45 var(--edge);color:var(--soft)}
 .level{justify-self:start;font:700 12.5px/1 var(--body);padding:5px 8px 6px;border-radius:2px;margin-top:2px}
 .level.pr{background:var(--keep);color:#fff}
 .level.p{border:2px solid var(--keep);color:var(--keep)}
@@ -125,10 +134,10 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .exhibits b{color:var(--panel-text);font-weight:600}
 
 /* ---------- replay: the one dark band ---------- */
-.band{background:var(--sheet);color:var(--cream);margin-top:88px;padding:64px 0 70px;position:relative}
+.band{background:var(--sheet);color:var(--cream);margin-top:88px;padding:48px 0 40px;position:relative;border-top:8px solid var(--maroon)}
 .band h2{color:var(--stock)}
 .band .intro{color:var(--cream)}
-.roll{margin:24px -20px 0;overflow-x:auto;padding:30px 0 8px;scrollbar-width:none}
+.roll{margin:14px -20px 0;overflow-x:auto;padding:14px 0 40px;scrollbar-width:none}
 .roll::-webkit-scrollbar{display:none}
 .roll .strip{padding:0 20px;width:max-content}
 .roll .frame{width:clamp(96px,23vw,150px);opacity:.3;transition:opacity .4s}
@@ -143,9 +152,9 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .stage-body{padding:4px 16px 8px;min-height:300px}
 .say{margin:0 0 14px;max-width:40em}
 .say .who{display:block;font:400 12px/1 var(--edge);color:var(--rebate);margin-bottom:6px}
-.say.you p{display:inline-block;background:var(--cream);color:var(--ink);padding:11px 14px;font-weight:500;border-radius:2px 14px 14px 14px}
+.say.you p{display:inline-block;background:var(--cream);color:var(--ink);padding:10px 14px;font-weight:500;border-radius:2px;box-shadow:0 2px 0 rgba(0,0,0,.4);transform:rotate(-.4deg)}
 .say.skill p{border-left:4px solid var(--keep-lit);padding:2px 0 2px 14px}
-.deleg{font:400 12.5px/1.55 var(--edge);background:#0c0808;color:var(--rebate);padding:11px 12px;margin:0 0 8px;overflow-wrap:anywhere;border-radius:2px}
+.deleg{font:400 13px/1.55 var(--edge);background:#0c0808;color:var(--rebate);padding:11px 12px;margin:0 0 8px;overflow-wrap:anywhere;border-radius:2px}
 .deleg b{color:var(--stock);font-weight:600}
 .state{display:inline-block;font:600 12px/1 var(--edge);padding:6px 8px;margin:0 6px 12px 0;border-radius:2px}
 .state.completed{background:var(--keep-lit);color:var(--ink)}
@@ -158,7 +167,7 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .nav{display:flex;gap:10px;align-items:center;padding:12px 16px 16px}
 .nav button{font:700 16px/1 var(--body);padding:15px 20px;min-height:50px;border:2px solid var(--cream);background:transparent;color:var(--cream);border-radius:3px;cursor:pointer}
 .nav .next{background:var(--cream);color:var(--ink);margin-left:auto}
-.nav button:disabled{opacity:.3;cursor:default}
+.nav button:disabled{opacity:.5;cursor:default}
 .pips{display:flex;gap:5px;flex:1;justify-content:center}
 .pips i{width:16px;height:5px;background:#4a3f3b;border-radius:2px}
 .pips i.done{background:var(--rebate)} .pips i.cur{background:var(--stock)}
@@ -172,6 +181,21 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .nots b{font:800 clamp(20px,3.6vw,25px)/1.15 var(--display);letter-spacing:-.01em}
 .nots span{font-size:16px}
 
+.exhibits-3{display:grid;gap:34px;margin-top:30px}
+.ex{margin:0;display:grid;gap:14px;align-content:start}
+.ex figcaption{font-size:16px;line-height:1.45;max-width:24em}
+.ex figcaption b{display:block;font:800 clamp(21px,3.6vw,25px)/1.15 var(--display);letter-spacing:-.01em;margin-bottom:5px}
+.ex-photo .sheet{width:max-content;transform:rotate(-2deg);padding:12px 0 8px}
+.ex-photo .frame{width:210px}
+.slip{background:var(--cream);color:var(--ink);font:400 13px/1.7 var(--edge);padding:16px 18px 20px;width:250px;position:relative;transform:rotate(1.4deg);box-shadow:0 12px 18px -12px rgba(60,25,10,.6);clip-path:polygon(0 0,100% 0,100% 94%,94% 100%,88% 94%,82% 100%,76% 94%,70% 100%,64% 94%,58% 100%,52% 94%,46% 100%,40% 94%,34% 100%,28% 94%,22% 100%,16% 94%,10% 100%,4% 94%,0 100%)}
+.slip p:first-child{font-weight:600}
+.slip .ask{display:inline-block;margin-top:8px;font:500 16px/1 var(--hand);color:var(--maroon);text-decoration:line-through;text-decoration-color:var(--slash);text-decoration-thickness:3px}
+.slip .no{font:800 26px/1 var(--display);color:var(--slash-ink);margin-left:12px;display:inline-block;transform:rotate(-6deg)}
+@media (prefers-color-scheme:dark){.slip .ask{color:#793026}.slip .no{color:#a81f18}}
+.cells{display:grid;grid-template-columns:auto 1fr;width:min(100%,300px);background:var(--panel);color:var(--panel-text);border:2px solid var(--panel-text);font:700 14px/1.2 var(--body);transform:rotate(-1deg);box-shadow:0 12px 18px -12px rgba(60,25,10,.6)}
+.cells span{padding:14px 12px}
+.cells .empty{border-left:2px solid var(--panel-text);font:500 16px/1.2 var(--hand);color:var(--soft);background:repeating-linear-gradient(-45deg,transparent 0 7px,var(--rule) 7px 8px)}
+.also{margin-top:34px;max-width:34em;font-size:18px;font-weight:500;padding-top:18px;border-top:2px solid var(--text)}
 /* ---------- what is real ---------- */
 .real{margin-top:26px;border-collapse:collapse;width:100%;max-width:46em}
 .real th,.real td{text-align:left;vertical-align:top;padding:13px 12px 13px 0;border-top:1px solid var(--text);font-size:16px}
@@ -180,6 +204,10 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .real .not th,.real .not td,.real .not small{color:var(--slash-ink)}
 footer{margin-top:80px;padding:26px 0 44px;border-top:2px solid var(--text);font-size:15px}
 footer p + p{margin-top:8px}
+.close{font:800 clamp(26px,5.4vw,44px)/1.1 var(--display);letter-spacing:-.02em;max-width:17em;margin-bottom:26px!important}
+.close a{display:block;font:700 18px/1.3 var(--body);letter-spacing:0;margin-top:14px}
+.hand-note{display:inline-block;font:500 16px/1 var(--hand);letter-spacing:0;background:var(--cream);color:var(--ink);padding:5px 9px 6px;transform:rotate(-2deg);margin-bottom:12px;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.close .hand-note{display:table}
 footer .credit{color:var(--soft);font-size:14.5px}
 
 @media (max-width:420px){ .pips{display:none} }
@@ -188,16 +216,16 @@ footer .credit{color:var(--soft);font-size:14.5px}
   .hero .sheet{margin:-36px 0 0 36%;transform:rotate(-3deg)}
   .lede{margin-top:26px;max-width:17em}
   .facts{grid-template-columns:1fr 1fr;gap:34px;margin-top:70px}
-  .camera{right:3%;top:0}
+  .camera{display:block}
+  .actions{display:flex;flex-wrap:wrap}
+  body{font-size:18px}
   .row{grid-template-columns:96px 1.2fr 1.6fr auto;align-items:center;gap:6px 18px}
   .thumb,.thumb img{width:96px}
   .thumb{grid-row:auto}
   .level{justify-self:end}
   .env-head,.filters,.rows,.totals,.exhibits{padding-left:30px;padding-right:30px}
   .stage-head,.stage-body,.nav{padding-left:28px;padding-right:28px}
-  .roll{overflow:visible}
-  .nots{grid-template-columns:1fr 1fr;column-gap:44px;max-width:none}
-  .nots li:nth-last-child(2){border-bottom:2px solid var(--text)}
+  .exhibits-3{grid-template-columns:1.25fr 1fr 1fr;gap:40px;align-items:start}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -209,10 +237,10 @@ footer .credit{color:var(--soft);font-size:14.5px}
 
 <header class="hero">
   <div class="wrap">
-    <p class="by">A Skill for UGREEN AI NAS, by <b>Jonathan Andrei</b></p>
+    <p class="by">An add-on for the assistant on UGREEN's AI NAS, a home storage box. By <b>Jonathan Andrei</b></p>
     <img class="camera" src="art/camera.jpg" width="480" height="320" alt="A compact film camera, drawn in two inks. Illustration made with AI.">
     <h1><span><span class="circled">Already<svg viewBox="0 0 400 130" preserveAspectRatio="none" aria-hidden="true"><path class="loop" d="M52 22 C150 2 300 4 372 30 C402 46 398 96 352 112 C262 132 108 130 34 108 C-2 92 0 40 40 24 C70 14 96 12 120 12"/></svg></span></span><span>Owned</span></h1>
-    <p class="lede">After a flood, the insurer wants proof you owned what you lost. The proof is usually sitting in your camera roll. This Skill is built to find it.</p>
+    <p class="lede">After a flood, the insurer wants proof you owned what you lost. The proof is usually sitting in your camera roll. This add-on is built to find it.</p>
   </div>
 
   <div class="sheet" id="hero-sheet" role="img" aria-label="A contact sheet. Photos taken before the loss are boxed in marker. Photos taken after are crossed out."></div>
@@ -222,6 +250,7 @@ footer .credit{color:var(--soft);font-size:14.5px}
       <div class="fact"><b>22<small> of 27</small></b><p>things I lost were already in photos I had taken before the water.</p><p class="how">Counted by hand, photo by photo. It is the most any tool could find.</p></div>
       <div class="fact"><b>0<small> of 27</small></b><p>turned up when I searched the same library by file name and date.</p><p class="how">A phone names a photo 20251211_160058.jpg. It never says sofa.</p></div>
     </div>
+    <p class="plain">The 22 is counted by hand and the 0 is measured, both on my real claim. The add-on's own count is not measured yet: it needs the hardware. Everything below this line is a practice run on a made-up library.</p>
     <div class="actions">
       <a class="btn" href="#claim">See the claim it writes</a>
       <a class="btn alt" href="#replay">Replay the run</a>
@@ -238,10 +267,11 @@ footer .credit{color:var(--soft);font-size:14.5px}
     <div class="envelope">
       <div class="env-head">
         <h3>Contents claim for the water of 20 June 2026</h3>
-        <p>Room: basement. Cut-off: 2026-06-20 02:00. Saved in Home Contents / Claims / 2026-06-20 water</p>
+        <p>Room: basement. Cut-off: <span>2026-06-20 02:00.</span> Saved in <span>Home Contents /</span> <span>Claims /</span> <span>2026-06-20 water</span></p>
       </div>
-      <div class="filters" id="filters" role="group" aria-label="Filter rows by proof"></div>
+      <div class="tally" id="tally"></div>
       <ul class="rows" id="rows"></ul>
+      <p class="more"><button id="more" class="btn alt"></button></p>
       <p class="totals" id="totals"></p>
       <p class="exhibits"><b>Exhibits in the folder: 16.</b> Each is a copy, listed with its SHA-256 so anyone can check nothing changed since the folder was made. 20240815_190211.jpg 9f2c...e41a, vacuum-invoice-2024-09-02.pdf 71b0...c3d8, and 14 more.</p>
     </div>
@@ -264,27 +294,31 @@ footer .credit{color:var(--soft);font-size:14.5px}
 <section>
   <div class="wrap">
     <h2>What it refuses to do</h2>
-    <ul class="nots" id="nots"></ul>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>What is real on this page</h2>
-    <table class="real">
-      <tr><th scope="row">27 items</th><td>My own contents claim from June 2026, $10,915, written by hand for my insurer.<small>Every photo on that list was taken after the water.</small></td></tr>
-      <tr><th scope="row">0 of 27</th><td>Measured. File names and dates only, every hit opened and checked.</td></tr>
-      <tr><th scope="row">22 of 27</th><td>Counted by hand. Three more are uncertain and two are in no photo at all.</td></tr>
-      <tr class="not"><th scope="row">? of 27</th><td>The Skill's own count is not measured yet.<small>It needs a NAS. If I get a day on one, this is the first thing I run.</small></td></tr>
-      <tr><th scope="row">The replay</th><td>A practice run against a made-up library. The steps are the Skill's real steps.</td></tr>
-    </table>
+    <div class="exhibits-3">
+      <figure class="ex ex-photo">
+        <div class="sheet"><div class="strip" id="ex-frame"></div></div>
+        <figcaption><b>Count a photo taken after the loss</b>This one is from 21 June. It shows damage. It is never proof you owned the sofa.</figcaption>
+      </figure>
+      <figure class="ex ex-slip">
+        <div class="slip" aria-hidden="true">
+          <p>FURNITURE DEPOT</p><p>RECLINING SOFA 3S&nbsp;&nbsp;1,799.99</p><p>DATE&nbsp;&nbsp;2025-03-01</p>
+          <span class="ask">make it say 2023?</span><span class="no">No.</span>
+        </div>
+        <figcaption><b>Change a receipt</b>Asked to re-date one, it says no before it searches anything.</figcaption>
+      </figure>
+      <figure class="ex ex-cell">
+        <div class="cells" aria-hidden="true"><span>Replacement value</span><span class="empty">left empty</span></div>
+        <figcaption><b>Guess what something is worth</b>A price comes from a receipt or from you. Otherwise the cell stays empty and is counted as empty.</figcaption>
+      </figure>
+    </div>
+    <p class="also">It also never swaps in a similar item when it finds nothing, never writes without your yes, never deletes or moves a file, and never follows words it reads inside a photo.</p>
   </div>
 </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <p><a href="https://github.com/JonathanSolvesProblems/already-owned">Read the Skill, the measurements and the practice runs on GitHub</a></p>
+    <p class="close"><span class="hand-note">yours is in there too</span>Your camera roll already holds most of the list. <a href="https://github.com/JonathanSolvesProblems/already-owned">Read how the add-on finds it</a></p>
     <p>Already Owned is an entry in the UGREEN Hackathon 2026 on AI NAS.</p>
     <p class="credit">Illustrations made with AI, after a 1940s photo-lab envelope. They stand in for my photos, which stay on my drive.</p>
   </div>
@@ -309,7 +343,7 @@ const CUT = '<div class="cut"><span>20 June, 2 am: the water</span></div>';
 // hero sheet: two strips, the cut between before and after
 const HERO = [
   [['sofa','11','keep','sofa, 11 Dec','A leather sofa'],['washer','12','keep','','A washer and dryer'],['lamp','13','keep','lamp','A floor lamp'],['tv','14','keep','','A television']],
-  [['dumbbells','21','keep','','Dumbbells'],['chair','22','keep','chair, Jan','A gaming chair'],'cut',['flood-sofa','23','gone','after','The sofa standing in flood water'],['flood-boxes','24','gone','','Boxes in flood water']]
+  [['dumbbells','21','keep','','Dumbbells'],['chair','22','keep','chair, Jan','A gaming chair'],'cut',['flood-sofa','23','gone','21 June','The sofa standing in flood water'],['flood-boxes','24','gone','','Boxes in flood water']]
 ];
 $('hero-sheet').innerHTML = HERO.map((s, r) => `<div class="strip">${s.map((f, i) => f === 'cut' ? CUT : frame(f, r * 4 + i)).join('')}</div>`).join('');
 
@@ -319,7 +353,7 @@ $('roll').innerHTML = ROLL.map((f, i) => f === 'cut' ? CUT : frame(f, i + 20)).j
 
 const D = (agent, text) => `<p class="deleg">delegate --target <b>${agent}</b> --instruction '${text}'</p>`;
 const STEPS = [
- { id:'C1', name:'Fix the cut-off first', html:`
+ { id:'C1', name:'Draw the line first', html:`
   <div class="say you"><span class="who">you</span><p>I had a flood on June 20 around 2 am in the basement. List what I lost.</p></div>
   <div class="say skill"><span class="who">skill</span><p>Water, 20 June 2026, about 02:00. I take 02:00, the earliest time you gave. Only photos captured before that moment count as proof you owned something. Is that right?</p></div>
   <div class="say you"><span class="who">you</span><p>Yes.</p></div>
@@ -398,7 +432,7 @@ $('next').onclick = () => { if (i === STEPS.length - 1){ i = 0; approved = 0; } 
 $('prev').onclick = () => { if (i > 0) i--; render(); };
 
 const ROWS = [
- [1,'Leather reclining sofa, 3-seat','pr','photo 2024-08-15, receipt 1,799.99 CAD, value 1,800 CAD','sofa'],
+ [1,'Leather reclining sofa, three seats','pr','photo 2024-08-15, receipt 1,799.99 CAD, value 1,800 CAD','sofa'],
  [2,'Flat-screen TV, about 55 inch','p','photo 2024-08-15, value 700 CAD from the owner','tv'],
  [3,'Stick vacuum','pr','photo 2024-09-03, invoice 2024-09-02, 799.99 CAD',''],
  [4,'Pull-up and dip station','pr','photo 2025-04-12, order 2025-04-08, 389.00 CAD',''],
@@ -426,30 +460,24 @@ const ROWS = [
  [26,'Boxes and bags of belongings','x','owner to itemise','']
 ];
 const LABEL = { pr:'photo and receipt', p:'photo only', x:'no proof' };
-let filt = 'all';
+let all = false;
 function rows(){
-  const shown = ROWS.filter(r => filt === 'all' || r[2] === filt);
+  const SAMPLE = [1, 3, 2, 11, 6, 9];
+  const shown = all ? ROWS : SAMPLE.map(n => ROWS[n - 1]);
   $('rows').innerHTML = shown.map(r => {
     const proven = r[2] !== 'x';
     const thumb = proven && r[4] ? `<div class="thumb"><img src="art/${r[4]}.jpg" width="480" height="320" loading="lazy" alt=""><svg viewBox="0 0 200 132" preserveAspectRatio="none" aria-hidden="true"><path d="${box(r[0] + 40)}"/></svg></div>`
-      : `<div class="thumb none">${proven ? 'photo on file' : 'no frame'}</div>`;
-    return `<li class="row">${thumb}<h4><i>${String(r[0]).padStart(2,'0')}</i>${r[1]}</h4><p class="ev">${r[3]}</p><span class="level ${r[2]}">${LABEL[r[2]]}</span></li>`;
+      : proven ? '<div class="thumb filed">photo on file</div>' : '<div class="thumb none">no photo</div>';
+    const ev = r[3].replace(/(\d{4}-\d{2}-\d{2}|[\d,]+\.\d{2} CAD|[\d,]+ CAD)/g, '<span class="nw">$1</span>');
+    return `<li class="row">${thumb}<h4><i>${String(r[0]).padStart(2,'0')}</i>${r[1]}</h4><p class="ev">${ev}</p><span class="level ${r[2]}">${LABEL[r[2]]}</span></li>`;
   }).join('');
   const c = k => ROWS.filter(r => r[2] === k).length;
-  $('totals').textContent = `${c('pr')} photo and receipt. ${c('p')} photo only. ${c('x')} no pre-loss proof. Price paid 2,988.98 CAD over 3 rows. Replacement value 2,800 CAD over 3 rows. 23 rows have no value, and none was estimated.`;
-  $('filters').innerHTML = [['all','All 26'],['pr','Photo and receipt'],['p','Photo only'],['x','No proof']].map(([k, l]) =>
-    `<button data-k="${k}" aria-pressed="${k === filt}">${l}</button>`).join('');
-  $('filters').querySelectorAll('button').forEach(b => b.onclick = () => { filt = b.dataset.k; rows(); $('filters').querySelector('[aria-pressed=true]').focus(); });
+  $('totals').textContent = 'Price paid 2,988.98 CAD over 3 rows. Replacement value 2,800 CAD over 3 rows. 23 rows have no value, and none was estimated.';
+  $('tally').innerHTML = [['pr','photo and receipt'],['p','photo only'],['x','no proof']].map(([k, l]) => `<div class="${k}"><b>${c(k)}</b><span>${l}</span></div>`).join('');
+  $('more').textContent = all ? 'Show six rows' : 'Show all 26 rows';
 }
-const NOTS = [
- ['Count a photo taken after the loss','The cut-off is the capture time inside the photo, not the upload date. Later photos are damage photos.'],
- ['Guess what something is worth','Prices come from a receipt or from you. An empty value stays empty.'],
- ['Swap in a similar item','Two search routes with nothing found, and the row says no proof.'],
- ['Write without asking','Folder, copies, document, album and tag each wait for a yes. Nothing is deleted, moved or overwritten.'],
- ['Obey words inside a photo','Text on a receipt is evidence for a row. It is never an instruction.'],
- ['Change a receipt','Asked to re-date one, it says no before it searches anything.']
-];
-$('nots').innerHTML = NOTS.map((n, k) => `<li><svg viewBox="0 0 200 132" preserveAspectRatio="none" aria-hidden="true"><path d="${slash(k + 70)}"/></svg><b>${n[0]}</b><span>${n[1]}</span></li>`).join('');
+$('more').onclick = () => { all = !all; rows(); if (!all) $('claim').scrollIntoView(); };
+$('ex-frame').innerHTML = frame(['flood-sofa','23','gone','21 June','The sofa standing in flood water'], 90);
 render(); rows();
 </script>
 </body>
