@@ -9,7 +9,7 @@ Effect and approval are the catalog's own values. Read steps need no approval. E
 | U1, A1, C3 read the ledger | `file-agent` | `file-workflow` get-user-dir, `ug-filesystem` find, ls, cat | read | none |
 | U2, C3 category names | `photo-agent` | `ug-photo` object-albums, search-classify, search-picture | read | none |
 | U3 photos per category, and C3 when no inventory exists | `photo-agent` | `ug-photo` search-picture by recognized object, by text in the photo, by capture time, vision-vlm, meta | read | none |
-| U4, C6 receipt files | `file-agent` | `ug-filesystem` find by type and date | read | none |
+| U4, C6 receipt files | `file-agent` | `file-workflow` get-user-dir, `ug-filesystem` find by type and date; in C6 also `ug-filemgr` tag-get-by-name and tag-list-file, to try tagged receipts first | read | none |
 | U5, C6 photographed receipts | `photo-agent` | `ug-photo` search-picture by text in the photo, vision-ocr | read | none |
 | U6, C6 purchase lines | `document-agent` | `ug-document` extract with the receipt and invoice schemas | read | none |
 | U6 fallback for an image | `photo-agent` | `ug-photo` vision-ocr | read | none |
@@ -17,13 +17,13 @@ Effect and approval are the catalog's own values. Read steps need no approval. E
 | U10 dated album | `photo-agent` | `ug-photo` create-album | state change | workflow |
 | U11 tag | `file-agent` | `ug-filemgr` tag-get-by-name, tag-add, tag-add-file | state change | gateway, conditional |
 | U12 ledger page | `knowledge-agent` | `ug-knowledge` save-text | state change | workflow |
-| C2 find and transcribe a recording | `file-agent`, `knowledge-agent` | `ug-filesystem` find by type, `ug-knowledge` audio-transcription | read | none |
+| C2 find and transcribe a recording | `file-agent`, `knowledge-agent` | `file-workflow` get-user-dir, `ug-filesystem` find by type and date, `ug-knowledge` audio-transcription | read | none |
 | C4a damage photos | `photo-agent` | `ug-photo` search-picture by capture time, vision-vlm, meta | read | none |
 | C4b pre-loss proof | `photo-agent` | `ug-photo` search-picture by file name, recognized object, text in the photo, capture time, vision-vlm, meta | read | none |
 | C4b second pass | `photo-agent` | `ug-photo` vision-vlm and meta on paths already returned | read | none |
-| U6b, C6 receipt-first photo search | `photo-agent` | `ug-photo` search-picture by text in the photo and by capture time, vision-vlm | read | none |
+| U6b, C6 receipt-first photo search | `photo-agent` | `ug-photo` search-picture by text in the photo and by capture time, vision-vlm, meta | read | none |
 | C5 camera events | `security-monitor-agent` | `ug-surveillance` cameras, event-timeline, event-evidence with snapshots for user review | read | none |
-| C8 draft, translated copy | `document-agent` | `ug-document` writing, translate | mixed | gateway |
+| C8 opening draft, translated copy | `document-agent` | `ug-document` writing, translate | mixed | gateway |
 | C9 claim folder | `file-agent` | `ug-filesystem` mkdir | state change | gateway |
 | C9 exhibit copies, the voice note included | `file-agent` | `ug-filesystem` cpmv as a copy, then sha256sum on each original and each copy | state change, then read | gateway |
 | C9 hashes when copies are declined | `file-agent` | `ug-filesystem` sha256sum | read | none |
