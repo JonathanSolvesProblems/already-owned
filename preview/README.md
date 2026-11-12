@@ -4,11 +4,11 @@ Eight images for the project page gallery, 1500 x 1000, in upload order. Built b
 
 1. `01-cover.png`
 
-   22 of the 27 things I lost in a flood were already in photos I had taken. Already Owned is a Skill for UGREEN AI NAS that finds them and writes the insurer's contents list.
+   22 of the 27 things I lost in a flood were already in photos I had taken. Already Owned is a Skill for UGREEN AI NAS built to find them and write the insurer's contents list.
 
 2. `02-baseline.png`
 
-   My real June 2026 claim, over the 1,769 photos my phone and PC held from before the flood: 22 of 27 items appear in them (counted by hand); the Skill's own search, with a small local model standing in for the NAS, proved 11; searching by file name and date proves 0.
+   My real June 2026 claim, over the 1,769 photos my phone and PC held from before the flood: 22 of 27 items appear in them (counted by hand); the Skill's own search, with a small local model standing in for the NAS, proved 13 of those 22 on the 1,749 photos stored on my computer (20 more are kept only in the cloud); searching by file name and date proves 0.
 
 3. `03-voice-note.png`
 

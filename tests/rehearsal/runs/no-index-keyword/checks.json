@@ -4,8 +4,8 @@
  "covers": "test-plan case 27",
  "checks": 17,
  "passed": 17,
- "delegations": 16,
- "accepted_as_first_sent": 15,
+ "delegations": 15,
+ "accepted_as_first_sent": 14,
  "results": [
   {
    "check": "no instruction holds a brace, a pipe, an angle bracket, a line break or a command option",
@@ -15,7 +15,7 @@
   {
    "check": "no instruction is longer than 4,000 characters",
    "pass": true,
-   "detail": "longest 3027"
+   "detail": "longest 2879"
   },
   {
    "check": "no request asks an expert to read more than ten files with a model",
@@ -65,12 +65,12 @@
   {
    "check": "proven with the right pre-loss photo: power tower",
    "pass": true,
-   "detail": "row: 20250412_101233.jpg, captured 2025-04-12 10:12 / photo and receipt"
+   "detail": "row: 20250412_101233.jpg, 2025-04-12 10:12 / photo and receipt"
   },
   {
    "check": "proven with the right pre-loss photo: vacuum",
    "pass": true,
-   "detail": "row: 20240903_121544.jpg, captured 2024-09-03 12:15 / photo and receipt"
+   "detail": "row: 20240903_121544.jpg, 2024-09-03 12:15 / photo and receipt"
   },
   {
    "check": "no row for a thing the user did not lose or a receipt did not sell",
@@ -90,7 +90,7 @@
   {
    "check": "with no household categories, the keyword route is used and no category is guessed",
    "pass": true,
-   "detail": "routes: ['text visible in the photo: Dyson', 'keyword: power tower']"
+   "detail": "routes: ['keyword: power tower and Dyson vacuum']"
   }
  ]
 }

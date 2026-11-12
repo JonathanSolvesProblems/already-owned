@@ -1,6 +1,6 @@
 # Pre-loss photo census: the answer key for the June 2026 replay
 
-Made 2026-11-02 by hand, first from the 169 unique photos captured before 2026-06-20 00:00 on the PC, then from the phone's own camera roll (1,708 photos, Oct 2023 to June 19, 2026, pulled over USB with a copy script). Method: a census script that reads each photo's capture time, contact sheets with `tools/contact_sheet.py`, a reviewer pass over every sheet, then every new hit opened at full size. File names are the phone's own; no file here carries an address.
+Made 2026-11-02 by hand, first from the 169 unique photos captured before 2026-06-20 00:00 on the PC, then from the phone's own camera roll (1,708 photos, Oct 2023 to June 19, 2026, pulled over USB with a copy script). Method: a census script that reads each photo's capture time, contact sheets made with a small script, a reviewer pass over every sheet, then every new hit opened at full size. File names are the phone's own; no file here carries an address.
 
 The replay on the NAS testing day is scored against this table: a Skill result for an item is a true positive when the photo it returns shows that item and was captured before the loss, whether or not it is the same file listed here.
 
@@ -44,4 +44,12 @@ The replay on the NAS testing day is scored against this table: a Skill result f
 
 So the replay's ceiling is 22 to 25 of 27. A result above 25 means the Skill matched a wrong photo and must be checked. (An earlier version of this file said 21 confirmed on the PC; recounting the table gives 20.)
 
-Other phone photos that matter for the test day: 20240806_131009.jpg (2024-08-06, the TV in the basement), 20240905_155112.jpg (Danby label readable), 20250316_120827.jpg (the gym floor tiles laid out the day after the 2025-03-15 Amazon order, the receipt-first route). The reviewer also listed 142 phone photos that show ID cards, bank screens, addresses, plates or signed letters; they are kept out of the upload by `tmp/census-phone/sensitive.txt`.
+## Found after this count
+
+The table and the totals above are left as they were made, because they are the answer key the measurements are scored against. On 2026-11-12 the recall measurement (`results/recall-standin.md`) cited three photos that this count had missed or rated below confirmed, and each was opened at full size and checked by eye:
+
+- Item 16, camera rig: 20240810_082331.jpg (2024-08-10) shows it on the floor of the storage room, under the shelving: rods, handles and a follow focus. This count had found it in no photo, so "not found anywhere" is now 1 (the iron), and the sentence above about a result over 25 no longer holds: the count itself missed one.
+- Item 14, stick vacuum: 20240805_161215.jpg (2024-08-05) shows the whole vacuum, where the photo above shows only its cleaner head.
+- Item 26, monitor arm: 20240815_090704.jpg (2024-08-15) shows the white single-monitor arm on the desk.
+
+Other phone photos that matter for the test day: 20240806_131009.jpg (2024-08-06, the TV in the basement), 20240905_155112.jpg (Danby label readable), 20250316_120827.jpg (the gym floor tiles laid out the day after the 2025-03-15 Amazon order, the receipt-first route). The reviewer also listed 142 phone photos that show ID cards, bank screens, addresses, plates or signed letters; they are kept out of any upload by a block list that is not published.

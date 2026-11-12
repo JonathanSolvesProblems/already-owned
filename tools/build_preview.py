@@ -53,7 +53,7 @@ def figures() -> dict:
     f["clis"] = len(re.findall(r"(?m)^- `[a-z-]+` → `[a-z-]+`$", skill))
     f["references"] = len(list((ROOT / "skill/home-contents-inventory/references").glob("*.md")))
     rc = json.loads(read("results/recall-standin.json"))["summary"]
-    f["rc_proven"], f["rc_searchable"] = rc["proven"], rc["searchable"]
+    f["rc_proven"], f["rc_searchable"], f["rc_photos"] = rc["proven"], rc["searchable"], rc["photos"]
     f["actions"] = int(re.search(r"and (\d+) of the catalog's \d+ actions", read("skill/home-contents-inventory/references/capability-map.md")).group(1))
     rounds = json.loads(read("tests/rehearsal/results.json"))["rounds"]
     final = rounds[-1]["runs"]
@@ -113,7 +113,7 @@ def s1_cover():
         <div style='font:800 236px/.76 "Besley",serif;letter-spacing:-.05em'>{F['confirmed']}</div>
         <div style='font:500 52px/1.12 "Besley",serif;letter-spacing:-.02em;padding-bottom:4px'>of the {F['items']} things I lost in a flood<br>were already in photos I had taken.</div>
       </div>
-      <p style='font:500 29px/1.3 "Hanken Grotesk",sans-serif;margin-top:26px'>Already Owned, a Skill for UGREEN AI NAS, finds them and writes the insurer's contents list.</p>
+      <p style='font:500 29px/1.3 "Hanken Grotesk",sans-serif;margin-top:26px'>Already Owned, a Skill for UGREEN AI NAS, is built to find them and write the insurer's contents list.</p>
     </div>
     <img src='{cap('sheet')}' style='position:absolute;left:50%;transform:translateX(-50%);top:392px;height:578px;width:auto'>"""
     return page(body, "my June 2026 claim · drawings stand in for my photos", address=False)
@@ -125,7 +125,7 @@ def s2_baseline():
                  "maybe": "border:4px dashed #2c6b50", "no": "border:4px dashed #a81f18"}
         return "".join(f"<div class='cell' style='{style[k]}'></div>" for k in kinds)
     hand = ["yes"] * F["confirmed"] + ["maybe"] * F["unclear"] + ["no"] * F["nowhere"]
-    skill = ["yes"] * F["rc_proven"] + ["no"] * (F["items"] - F["rc_proven"])
+    skill = ["yes"] * F["rc_proven"] + ["no"] * (F["confirmed"] - F["rc_proven"])  # out of the 22 the hand count found
     name = ["yes"] * F["by_name"] + ["no"] * (F["items"] - F["by_name"])
     grid = "display:grid;grid-template-columns:repeat(7,1fr);gap:11px 10px"
     col = lambda n, label, kinds, note: (
@@ -137,7 +137,7 @@ def s2_baseline():
       <h1 style='font-size:68px'>The proof was in {F['photos']:,} photos. Their file names did not say so</h1>
       <div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:52px;margin-top:34px'>
         {col(F['confirmed'], f"of {F['items']} items in a photo from before the flood, counted by hand", hand, f"{F['unclear']} more unclear, {F['nowhere']} in no photo.")}
-        {col(F['rc_proven'], f"of {F['items']} proven by the Skill's own search, a small local model standing in for the NAS", skill, f"{F['confirmed'] - F['rc_searchable']} of the {F['confirmed']} are boxes and bags the Skill asks you to itemize.")}
+        {col(F['rc_proven'], f"of those {F['confirmed']} proven by the Skill's own search, a small local model standing in for the NAS", skill, f"{F['confirmed'] - F['rc_searchable']} of the {F['confirmed']} are boxes and bags the Skill asks you to itemize.")}
         {col(F['by_name'], f"of {F['items']} found by searching file names and dates", name, "A phone names a photo 20251211_160058.jpg. It never says&nbsp;sofa.")}
       </div>
     </div>"""
@@ -172,11 +172,13 @@ def film(name: str, no: str, tag: str = "") -> str:
 
 def s4_forgot():
     blank = ("<div><div style='aspect-ratio:3/2;border:4px dashed #ff8a7c;display:grid;place-items:center;text-align:center;color:#ffb3a8;font:600 24px/1.3 \"Red Hat Mono\",monospace'>armchair,<br>bed frame:<br>no photo</div></div>")
+    # the monitor arm has no drawing of its own: a text tile, as on the page, rather than a chair captioned as an arm
+    arm = ("<div><div style='aspect-ratio:3/2;border:4px dashed #63d3a6;display:grid;place-items:center;text-align:center;color:#c9f2e0;font:600 24px/1.3 \"Red Hat Mono\",monospace'>monitor arm:<br>behind the chair<br>in photo 05</div></div>")
     body = f"""
     <div class='stage'>
       <h1 style='color:#fbc23a;font-size:92px'>Then it shows you what you forgot</h1>
       <div style='display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:54px'>
-        {film('lamp', '07', 'yours too?')}{film('fridge', '08', 'yours too?')}{film('chair', '05', 'arm behind it')}{blank}
+        {film('lamp', '07', 'yours too?')}{film('fridge', '08', 'yours too?')}{arm}{blank}
       </div>
       <p class='lead' style='color:#f9ead4;margin-top:54px;max-width:30em;font-size:42px'>Three things in those photos that the voice note never mentioned: a lamp, a mini-fridge and the monitor arm behind the chair. And two it was told about that are in no photo, reported as no proof.</p>
     </div>"""
@@ -266,8 +268,8 @@ def s8_rehearsal():
 
 
 SLIDES = [
-    ("01-cover", s1_cover, "22 of the 27 things I lost in a flood were already in photos I had taken. Already Owned is a Skill for UGREEN AI NAS that finds them and writes the insurer's contents list."),
-    ("02-baseline", s2_baseline, f"My real June 2026 claim, over the {F['photos']:,} photos my phone and PC held from before the flood: 22 of 27 items appear in them (counted by hand); the Skill's own search, with a small local model standing in for the NAS, proved {F['rc_proven']}; searching by file name and date proves 0."),
+    ("01-cover", s1_cover, "22 of the 27 things I lost in a flood were already in photos I had taken. Already Owned is a Skill for UGREEN AI NAS built to find them and write the insurer's contents list."),
+    ("02-baseline", s2_baseline, f"My real June 2026 claim, over the {F['photos']:,} photos my phone and PC held from before the flood: 22 of 27 items appear in them (counted by hand); the Skill's own search, with a small local model standing in for the NAS, proved {F['rc_proven']} of those {F['confirmed']} on the {F['rc_photos']:,} photos stored on my computer ({F['photos'] - F['rc_photos']} more are kept only in the cloud); searching by file name and date proves 0."),
     ("03-voice-note", s3_voice, "Walk the damaged room with a voice note. The NAS transcribes it and looks for each thing you named in photos captured before the loss. (Practice run on a made-up library.)"),
     ("04-what-you-forgot", s4_forgot, "It then shows belongings that appear in those same photos and that you never named, and reports honestly what it cannot find. (Practice run on a made-up library.)"),
     ("05-claim-folder", s5_claim, "The result is one claim folder: the contents list with a proof level on every row, read back after saving, and every exhibit with its capture time, camera and SHA-256. (Sample from a made-up library.)"),

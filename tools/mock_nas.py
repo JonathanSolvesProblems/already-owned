@@ -276,6 +276,17 @@ def by_route(photos, route, category=""):
     return None
 
 
+def spread(found, n=9):
+    """Claim search: n matches spread across the capture dates, the latest and the earliest included."""
+    dated = sorted([p for p in found if cap(p)], key=cap)
+    undated = [p for p in found if not cap(p)]
+    if len(dated) <= n:
+        return dated, 0, undated
+    idx = sorted({round(i * (len(dated) - 1) / (n - 1)) for i in range(n)})
+    chosen = [dated[i] for i in idx]
+    return chosen, len(dated) - len(chosen), undated
+
+
 def take(found, newest, key=cap):
     dated = sorted([p for p in found if cap(p)], key=key)
     undated = [p for p in found if not cap(p)]
@@ -344,7 +355,7 @@ def expert(run, tid, slots):
             elif (lo is None or c >= lo) and (hi is None or (c < hi if strict else c <= hi)):
                 pool.append(p)
         pool = [p for p in pool if not p["path"].startswith(hc)]
-        chosen, more, undated = take(pool, 8)
+        chosen, more, undated = spread(pool) if tid == "C4B" else take(pool, 8)
         if not chosen and not undated:
             return "completed", "No results for this search."
         bad = not_processed(chosen)

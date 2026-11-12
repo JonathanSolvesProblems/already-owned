@@ -2,32 +2,86 @@
  "summary": {
   "model": "qwen3.5:4b",
   "photos": 1749,
-  "descriptions": 537,
+  "descriptions": 936,
   "confirmed": 22,
   "searchable": 18,
-  "proven": 11,
+  "proven": 13,
   "proven_outside_census": [
-   14
+   14,
+   16,
+   26
   ],
-  "right_photos": 28,
-  "wrong_photos": 55,
-  "unclear_photos": 11,
+  "right_photos": 37,
+  "wrong_photos": 38,
+  "unclear_photos": 9,
   "unchecked": 0,
+  "photos_described": 148,
+  "model_reads": 310,
+  "rule": "nine spread across the capture dates (Skill 0.2.0)",
+  "value_proven": 6945,
+  "value_total": 10915,
   "continued_pages": 4,
   "continued": {
    "model": "qwen3.5:4b",
    "photos": 1749,
-   "descriptions": 537,
+   "descriptions": 936,
    "confirmed": 22,
    "searchable": 18,
-   "proven": 13,
+   "proven": 15,
    "proven_outside_census": [
-    14
+    14,
+    16,
+    26
    ],
-   "right_photos": 32,
-   "wrong_photos": 81,
-   "unclear_photos": 14,
-   "unchecked": 0
+   "right_photos": 39,
+   "wrong_photos": 61,
+   "unclear_photos": 13,
+   "unchecked": 0,
+   "photos_described": 253,
+   "model_reads": 427,
+   "value_proven": 7295
+  },
+  "before_change": {
+   "rule": "eight latest plus the earliest (Skill 0.1.0)",
+   "first": {
+    "model": "qwen3.5:4b",
+    "photos": 1749,
+    "descriptions": 936,
+    "confirmed": 22,
+    "searchable": 18,
+    "proven": 11,
+    "proven_outside_census": [
+     14
+    ],
+    "right_photos": 28,
+    "wrong_photos": 55,
+    "unclear_photos": 11,
+    "unchecked": 0,
+    "photos_described": 136,
+    "model_reads": 298
+   },
+   "continued": {
+    "model": "qwen3.5:4b",
+    "photos": 1749,
+    "descriptions": 936,
+    "confirmed": 22,
+    "searchable": 18,
+    "proven": 13,
+    "proven_outside_census": [
+     14
+    ],
+    "right_photos": 32,
+    "wrong_photos": 81,
+    "unclear_photos": 14,
+    "unchecked": 0,
+    "photos_described": 309,
+    "model_reads": 522
+   }
+  },
+  "misses": {
+   "8": "recognition",
+   "15": "recognition",
+   "24": "keyword"
   }
  }
 }

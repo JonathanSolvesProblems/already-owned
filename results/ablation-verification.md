@@ -8,8 +8,10 @@ Every file the keyword search hit was opened and compared with the June claim li
 | 6 | Console and side tables | 01 2025-12-04 14-22 Dining area ... table and chairs.jpg | No. The ground-floor dining table, a different piece. |
 | 7 | Coffee table | same file | No. Same dining table. |
 | 8 | Hex side table | same file | No. Same dining table. |
+| 3 | Gaming chair | 01 2025-12-04 14-22 Dining area ... table and chairs.jpg; 04 2025-12-06 11-43 Dining chairs and area rug ... .jpg | No. Light wood dining chairs with red cushions, not the black and red gaming chair. |
+| 4 | Wooden armchair | the same two files | No. The same dining chairs, not the antique armchair with the patterned seat. |
 | 21 | Bedding and blankets | 01 and 02 2025-12-04 ... blanket ... .jpg | No. The striped wool blanket on the dining floor was the December claim's own item 1, not the bagged basement bedding. |
 | 22 | Boxes of belongings | 05 2025-12-06 11-44 Area rug, towels, rolling cart and boxes.jpg | No. Boxes on the dining-room rug in December; the June line is the boxes stored in the basement. |
 | 16 | Camera rig | the folder named Camera | No. That is the phone's own camera folder, which holds every phone photo. None of them shows the rig; the census found it in no photo at all. |
 
-**Verified result: 0 of 27 items found by file name and date.** Six of the seven raw hits come from photos renamed by hand for the December 2025 claim, which is why the method looks better than it is: it found the previous claim's labels, not the belongings.
+**Verified result: 0 of 27 items found by file name and date.** Eight of the nine raw hits come from photos renamed by hand for the December 2025 claim, which is why the method looks better than it is: it found the previous claim's labels, not the belongings.

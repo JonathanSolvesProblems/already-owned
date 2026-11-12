@@ -1,10 +1,10 @@
 {
  "run": "theft-ledger-declines",
- "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+ "title": "A break-in with a saved inventory and camera events; the copies turned down, the album declined",
  "covers": "test-plan cases 10, 19, and the camera step",
  "checks": 19,
  "passed": 19,
- "delegations": 19,
+ "delegations": 18,
  "accepted_as_first_sent": 18,
  "results": [
   {
@@ -15,7 +15,7 @@
   {
    "check": "no instruction is longer than 4,000 characters",
    "pass": true,
-   "detail": "longest 2841"
+   "detail": "longest 2974"
   },
   {
    "check": "no request asks an expert to read more than ten files with a model",
@@ -65,12 +65,12 @@
   {
    "check": "proven with the right pre-loss photo: television",
    "pass": true,
-   "detail": "row: 20240815_190211.jpg (2024-08-15) / photo and receipt"
+   "detail": "row: 20240815_190211.jpg (2024-08-15 19:02) / photo and receipt"
   },
   {
    "check": "proven with the right pre-loss photo: gaming chair",
    "pass": true,
-   "detail": "row: 20250118_164002.jpg (2025-01-18) / photo only"
+   "detail": "row: 20250118_164002.jpg (2025-01-18 16:40) / photo only"
   },
   {
    "check": "no row for a thing the user did not lose or a receipt did not sell",

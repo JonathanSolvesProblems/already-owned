@@ -1,118 +1,234 @@
-item,photo,shows_item
-1,20260614_170938.jpg,no
-5,20260612_190106.jpg,no
-7,20260613_212502.jpg,no
-7,20260617_063548.jpg,no
-7,20260617_064152.jpg,no
-7,20260617_064156.jpg,unclear
-8,20260613_212502.jpg,no
-8,20260617_063759.jpg,no
-8,20260617_064152.jpg,no
-8,20260617_064156.jpg,no
-12,20240626_180643.jpg,no
-12,20260222_160443.jpg,no
-12,20260222_160444.jpg,no
-12,20260222_160506.jpg,no
-12,20260222_161028.jpg,no
-12,20260222_161030.jpg,no
-14,20240805_161215.jpg,yes
-15,20231107_210556.jpg,no
-15,20231111_180835.jpg,unclear
-15,20260417_102757.jpg,no
-15,20260528_175336.jpg,no
-15,20260528_175854.jpg,no
-15,20260529_165854.jpg,no
-15,20260613_072826.jpg,no
-15,20260613_072828.jpg,no
-18,20260401_183801.jpg,no
-18,20260401_184005.jpg,no
-18,20260602_175816.jpg,no
-18,20260602_175826.jpg,no
-18,20260612_190059.jpg,unclear
-18,20260612_190106.jpg,unclear
-18,20260614_113614.jpg,unclear
-18,20260617_064159.jpg,unclear
-26,20260608_135554.jpg,no
-26,20260617_063616.jpg,no
-27,20260528_175336.jpg,unclear
-2,20260425_194625.jpg,no
-3,20260613_172818.jpg,no
-3,20260617_063759.jpg,yes
-4,20260417_074430.jpg,no
-4,20260417_074439.jpg,no
-4,20260617_064152.jpg,yes
-6,20260617_063548.jpg,no
-9,20231107_210556.jpg,unclear
-9,20260222_155737.jpg,yes
-9,20260222_155740.jpg,yes
-9,20260222_155743.jpg,yes
-9,20260426_120434.jpg,no
-10,20240807_132511.jpg,yes
-10,20260222_155735.jpg,yes
-10,20260222_155740.jpg,yes
-10,20260602_175826.jpg,unclear
-10,20260605_201640.jpg,yes
-10,20260608_212738.jpg,yes
-13,20231029_012548.jpg,no
-13,20260607_110813.jpg,no
-13,20260617_063548.jpg,no
-13,20260617_064044.jpg,no
-13,20260617_064159.jpg,no
-13,20260618_073913.jpg,no
-13,20260619_204224.jpg,no
-17,20260607_110813.jpg,no
-17,20260617_063536.jpg,no
-17,20260617_063548.jpg,no
-17,20260617_064044.jpg,no
-17,20260619_204224.jpg,no
-19,20260219_194148.jpg,no
-19,20260222_155819.jpg,yes
-19,20260401_184929.jpg,no
-19,20260617_063539.jpg,no
-19,20260617_063542.jpg,no
-20,20240810_082300.jpg,yes
-20,20260401_183837.jpg,no
-20,20260506_092504.jpg,yes
-1,20260614_170934.jpg,no
-1,20260614_170935.jpg,no
-1,20260614_170936.jpg,no
-1,20260617_063536.jpg,unclear
-2,20231022_024331.jpg,unclear
-2,20260609_110041.jpg,no
-5,20251214_183310.jpg,no
-5,20260218_085604.jpg,yes
-5,20260222_155733.jpg,yes
-8,20260401_184005.jpg,no
-8,20260417_074430.jpg,no
-8,20260417_074439.jpg,no
-12,"01 2025-12-04 14-22 Dining area under the opened ceiling, blanket on floor, hutch, table and chairs.jpg",no
-12,20251211_160602.jpg,no
-12,20251231_160319.jpg,no
-12,20260218_085604.jpg,yes
-12,20260222_155733.jpg,yes
-12,20260222_160140.jpg,no
-12,a renamed photo from the earlier claim,no
-15,20241206_111516.jpg,unclear
-18,20260512_184950.jpg,no
-18,20260602_180749.jpg,no
-18,20260614_113620.jpg,unclear
-18,bannerImage.jpg,no
-16,20250314_085329.jpg,no
-16,Screenshot_20251207_155117_Gallery.jpg,no
-26,20251211_160630.jpg,unclear
-26,20260110_094502.jpg,no
-26,20260110_094532.jpg,no
-26,20260112_104451.jpg,no
-26,20260222_160120.jpg,no
-26,20260222_160248.jpg,no
-26,20260226_154642.jpg,no
-26,20260303_155253.jpg,no
-26,20260304_215717.jpg,no
-27,20260328_001628.jpg,no
-27,20260328_001706(0).jpg,no
-27,20260328_001706.jpg,no
-27,20260425_144523.jpg,no
-27,20260425_194617.jpg,no
-27,20260425_194623.jpg,no
-27,20260425_194627.jpg,no
-27,20260425_194629.jpg,no
+item,photo,shows_item,note
+1,20260614_170938.jpg,no,
+5,20260612_190106.jpg,no,
+7,20260613_212502.jpg,no,
+7,20260617_063548.jpg,no,
+7,20260617_064152.jpg,no,
+7,20260617_064156.jpg,unclear,
+8,20260613_212502.jpg,no,
+8,20260617_063759.jpg,no,
+8,20260617_064152.jpg,no,
+8,20260617_064156.jpg,no,
+12,20240626_180643.jpg,no,
+12,20260222_160443.jpg,no,
+12,20260222_160444.jpg,no,
+12,20260222_160506.jpg,no,
+12,20260222_161028.jpg,no,
+12,20260222_161030.jpg,no,
+14,20240805_161215.jpg,yes,
+15,20231107_210556.jpg,no,
+15,20231111_180835.jpg,unclear,
+15,20260417_102757.jpg,no,
+15,20260528_175336.jpg,no,
+15,20260528_175854.jpg,no,
+15,20260529_165854.jpg,no,
+15,20260613_072826.jpg,no,
+15,20260613_072828.jpg,no,
+18,20260401_183801.jpg,no,
+18,20260401_184005.jpg,no,
+18,20260602_175816.jpg,no,
+18,20260602_175826.jpg,no,
+18,20260612_190059.jpg,unclear,
+18,20260612_190106.jpg,unclear,
+18,20260614_113614.jpg,unclear,
+18,20260617_064159.jpg,unclear,
+26,20260608_135554.jpg,no,
+26,20260617_063616.jpg,no,
+27,20260528_175336.jpg,unclear,
+2,20260425_194625.jpg,no,
+3,20260613_172818.jpg,no,
+3,20260617_063759.jpg,yes,
+4,20260417_074430.jpg,no,
+4,20260417_074439.jpg,no,
+4,20260617_064152.jpg,yes,
+6,20260617_063548.jpg,no,
+9,20231107_210556.jpg,unclear,
+9,20260222_155737.jpg,yes,
+9,20260222_155740.jpg,yes,
+9,20260222_155743.jpg,yes,
+9,20260426_120434.jpg,no,
+10,20240807_132511.jpg,yes,
+10,20260222_155735.jpg,yes,
+10,20260222_155740.jpg,yes,
+10,20260602_175826.jpg,unclear,
+10,20260605_201640.jpg,yes,
+10,20260608_212738.jpg,yes,
+13,20231029_012548.jpg,no,
+13,20260607_110813.jpg,no,
+13,20260617_063548.jpg,no,
+13,20260617_064044.jpg,no,
+13,20260617_064159.jpg,no,
+13,20260618_073913.jpg,no,
+13,20260619_204224.jpg,no,
+17,20260607_110813.jpg,no,
+17,20260617_063536.jpg,no,
+17,20260617_063548.jpg,no,
+17,20260617_064044.jpg,no,
+17,20260619_204224.jpg,no,
+19,20260219_194148.jpg,no,
+19,20260222_155819.jpg,yes,
+19,20260401_184929.jpg,no,
+19,20260617_063539.jpg,no,
+19,20260617_063542.jpg,no,
+20,20240810_082300.jpg,yes,
+20,20260401_183837.jpg,no,
+20,20260506_092504.jpg,yes,
+1,20260614_170934.jpg,no,
+1,20260614_170935.jpg,no,
+1,20260614_170936.jpg,no,
+1,20260617_063536.jpg,unclear,
+2,20231022_024331.jpg,unclear,
+2,20260609_110041.jpg,no,
+5,20251214_183310.jpg,no,
+5,20260218_085604.jpg,yes,
+5,20260222_155733.jpg,yes,
+8,20260401_184005.jpg,no,
+8,20260417_074430.jpg,no,
+8,20260417_074439.jpg,no,
+12,"01 2025-12-04 14-22 Dining area under the opened ceiling, blanket on floor, hutch, table and chairs.jpg",no,
+12,20251211_160602.jpg,no,
+12,20251231_160319.jpg,no,
+12,20260218_085604.jpg,yes,
+12,20260222_155733.jpg,yes,
+12,20260222_160140.jpg,no,
+12,a renamed photo from the earlier claim,no,
+15,20241206_111516.jpg,unclear,
+18,20260512_184950.jpg,no,
+18,20260602_180749.jpg,no,
+18,20260614_113620.jpg,unclear,
+18,bannerImage.jpg,no,
+16,20250314_085329.jpg,no,
+16,Screenshot_20251207_155117_Gallery.jpg,no,
+26,20251211_160630.jpg,unclear,
+26,20260110_094502.jpg,no,
+26,20260110_094532.jpg,no,
+26,20260112_104451.jpg,no,
+26,20260222_160120.jpg,no,
+26,20260222_160248.jpg,no,
+26,20260226_154642.jpg,no,
+26,20260303_155253.jpg,no,
+26,20260304_215717.jpg,no,
+27,20260328_001628.jpg,no,
+27,20260328_001706(0).jpg,no,
+27,20260328_001706.jpg,no,
+27,20260425_144523.jpg,no,
+27,20260425_194617.jpg,no,
+27,20260425_194623.jpg,no,
+27,20260425_194627.jpg,no,
+27,20260425_194629.jpg,no,
+13,20240427_141204.jpg,no,Store shelf of shampoo bottles; no pine shelving units
+13,20240502_135625.jpg,no,Oak vanity table with mirror; different furniture
+13,20240502_135627.jpg,no,Antique dresser with drawers removed; not the shelving units
+13,20240713_174917.jpg,no,Kitchen with curved light wood shelf; different furniture
+13,20240905_153721.jpg,no,Laminate cube shelf holding a 3D printer; different object
+13,20240908_185344.jpg,no,Framed poster and dark cabinet only
+13,20241024_153611.jpg,yes,Same pine 2x4 frames with diagonal braces and green metal shelves
+13,20241031_194135.jpg,no,Store dairy fridge; no home shelving
+13,20250608_213213.jpg,no,Restaurant bar shelving; not the owner's units
+13,20250608_213215.jpg,no,Restaurant bar shelving; not the owner's units
+13,20250608_213216.jpg,no,Restaurant bar shelving; not the owner's units
+13,20250608_213217.jpg,no,Restaurant bar shelving; not the owner's units
+13,20251011_204126.jpg,no,White metal shelf in background; not the pine units
+13,20260113_131255.jpg,no,Decorative metal shelf; not the pine units
+13,20260113_193251.jpg,no,Bakery display case in a store
+13,20260218_085609.jpg,yes,Both pine units side by side with braces and green shelves
+13,20260222_160221.jpg,no,Laminate cube shelf with printer; different object
+13,20260222_160228.jpg,no,Bathroom vanity and cabinet; no shelving units
+13,20260222_160308.jpg,no,White wire closet shelving; different object
+13,20260222_160340.jpg,no,White wire closet shelving; different object
+13,20260222_160357.jpg,no,Built-in closet shelves; not the pine units
+13,20260326_134006.jpg,no,Bare wall and white wire-shelf track
+13,20260326_134008.jpg,no,Empty white wire closet shelving; different object
+13,20260401_183701.jpg,no,White built-in linen closet shelves
+13,20260401_183804.jpg,no,TV stand and black metal cart; no pine units
+13,20260410_141022.jpg,no,Flooring store display racks
+13,20260421_091724.jpg,no,Tile store display racks
+13,20260421_094639.jpg,no,Showroom bathroom cabinet; no shelving units
+13,20260425_194627.jpg,no,Restaurant dining room; no owner shelving
+13,20260506_194259.jpg,no,Renovation site with scaffold; shelving units not visible
+13,20260506_194635.jpg,no,White wire closet shelving; different object
+2,20240626_193037.jpg,unclear,large dark screen partly hidden behind people; cannot match it
+2,20240806_131646.jpg,yes,same basement; flat TV on black stand matches reference and census
+6,20260222_155812.jpg,yes,small curved-leg side table matches the reference table
+9,20260218_085601.jpg,yes,black tower with red pads and red lei matches reference
+9,20260222_155733.jpg,yes,same black tower with red pads and lei; clearly visible
+17,20240427_141204.jpg,no,store shelf with shampoo bottles; not the owner's unit
+17,20241024_153611.jpg,no,wood-frame metal storage shelves; different unit
+17,20250608_213215.jpg,no,bar shelving at a public venue
+17,20250608_213216.jpg,no,bar shelving at a public venue
+17,20250608_213217.jpg,no,bar shelving at a public venue
+17,20260113_131255.jpg,yes,lattice-side unit with games and dagger; same wall as reference
+17,20260113_193251.jpg,no,donut shop display rack
+17,20260217_133248.jpg,no,shower caddy pole in bathroom
+17,20260222_160308.jpg,no,white built-in closet wire shelving; not the freestanding unit
+17,20260222_160340.jpg,no,white built-in closet wire shelving; not the freestanding unit
+17,20260222_160357.jpg,no,built-in closet shelves; no freestanding unit
+17,20260326_134008.jpg,no,empty white wall-rail closet shelving
+17,20260421_091339.jpg,no,tile store display
+17,20260421_091712.jpg,no,tile store display
+17,20260421_091724.jpg,no,tile store display
+17,20260506_194635.jpg,no,white wall-rail wire shelving in a closet
+18,"01 2025-12-04 14-22 Dining area under the opened ceiling, blanket on floor, hutch, table and chairs.jpg",no,bell-shade dining chandelier only; no floor lamp
+18,"02 2025-12-04 14-22 Same, striped wool blanket soaking up water.jpg",no,dining chandelier edge only; no floor lamp
+18,20240430_144622.jpg,no,bell-shade dining chandelier; no floor lamp
+18,20260104_161345.jpg,unclear,shelf-style floor lamp; not the reference pole lamp
+18,20260105_094730.jpg,no,outdoor shed and small lantern; no floor lamp
+18,20260113_131012.jpg,yes,torchiere with side globe arm matches reference; bottom right
+18,20260113_131020.jpg,unclear,only a cut-off shade edge at top right
+27,20251224_190943.jpg,no,framed jersey in another room; not the office shelf frames
+4,20240713_174454.jpg,no,Pale turned chair leg under tablecloth; not the dark armchair
+4,20250820_153825.jpg,no,Light wood chairs with red cushion; different from the armchair
+4,20260104_161345.jpg,no,Patio door and leather sofa only; no armchair in view
+7,20260222_155812.jpg,no,Plainer look-alike table by wall; shaped-top coffee table not in frame
+7,20260417_074439.jpg,no,Log stool in a lobby; no curved-leg table
+8,20231201_202715.jpg,unclear,Reddish wood top under cards; too little shown to identify
+8,20231201_202716.jpg,unclear,Only reddish wood grain under cards; table cannot be identified
+8,20251211_160102.jpg,unclear,Wooden stand under mini fridge; only its top edge visible
+8,20260218_152553.jpg,no,Different light pine table; no hex cabinet
+8,20260222_155812.jpg,unclear,Dark stand under TV mostly hidden by armchair; shape unreadable
+8,20260222_155814.jpg,no,Sofa and curved-leg tables only; no hex cabinet
+8,20260617_064151.jpg,no,Writing desk with drawer; no hex cabinet
+15,20240810_082331.jpg,no,Same shelves but only a brown chest; no black road case
+15,20240903_083827.jpg,no,Black bookcase and soft bag; no road case
+26,20240110_002551.jpg,no,3D printer bed with printed bracket; no monitor arm
+26,20240112_182923.jpg,no,Screen close-up only; no arm visible
+26,20240112_182930.jpg,no,Screen close-up only; no arm visible
+26,20240815_090704.jpg,yes,White slotted arm pole under monitor on same mesh desk
+26,20240815_091133.jpg,yes,Same white slotted arm pole under AOC monitor
+26,20240820_201051.jpg,no,TV stand with console; no monitor arm
+26,20250210_121346.jpg,yes,White arm pole under Lenovo monitor on mesh desk
+26,20250309_080140.jpg,no,Screen only; arm pictured is an on-screen product image
+26,20250309_080258.jpg,no,Monitor screen only; no white arm visible
+26,20250309_080302.jpg,no,No white arm; only a dark bracket at left edge
+26,20250309_162052.jpg,no,Black dual-monitor mount; not the white single arm
+26,20250505_082624.jpg,no,AOC monitor over speakers; no white arm visible
+26,20250505_082626.jpg,no,AOC monitor over speakers; no white arm visible
+26,20250505_082629.jpg,no,AOC monitor over speakers; no white arm visible
+1,10 2025-12-08 Wall by the couch.jpg,no,black leather sofa in another room not the owner's brown one
+1,20241006_165733.jpg,yes,same brown leather three-cushion back behind games table
+1,20241017_211326.jpg,yes,same brown leather 3-seat sofa behind folding table
+1,20250710_202229.jpg,no,takeout bags on a table; no sofa in frame
+1,20250716_234520.jpg,yes,same brown leather 3-seat sofa in an earlier room with rug
+1,20260218_085804.jpg,yes,same brown leather sofa in basement nook
+1,20260218_085805.jpg,yes,same brown leather sofa beside basement pillar
+1,20260614_170929.jpg,no,different venue; only a black seat edge visible
+1,20260614_170930.jpg,no,different venue; only a black seat edge visible
+1,20260614_170931.jpg,no,different venue; only a black seat edge visible
+3,20240805_161209.jpg,no,all-black quilted office chair with no red
+3,20240805_161215.jpg,no,same all-black office chair with no red
+3,20250706_190238.jpg,unclear,only a dark chair corner in frame; no red visible
+3,20250706_190258.jpg,unclear,only a dark chair corner in frame; no red visible
+3,20251211_160630.jpg,no,all-black office chair beside tripod; no red
+3,20260210_092511.jpg,yes,black and red gaming chair at basement desk from behind
+3,20260218_085805.jpg,yes,black and red gaming chair clearly visible from front
+3,20260218_085807.jpg,yes,black and red gaming chair clearly visible from front
+14,20241217_185953.jpg,yes,yellow and purple Dyson stick on floor of same dining room
+14,20251019_152148(0).jpg,yes,yellow and purple Dyson stick against wall behind plants
+16,20240810_082331.jpg,yes,rod rig with follow focus wheel and handles under shelf
+16,20250505_082614.jpg,no,monitor and webcam only; no camera rig
+16,20251224_173639.jpg,no,close-up of a handheld device; no camera rig
+19,20250114_080145.jpg,yes,black compact fridge on same wooden stand at top left
+20,20260222_155753.jpg,yes,same Amana dryer and washer side by side in laundry room
+20,20260309_115512.jpg,yes,Amana washer with logo; dryer not in frame
+20,20260310_131524.jpg,yes,Amana washer in laundry room; dryer absent
+20,20260310_131530.jpg,unclear,white appliance side panel only; no brand or controls visible

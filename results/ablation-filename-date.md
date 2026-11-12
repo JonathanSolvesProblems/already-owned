@@ -4,14 +4,14 @@ Run 2026-11-12 with `tools/ablation_filename.py` over 1769 photos captured befor
 
 Method: for each of the 27 items, a case-insensitive search of its keywords in the photo file names, and separately in the folder names, with no recognition index, no text recognition and no vision model. A raw hit means at least one file name or folder name contains a keyword. A raw hit is not a find: it counts only if the photo shows the item, which is checked by eye further down.
 
-**Raw hits: 7 of 27 items have a file name or a folder name that contains a keyword.**
+**Raw hits: 9 of 27 items have a file name or a folder name that contains a keyword.**
 
 | # | Item | Keywords | Hits by file name | Hits by folder name | Raw hit |
 | --- | --- | --- | --- | --- | --- |
 | 1 | Leather reclining sofa, 3-seat (brown) | sofa, couch, recliner | 10 2025-12-08 Wall by the couch.jpg | 0 | yes |
 | 2 | Flat-screen TV, about 55 inch | tv, television, screen | 0 | 0 | no |
-| 3 | Gaming chair | chair, gaming | 0 | 0 | no |
-| 4 | Wooden armchair | armchair, chair | 0 | 0 | no |
+| 3 | Gaming chair | chair, gaming | 01 2025-12-04 14-22 Dining area under the opened ceiling, blanket on floor, hutch, table and chairs.jpg; 04 2025-12-06 11-43 Dining chairs and area rug, towels still down.jpg | 0 | yes |
+| 4 | Wooden armchair | armchair, chair | 01 2025-12-04 14-22 Dining area under the opened ceiling, blanket on floor, hutch, table and chairs.jpg; 04 2025-12-06 11-43 Dining chairs and area rug, towels still down.jpg | 0 | yes |
 | 5 | Wooden bed frame (oak headboard and footboard) | bed, headboard | 0 | 0 | no |
 | 6 | Wooden console and side tables | console, side table, table | 01 2025-12-04 14-22 Dining area under the opened ceiling, blanket on floor, hutch, table and chairs.jpg | 0 | yes |
 | 7 | Coffee or accent table | coffee table, table | 01 2025-12-04 14-22 Dining area under the opened ceiling, blanket on floor, hutch, table and chairs.jpg | 0 | yes |
@@ -48,8 +48,10 @@ Every file the keyword search hit was opened and compared with the June claim li
 | 6 | Console and side tables | 01 2025-12-04 14-22 Dining area ... table and chairs.jpg | No. The ground-floor dining table, a different piece. |
 | 7 | Coffee table | same file | No. Same dining table. |
 | 8 | Hex side table | same file | No. Same dining table. |
+| 3 | Gaming chair | 01 2025-12-04 14-22 Dining area ... table and chairs.jpg; 04 2025-12-06 11-43 Dining chairs and area rug ... .jpg | No. Light wood dining chairs with red cushions, not the black and red gaming chair. |
+| 4 | Wooden armchair | the same two files | No. The same dining chairs, not the antique armchair with the patterned seat. |
 | 21 | Bedding and blankets | 01 and 02 2025-12-04 ... blanket ... .jpg | No. The striped wool blanket on the dining floor was the December claim's own item 1, not the bagged basement bedding. |
 | 22 | Boxes of belongings | 05 2025-12-06 11-44 Area rug, towels, rolling cart and boxes.jpg | No. Boxes on the dining-room rug in December; the June line is the boxes stored in the basement. |
 | 16 | Camera rig | the folder named Camera | No. That is the phone's own camera folder, which holds every phone photo. None of them shows the rig; the census found it in no photo at all. |
 
-**Verified result: 0 of 27 items found by file name and date.** Six of the seven raw hits come from photos renamed by hand for the December 2025 claim, which is why the method looks better than it is: it found the previous claim's labels, not the belongings.
+**Verified result: 0 of 27 items found by file name and date.** Eight of the nine raw hits come from photos renamed by hand for the December 2025 claim, which is why the method looks better than it is: it found the previous claim's labels, not the belongings.

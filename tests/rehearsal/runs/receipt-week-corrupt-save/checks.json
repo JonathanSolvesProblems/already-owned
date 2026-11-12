@@ -4,7 +4,7 @@
  "covers": "test-plan cases 15, 24, 26",
  "checks": 13,
  "passed": 13,
- "delegations": 15,
+ "delegations": 14,
  "accepted_as_first_sent": 14,
  "results": [
   {
@@ -15,7 +15,7 @@
   {
    "check": "no instruction is longer than 4,000 characters",
    "pass": true,
-   "detail": "longest 1228"
+   "detail": "longest 1131"
   },
   {
    "check": "no request asks an expert to read more than ten files with a model",

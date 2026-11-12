@@ -5,7 +5,8 @@ No NAS is available in Round 1, so a small local vision model plays two parts th
 1. The recognition index. Every photo captured before the loss is tagged once with object
    categories from a fixed list, the way UGREEN Photos indexes a library.
 2. photo-agent's vision step. For each claimed item, the Skill's own route and caps are applied
-   (one search per category; the eight latest matching photos before the loss plus the earliest),
+   (one search per category; nine matching photos before the loss spread across their capture dates, or with
+   STANDIN_SELECT=latest the rule of Skill 0.1.0, the eight latest plus the earliest),
    and each candidate is described with the C4b question: which of the listed items are visible,
    and which other durable items. Then the Skill's second pass looks again at the photos already
    returned, for the items still unproven.
@@ -15,13 +16,13 @@ Skill asks the owner to itemize them. The second route (text in a photo, receipt
 run here, because the receipts are not part of this test.
 
 Scoring is against results/pre-loss-photo-census.md, the hand count made before this test: an item
-counts as proven when a photo the model cites is one the census lists for that item, or one I opened
-and checked by eye (recorded in results/recall-standin-checks.csv). Nothing leaves this machine: the
+counts as proven when a photo the model cites is one the census lists for that item, or one opened at full
+size and checked by eye (recorded in results/recall-standin-checks.csv). Nothing leaves this machine: the
 model runs in Ollama, and only file names and item names are written out.
 
     py tools/recall_standin.py index      # tag every pre-loss photo (cached in tmp/recall/)
     py tools/recall_standin.py search     # run the claim search and score it
-    py tools/recall_standin.py report     # write results/recall-standin.md and .json
+    py tools/recall_standin.py report     # both cap rules, first pass and continuing: results/recall-standin.md and .json
 """
 import base64
 import csv
@@ -42,6 +43,9 @@ ROOT = Path(__file__).resolve().parent.parent
 # gemma4:e4b missed one, qwen3.5:4b answered all three correctly. All three are about four billion parameters.
 MODEL = os.environ.get("STANDIN_MODEL", "qwen3.5:4b")
 PAGES = int(os.environ.get("STANDIN_CONTINUE", "0"))  # continuations the owner asks for, per category
+# The claim-search cap: "spread", nine photos spread across the capture dates (Skill 0.2.0), or "latest", the eight
+# latest plus the earliest (Skill 0.1.0, the rule of the first run of this measurement).
+SELECT = os.environ.get("STANDIN_SELECT", "spread")
 WORK = ROOT / "tmp" / "recall" / MODEL.replace(":", "-")
 LOSS = "2026-06-20T00:00"
 LISTS = [ROOT / "tmp" / "census" / "photos.csv", ROOT / "tmp" / "census-phone" / "photos.csv"]
@@ -128,6 +132,19 @@ def census():
     return out
 
 
+def spread(hits, n=9):
+    """n photos spread across the capture dates: the latest, the earliest and n - 2 at even steps between them."""
+    if len(hits) <= n:
+        return list(hits)
+    return [hits[i] for i in sorted({round(i * (len(hits) - 1) / (n - 1)) for i in range(n)})]
+
+
+def first_cut(hits):
+    if SELECT == "latest":
+        return hits[-8:] + ([hits[0]] if hits and hits[0] not in hits[-8:] else [])
+    return spread(hits)
+
+
 def search():
     idx = [json.loads(line) for line in (WORK / "index.jsonl").open(encoding="utf-8")]
     items = list(csv.DictReader((ROOT / "results" / "june-2026-items.csv").open(encoding="utf-8")))
@@ -145,7 +162,10 @@ def search():
             r = json.loads(line)
             cache[(r["path"], r["items"])] = r["answer"]
 
+    reads = [0]  # model reads this run would cost on the NAS, cached or not
+
     def describe(path, names):
+        reads[0] += 1
         key = (path, " | ".join(names))
         if key not in cache:
             prompt = ("Say which of these household items are visible in this photo: " + "; ".join(names)
@@ -173,12 +193,11 @@ def search():
     name = {int(it["number"]): it["item"] for it in items}
     cited = {n: [] for n in name}
     returned = []
-    # first route: one search per category, the eight latest before the loss plus the earliest
+    # first route: one search per category, capped as the Skill version under test says (SELECT)
     for cat in sorted({c for c in ROUTE.values() if c and c != "keyword"}):
         wanted = [n for n, c in ROUTE.items() if c == cat]
         hits = sorted((p for p in idx if cat in p["cats"]), key=lambda p: p["taken"])
-        chosen = hits[-8:] + ([hits[0]] if hits and hits[0] not in hits[-8:] else [])
-        for p in chosen:
+        for p in first_cut(hits):
             returned.append(p)
             ans = describe(p["path"], [name[n] for n in wanted])
             for n in wanted:
@@ -196,7 +215,8 @@ def search():
                 cited[n].append(p)
     # Continuing, as the Skill offers when more photos matched than were described: the owner has rejected every
     # photo shown for an item (here, the photos the census and the eye checks say do not show it) and asks to go on.
-    # Each continuation describes the next eight older matches of the item's category, up to PAGES times.
+    # Each continuation goes on from where the last delegation stopped, up to PAGES times: with the "latest" cap the next
+    # eight older matches; with the "spread" cap nine more spread across the matches not described yet.
     files_of = {n: cen.get(n, ("no", set()))[1] for n in name}
 
     def shown(n):
@@ -204,10 +224,15 @@ def search():
 
     for cat in sorted({c for c in ROUTE.values() if c and c != "keyword"}):
         hits = sorted((p for p in idx if cat in p["cats"]), key=lambda p: p["taken"])
+        done = {p["path"] for p in first_cut(hits)}
         for page in range(1, PAGES + 1):
             wanted = [n for n, c in ROUTE.items() if c == cat and not shown(n)]
-            older = hits[max(0, len(hits) - 8 * (page + 1)):len(hits) - 8 * page]
-            older = [p for p in older if p is not hits[0]]
+            if SELECT == "latest":
+                older = hits[max(0, len(hits) - 8 * (page + 1)):len(hits) - 8 * page]
+                older = [p for p in older if p is not hits[0]]
+            else:
+                older = spread([p for p in hits if p["path"] not in done])
+                done |= {p["path"] for p in older}
             if not wanted or not older:
                 break
             for p in older:
@@ -229,9 +254,9 @@ def search():
         unchecked += [(n, f) for f in todo]
         rows.append({"n": n, "item": name[n], "census": status, "route": ROUTE[n] or "owner to itemize",
                      "proven": bool(good), "good": good, "bad": bad, "unclear": unclear, "todo": todo})
-    out = {"model": MODEL, "photos_indexed": len(idx), "describe_calls": len(cache), "rows": rows,
-           "returned": sorted({Path(p["path"]).name for p in pool})}
-    (WORK / (f"result-continue{PAGES}.json" if PAGES else "result.json")).write_text(json.dumps(out, indent=1), encoding="utf-8")
+    out = {"model": MODEL, "select": SELECT, "photos_indexed": len(idx), "describe_calls": len(cache), "rows": rows,
+           "returned": sorted({Path(p["path"]).name for p in pool}), "described": len(pool), "model_reads": reads[0]}
+    (WORK / f"result-{SELECT}-continue{PAGES}.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     conf = [r for r in rows if r["census"] == "yes"]
     print(f"photos indexed {len(idx)}, descriptions {len(cache)}")
     print(f"confirmed by the census: {len(conf)}; searchable: {sum(1 for r in conf if r['route'] != 'owner to itemize')}; "
@@ -259,72 +284,173 @@ def tally(res):
             "proven": sum(r["proven"] for r in conf),
             "proven_outside_census": [r["n"] for r in rows if r["census"] != "yes" and r["proven"]],
             "right_photos": sum(len(r["good"]) for r in rows), "wrong_photos": sum(len(r["bad"]) for r in rows),
-            "unclear_photos": sum(len(r.get("unclear", [])) for r in rows), "unchecked": sum(len(r["todo"]) for r in rows)}
+            "unclear_photos": sum(len(r.get("unclear", [])) for r in rows), "unchecked": sum(len(r["todo"]) for r in rows),
+            "photos_described": res.get("described"), "model_reads": res.get("model_reads")}
+
+
+def causes(res, idx):
+    """Why each searchable item the hand count found was not proven, worked out from the run itself."""
+    cen = census()
+    tags = {Path(p["path"]).name: set(p["cats"]) for p in idx}
+    returned = set(res["returned"])
+    out = {}
+    for r in res["rows"]:
+        if r["census"] != "yes" or r["proven"] or r["route"] == "owner to itemize":
+            continue
+        files = cen[r["n"]][1]
+        if r["route"] == "keyword":
+            why = "keyword"
+        elif not files & set(tags):
+            why = "not indexed"
+        elif not any(r["route"] in tags[f] for f in files if f in tags):
+            why = "recognition"
+        elif not files & returned:
+            why = "cap"
+        elif r["bad"]:
+            why = "wrong photo first"
+        else:
+            why = "description"
+        out[r["n"]] = why
+    return out
+
+
+# How the report names an item in a sentence; the table keeps the claim's own wording.
+SHORT = {1: "the sofa", 2: "the television", 3: "the gaming chair", 4: "the armchair", 5: "the bed frame",
+         6: "the console and side tables", 7: "the coffee table", 8: "the hex side table", 9: "the power tower",
+         10: "the dumbbells", 12: "the bookshelf", 13: "the storage shelving", 14: "the stick vacuum",
+         15: "the road case", 16: "the camera rig", 17: "the chrome shelving", 18: "the floor lamps",
+         19: "the mini-fridge", 20: "the washer and dryer", 24: "the boot dryer", 25: "the iron",
+         26: "the monitor arm", 27: "the picture frames"}
+RATED = {"likely": "rated only likely", "plausible": "rated plausible", "no": "which the hand count found in no photo"}
 
 
 def report():
-    global PAGES
-    PAGES = 0
-    first = search()
-    PAGES = int(os.environ.get("STANDIN_REPORT_CONTINUE", "4"))
-    more = search()
-    a, b = tally(first), tally(more)
-    by_n = {r["n"]: r for r in first["rows"]}
-    summary = {**a, "continued_pages": PAGES, "continued": b}
+    global PAGES, SELECT
+    cont = int(os.environ.get("STANDIN_REPORT_CONTINUE", "4"))
+    idx = [json.loads(line) for line in (WORK / "index.jsonl").open(encoding="utf-8")]
+    runs = {}
+    for select in ("spread", "latest"):
+        for pages in (0, cont):
+            SELECT, PAGES = select, pages
+            runs[(select, pages)] = search()
+    SELECT, PAGES = "spread", cont
+    a, b = tally(runs[("spread", 0)]), tally(runs[("spread", cont)])
+    la, lb = tally(runs[("latest", 0)]), tally(runs[("latest", cont)])
+    first_n = {r["n"]: r for r in runs[("spread", 0)]["rows"]}
+    old_first = {r["n"]: r for r in runs[("latest", 0)]["rows"]}
+    old_more = {r["n"]: r for r in runs[("latest", cont)]["rows"]}
+    more = runs[("spread", cont)]
+    items = list(csv.DictReader((ROOT / "results" / "june-2026-items.csv").open(encoding="utf-8-sig")))
+    value = {int(it["number"]): int(it["qty"]) * int(it["replacement_cad_each"]) for it in items}
+    total = sum(value.values())
+
+    def worth(res):
+        return sum(value[r["n"]] for r in res["rows"] if r["census"] == "yes" and r["proven"])
+
+    why = causes(more, idx)
+    name = {r["n"]: SHORT.get(r["n"], r["item"]) for r in more["rows"]}
+    gained = [name[n] for n in sorted(name) if first_n[n]["census"] == "yes" and first_n[n]["proven"] and not old_first[n]["proven"]]
+    lost = [name[n] for n in sorted(name) if first_n[n]["census"] == "yes" and old_first[n]["proven"] and not first_n[n]["proven"]]
+    summary = {**a, "rule": "nine spread across the capture dates (Skill 0.2.0)", "value_proven": worth(runs[("spread", 0)]),
+               "value_total": total, "continued_pages": cont,
+               "continued": {**b, "value_proven": worth(more)},
+               "before_change": {"rule": "eight latest plus the earliest (Skill 0.1.0)", "first": la, "continued": lb},
+               "misses": {str(n): w for n, w in why.items()}}
+    group = {"recognition": [], "cap": [], "wrong photo first": [], "description": [], "keyword": [], "not indexed": []}
+    for n, w in why.items():
+        group[w].append(name[n])
+
+    def join(xs):
+        return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+
+    change = ""
+    if gained:
+        change += f" On the first pass the change proved {join(gained)}"
+        change += f", and lost {join(lost)}." if lost else "."
+    elif lost:
+        change += f" On the first pass the change lost {join(lost)}."
+    change += (f" The first pass also cited {a['wrong_photos']} wrong photos instead of {la['wrong_photos']}, and continuing "
+               f"cost {b['model_reads']} model reads instead of {lb['model_reads']}.")
+    status = {r["n"]: r["census"] for r in more["rows"]}
+    beyond = [f"{name[n]} ({RATED.get(status[n], status[n])})" for n in b["proven_outside_census"]]
+    beyond = (f" Beyond the hand count it also proved {join(beyond)}, each with a photo checked by eye." if beyond else "")
     lines = ["# Recall on my real library, with a local stand-in for the NAS", "",
              f"Run {time.strftime('%Y-%m-%d')} with `tools/recall_standin.py`. A small vision model running on my own computer "
              f"({a['model']}, about four billion parameters, through Ollama) played two parts of the NAS: it tagged each of the "
-             f"{a['photos']:,} photos captured before the loss with object categories, as the NAS recognition index would, "
-             "and it answered the Skill's own question for each candidate photo. The Skill's routes and caps were applied as written: "
-             "one search per category, the eight latest photos before the loss plus the earliest, then a second look at the photos "
-             "already returned for the items still unproven. Nothing left the computer.", "",
+             f"{a['photos']:,} photos captured before the loss that are stored on the computer with object categories, as the NAS "
+             "recognition index would, and it answered the Skill's own question for each candidate photo. The library holds 1,769 "
+             f"photos from before the loss; the other {1769 - a['photos']} are kept only in the cloud and could not be read. Nothing "
+             "left the computer.", "",
+             "What I chose and what the Skill chose: I set the stand-in index's 25 categories, and the category each line of my "
+             "claim is searched under, before the run, following the Skill's search-routes reference. The NAS index has its own "
+             "category list, so its routes can differ. Everything after that follows the Skill as written: one search per category, "
+             "capped, then a second look at the photos already returned, for the items still unproven.", "",
              "How the model was chosen: a first run with gemma3:4b named items in photos that do not show them (a bed frame in a "
              "photo of trading cards, a console table in a photo of a fence), so before a second run three local models of the same "
              "size were asked the Skill's question about three photos whose contents the hand count records. gemma3:4b named an item "
              "that was not there, gemma4:e4b missed one, and qwen3.5:4b answered all three correctly; it is the model used here. "
-             "The first run is not scored.", "",
+             "The gemma3:4b run is not scored.", "",
              "## Result", "",
-             f"**First pass: the stand-in proved {a['proven']} of the {a['confirmed']} items my hand count found in a pre-loss photo**, "
-             "each with a photo that shows the item. "
-             f"{a['confirmed'] - a['searchable']} of the {a['confirmed']} are entries the Skill never searches (boxes, bags, bedding, "
-             f"stored items), because it asks the owner to itemize them, so the most it could prove is {a['searchable']}. "
-             "It also found a clearer photo of the stick vacuum, an item the hand count had rated only likely.", "",
-             f"**Continuing: {b['proven']} of {b['confirmed']}.** When more photos match than were described, the Skill offers to go on. "
-             f"With the owner turning down the wrong photos and asking to continue up to {PAGES} times per item, the search reached older "
-             "photos of the storage room and proved the bed frame and the bookshelf from them.", "",
-             f"Photos it cited, every one checked against the hand count or opened and looked at: {b['right_photos']} show the item, "
-             f"{b['wrong_photos']} do not, {b['unclear_photos']} cannot settle it. Nothing was left unchecked. "
-             "A wrong photo never reaches the claim on its own: every row and its photo are shown to the owner to confirm first, "
-             "and this many wrong photos is why that step exists. On the first pass it cited no photo for the camera rig or the iron, "
-             "the two items the hand count found in no photo; continuing, it cited two screenshots for the camera rig.", "",
+             f"**Skill 0.2.0, nine photos spread across the capture dates: the stand-in proved {a['proven']} of the {a['confirmed']} "
+             f"items my hand count found in a pre-loss photo on the first pass, worth ${summary['value_proven']:,} of the "
+             f"${total:,} CAD claimed, and {b['proven']} (${summary['continued']['value_proven']:,}) when the owner asks it to "
+             f"continue.** {a['confirmed'] - a['searchable']} of the {a['confirmed']} are entries the Skill never searches (boxes, "
+             f"bags, bedding, stored items), because it asks the owner to itemize them, so the most it could prove is "
+             f"{a['searchable']}. The first pass cost {a['model_reads']} model reads over {a['photos_described']} photos; "
+             f"continuing, {b['model_reads']} over {b['photos_described']}." + beyond, "",
+             f"**Skill 0.1.0, the eight latest matches plus the earliest: {la['proven']} on the first pass, {lb['proven']} "
+             "continuing.** That was the rule of the first run of this measurement. Its misses showed that the eight latest matches "
+             "of a busy category all came from 2026 and never reached the older photos that held the proof, so the claim search "
+             "was changed to spread its nine photos across the capture dates. The change came after that run; both results are "
+             "kept here and scored the same way." + change, "",
+             f"Photos it cited (0.2.0, continuing), every one checked against the hand count or opened and looked at: "
+             f"{b['right_photos']} show the item, {b['wrong_photos']} do not, {b['unclear_photos']} cannot settle it"
+             + (". Nothing was left unchecked. " if not b["unchecked"] else f", {b['unchecked']} not checked yet. ")
+             + "A wrong photo never reaches the claim on its own: every row and its photo are shown to the owner to confirm "
+             "first, and this many wrong photos is why that step exists.", "",
              "## Why it missed what it missed", "",
-             "- **The cap, not the recognition.** The index tagged the December walk-through correctly (bed, bookcase, table, lamp), but "
-             "40 photos are tagged bed and 133 lamp, and the eight latest of each are from 2026. The first pass never reached December "
-             "2025. Continuing reached the bed frame and the bookshelf; the coffee table, the road case and the floor lamps were still "
-             "further back.",
-             "- **An item counted as found too early.** The hex side table was in a photo the search returned, but a wrong photo had "
-             "already been cited for it, so the second look never asked about it. The owner would turn that photo down, and the "
-             "Skill would look again.",
-             "- **No word for it.** The boot dryer has no category and the stand-in has no keyword search, so only the second look "
-             "could reach it, and its one photo was never returned.", "",
-             "For the testing day, this says what to watch: how many photos the NAS index returns per category, and whether the "
-             "eight-latest cap needs to grow when an item stays unproven.", "",
-             "This measures the Skill's search and description steps with a small model standing in for the NAS; the NAS's own "
-             "recognition index will tag photos differently, and the receipt routes were not run.", "",
-             "## Item by item", "",
-             "A cited photo counts when the hand count lists it for that item, or when the photo, opened at full size and compared "
-             "with the hand count's description of the item, shows it. Each verdict (yes, no or unclear) is in "
-             "[recall-standin-checks.csv](recall-standin-checks.csv); the AI assistant that helped build this project made the first "
-             "pass of these checks, and the list is mine to correct.", "",
-             "| # | Item | Hand count | Route | First pass | Continuing | Photos that show it | Wrong photos cited |",
-             "| --- | --- | --- | --- | --- | --- | --- | --- |"]
+             "Worked out from the run itself (0.2.0, continuing), for each item the hand count found and the Skill searches:", ""]
+    text = {
+        "recognition": "**Recognition.** The stand-in index never tagged the photos that show {x} with the category searched, "
+                       "so no search could return them.",
+        "cap": "**The cap.** The photos that show {x} were tagged correctly but were not among the photos described, even "
+               "after continuing.",
+        "wrong photo first": "**A wrong photo counted first.** A photo that shows {x} was returned, but a wrong photo had "
+                             "already been cited, so the second look never asked about it. The owner would turn that photo "
+                             "down, and the Skill would look again.",
+        "description": "**The description.** A photo that shows {x} was described, and the model did not name it.",
+        "keyword": "**No word for it.** No category names {x}, and the stand-in has no keyword search, so only the second "
+                   "look could reach it.",
+        "not indexed": "**Not on the computer.** The only photos of {x} are kept in the cloud.",
+    }
+    for k, xs in group.items():
+        if xs:
+            lines.append("- " + text[k].format(x=join(xs)))
+    lines += ["", "For the testing day, this says what to watch: how many photos the NAS index returns per category, and how "
+              "its categories cover a household's things.", "",
+              "This measures the Skill's search and description steps with a small model standing in for the NAS; the NAS's own "
+              "recognition index will tag photos differently, and the receipt routes were not run.", "",
+              "## Item by item", "",
+              "A cited photo counts when the hand count lists it for that item, or when the photo, opened at full size and "
+              "compared with the hand count's description of the item, shows it. Each verdict (yes, no or unclear) is in "
+              "[recall-standin-checks.csv](recall-standin-checks.csv), which also keeps the verdicts on photos cited by earlier "
+              "runs; the AI assistant that helped build this project made the first pass of these checks, and the list is mine "
+              "to correct.", "",
+              "| # | Item | Hand count | Route | 0.1.0 first pass | 0.1.0 continuing | 0.2.0 first pass | 0.2.0 continuing | "
+              "Photos that show it (0.2.0) | Wrong photos cited |",
+              "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+
+    def yn(v):
+        return "yes" if v else "no"
+
     for r in more["rows"]:
-        lines.append(f"| {r['n']} | {r['item']} | {r['census']} | {r['route']} | {'yes' if by_n[r['n']]['proven'] else 'no'} | "
-                     f"{'yes' if r['proven'] else 'no'} | {', '.join(public(f) for f in r['good']) or ' '} | "
-                     f"{len(r['bad']) or ' '} |")
+        n = r["n"]
+        lines.append(f"| {n} | {r['item']} | {r['census']} | {r['route']} | {yn(old_first[n]['proven'])} | "
+                     f"{yn(old_more[n]['proven'])} | {yn(first_n[n]['proven'])} | {yn(r['proven'])} | "
+                     f"{', '.join(public(f) for f in r['good']) or ' '} | {len(r['bad']) or ' '} |")
     (ROOT / "results" / "recall-standin.md").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     (ROOT / "results" / "recall-standin.json").write_text(json.dumps({"summary": summary}, indent=1) + "\n", encoding="utf-8")
-    print("summary", summary)
+    print("summary", json.dumps(summary, indent=1))
 
 
 if __name__ == "__main__":

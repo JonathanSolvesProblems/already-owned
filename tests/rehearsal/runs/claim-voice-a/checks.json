@@ -4,8 +4,8 @@
  "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
  "checks": 31,
  "passed": 31,
- "delegations": 34,
- "accepted_as_first_sent": 33,
+ "delegations": 36,
+ "accepted_as_first_sent": 35,
  "results": [
   {
    "check": "no instruction holds a brace, a pipe, an angle bracket, a line break or a command option",
@@ -15,7 +15,7 @@
   {
    "check": "no instruction is longer than 4,000 characters",
    "pass": true,
-   "detail": "longest 3601"
+   "detail": "longest 3558"
   },
   {
    "check": "no request asks an expert to read more than ten files with a model",

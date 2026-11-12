@@ -73,7 +73,11 @@ def main(args):
     lines += ["## Notes", "",
               "- Round 1 had a sixth run, the break-in. It is left out: the scripted user answered a question about the camera window with its answer about the exhibit copies, a fault in the mock's script that was fixed before round 2.",
               "- The checks were tightened as the Skill was: the ten-line and 4,000-character checks were added when the Skill set those limits, and every round above is scored with today's checks.",
-              "- After the last round, the package changed in two places no step reads: the AI-tools sentences in `references/disclosures.md`, and the part count in the example of `references/sample-claim.md`, brought in line with the six-row limit.", ""]
+              "- Rounds 6 and 7 ran after the claim search was changed to describe nine photos spread across the capture dates instead of the eight latest (the version note in `references/disclosures.md` says why). "
+              "In round 6, one run asked about the items of the voice walk-through instead of listing them; the user's reply did not answer, and under the rule that an unanswered question decides nothing, four lost items were left off the claim. "
+              "C2 and C3 now keep what the user names, typed or spoken, on the list unless the user removes it. Round 6 also found three wording gaps, fixed before round 7: a receipt for a row already in the ledger, the exhibit line when the copies are declined, and what continuing a claim search means.",
+              "- One check in the altered-save scenario, \"the mock altered one saved value\", confirms the mock did its part rather than testing the assistant.",
+              "- After the last round, nothing in the package changed.", ""]
     (OUT / "results.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
     (OUT / "results.json").write_text(json.dumps({"rounds": [{"label": l, "runs": r} for l, _, r in rounds]}, indent=1) + "\n", encoding="utf-8")
 

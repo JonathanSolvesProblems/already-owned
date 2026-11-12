@@ -12,7 +12,8 @@ Each photo list is a CSV with the columns path and taken (the capture time, writ
 merged, and a photo that appears in two of them is counted once.
 
 The items file has one row per claim line: number, item, keywords (pipe separated). A keyword hits
-when it appears, case-insensitive, in the file name or in a folder name on the path. Folder names
+when it appears as a whole word, singular or plural, case-insensitive, in the file name or in a folder name
+on the path. Folder names
 count because a user may have sorted photos by hand; file names count because cameras sometimes
 write words (Screenshot, PANO) and users sometimes rename.
 
@@ -51,7 +52,7 @@ def main():
 
     photos, seen, undated = [], set(), 0
     for census in args.census:
-        with open(census, encoding="utf-8") as f:
+        with open(census, encoding="utf-8-sig") as f:  # -sig: a list saved by Excel starts with a byte-order mark
             for r in csv.DictReader(f):
                 key = (r.get("md5_64k") or r["path"], r.get("bytes"))
                 taken = when(r.get("taken", ""))
@@ -63,11 +64,12 @@ def main():
                     photos.append(r["path"].replace("\\", "/"))
     names = [(os.path.basename(p), os.path.dirname(p)) for p in photos]
 
-    with open(args.items, encoding="utf-8") as f:
+    with open(args.items, encoding="utf-8-sig") as f:
         items = list(csv.DictReader(f))
 
     def word_hit(text, kws):
-        return any(re.search(r"(?<![a-z])" + re.escape(k) + r"(?![a-z])", text) for k in kws)
+        # a keyword hits as a whole word, singular or plural (lamp, lamps; bench, benches)
+        return any(re.search(r"(?<![a-z])" + re.escape(k) + r"(?:e?s)?(?![a-z])", text) for k in kws)
 
     rows, hits_total = [], 0
     for it in items:
@@ -105,7 +107,7 @@ def main():
                 "day a given belonging was photographed. Finding belongings in an unlabelled library needs the "
                 "recognition index, the text in the photo and the vision model, which is what the Skill delegates to.\n")
         if args.verification:
-            with open(args.verification, encoding="utf-8") as n:
+            with open(args.verification, encoding="utf-8-sig") as n:
                 f.write("\n" + n.read())
     print(f"{hits_total} of {len(items)} items with a raw hit, over {len(photos)} photos; written to {args.out}")
 

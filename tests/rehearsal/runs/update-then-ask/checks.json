@@ -15,7 +15,7 @@
   {
    "check": "no instruction is longer than 4,000 characters",
    "pass": true,
-   "detail": "longest 3565"
+   "detail": "longest 3124"
   },
   {
    "check": "no request asks an expert to read more than ten files with a model",
@@ -65,12 +65,12 @@
   {
    "check": "a ledger page was saved",
    "pass": true,
-   "detail": "2 page(s), 15 row(s)"
+   "detail": "2 page(s), 14 row(s)"
   },
   {
    "check": "the page holds at least 8 rows",
    "pass": true,
-   "detail": "15 rows"
+   "detail": "14 rows"
   },
   {
    "check": "on the page: sofa",

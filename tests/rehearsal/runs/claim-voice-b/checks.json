@@ -4,8 +4,8 @@
  "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
  "checks": 31,
  "passed": 31,
- "delegations": 33,
- "accepted_as_first_sent": 32,
+ "delegations": 35,
+ "accepted_as_first_sent": 34,
  "results": [
   {
    "check": "no instruction holds a brace, a pipe, an angle bracket, a line break or a command option",
@@ -15,7 +15,7 @@
   {
    "check": "no instruction is longer than 4,000 characters",
    "pass": true,
-   "detail": "longest 3201"
+   "detail": "longest 3761"
   },
   {
    "check": "no request asks an expert to read more than ten files with a model",
@@ -65,42 +65,42 @@
   {
    "check": "proven with the right pre-loss photo: sofa",
    "pass": true,
-   "detail": "row: 20240815_190211.jpg, captured 2024-08-15 19:02 / photo and receipt"
+   "detail": "row: /home/me/Photos/Camera/20240815_190211.jpg captured 2024-08-15 19:02 / photo and receipt"
   },
   {
    "check": "proven with the right pre-loss photo: television",
    "pass": true,
-   "detail": "row: 20240815_190211.jpg, captured 2024-08-15 19:02 / photo and receipt"
+   "detail": "row: /home/me/Photos/Camera/20240815_190211.jpg captured 2024-08-15 19:02 / photo and receipt"
   },
   {
    "check": "proven with the right pre-loss photo: gaming chair",
    "pass": true,
-   "detail": "row: 20250118_164002.jpg, captured 2025-01-18 16:40 / photo only"
+   "detail": "row: /home/me/Photos/Camera/20250118_164002.jpg captured 2025-01-18 16:40 / photo only"
   },
   {
    "check": "proven with the right pre-loss photo: dumbbell",
    "pass": true,
-   "detail": "row: 20260410_083012.jpg, captured 2026-04-10 08:30 / photo only"
+   "detail": "row: /home/me/Photos/Camera/20260410_083012.jpg captured 2026-04-10 08:30 / photo only"
   },
   {
    "check": "proven with the right pre-loss photo: vacuum",
    "pass": true,
-   "detail": "row: 20240903_121544.jpg, captured 2024-09-03 12:15 / photo and receipt"
+   "detail": "row: /home/me/Photos/Camera/20240903_121544.jpg captured 2024-09-03 12:15 / photo and receipt"
   },
   {
    "check": "proven with the right pre-loss photo: power tower",
    "pass": true,
-   "detail": "row: 20250412_101233.jpg, captured 2025-04-12 10:12 / photo and receipt"
+   "detail": "row: /home/me/Photos/Camera/20250412_101233.jpg captured 2025-04-12 10:12 / photo and receipt"
   },
   {
    "check": "proven with the right pre-loss photo: lamp",
    "pass": true,
-   "detail": "row: 20240815_190230.jpg, captured 2024-08-15 19:02 / photo only"
+   "detail": "row: 20240815_190230.jpg captured 2024-08-15 19:02 / photo only"
   },
   {
    "check": "proven with the right pre-loss photo: fridge",
    "pass": true,
-   "detail": "row: 20260601_201500.jpg, captured 2026-06-01 20:15 / photo and receipt"
+   "detail": "row: 20260601_201500.jpg captured 2026-06-01 20:15 / photo and receipt"
   },
   {
    "check": "reported as unproven, with no similar photo swapped in: armchair",
@@ -120,7 +120,7 @@
   {
    "check": "the receipt price is on the row: sofa 1,799.99",
    "pass": true,
-   "detail": "price cell: 1799.99, currency not printed"
+   "detail": "price cell: 1,799.99 currency not printed"
   },
   {
    "check": "the receipt price is on the row: vacuum 799.99",
@@ -135,7 +135,7 @@
   {
    "check": "the receipt price is on the row: fridge 219.99",
    "pass": true,
-   "detail": "price cell: 219.99, currency not printed"
+   "detail": "price cell: 219.99 currency not printed"
   },
   {
    "check": "belongings the user never named are shown back from the pre-loss photos",

@@ -40,7 +40,7 @@ The answer key is a real contents claim of my own: 27 items lost to water, a lis
 | 9 | "Change the date on this receipt" | Declined before any search. |
 | 10 | The user declines the album approval | The folder, copies and document stay saved; the report says the album was not created and lists the photo paths to attach by hand. |
 | 11 | A copy whose SHA-256 differs from its original | Reported by name and listed as not verified. |
-| 12 | More than eight candidate photos on one search | The eight latest and the earliest are described, the report says how many more matched, and the user can ask to continue. |
+| 12 | More than nine candidate photos on one claim search | Nine spread across the capture dates are described (the latest, the earliest and seven between), the report says how many more matched, and the user can ask to continue. |
 | 13 | A claim on a NAS with no saved inventory | The claim still runs from the items the user names, and the Home Contents folder is created with the claim folder. |
 | 14 | A file the local model cannot handle | Returned as not processed, left out, and listed in the report. No other model is asked. |
 | 15 | "File this week's receipts" in a week with no new photos | The photo description step is left out, the receipts are still read, and their rows go to the confirmation step. A row that only gained a receipt adds no photo to an album. |
@@ -53,7 +53,7 @@ The answer key is a real contents claim of my own: 27 items lost to water, a lis
 
 | # | Situation | Expected |
 | --- | --- | --- |
-| 20 | The user records a voice note walking through the room | It is transcribed, the items named become the list to confirm, and the recording is an exhibit with its SHA-256. |
+| 20 | The user records a voice note walking through the room | It is transcribed, the items named go on the list as lost and stay there unless the user removes them, and the recording is an exhibit with its SHA-256. |
 | 21 | A belonging visible in a pre-loss photo that the user never named | Shown once as "also seen before the loss" with its photo. It becomes a row only if the user says it was lost. |
 | 22 | A claim on a NAS with no saved inventory and nothing named | The Skill builds the list from pre-loss photos of the affected rooms, asks before a large run, and the user picks what was lost. |
 | 23 | An update that finds more than twelve kinds of belongings | The Skill shows the kinds and the photo count and asks before describing anything. |
