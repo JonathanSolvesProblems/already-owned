@@ -181,7 +181,7 @@ def s5_claim():
     <div class='stage' style='bottom:0'>
       <div style='display:grid;grid-template-columns:.62fr 1.38fr;gap:50px;height:100%'>
         <div style='padding-top:40px'>
-          <h1 style='font-size:68px'>One folder you can hand to the insurer</h1>
+          <h1 style='font-size:68px;line-height:1.12'>One folder you can hand to the insurer</h1>
           <p class='lead' style='margin-top:30px;font-size:30px'>Every row says what proves it: a photo from before the loss, a receipt, or a plain "no proof".</p>
           <p style='font-size:24px;margin-top:26px'>Each exhibit is copied in with its capture time, its camera and a SHA-256 value.</p>
         </div>
