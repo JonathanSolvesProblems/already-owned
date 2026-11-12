@@ -73,17 +73,27 @@ h1 .circled svg{position:absolute;left:-7%;top:-13%;width:114%;height:126%;overf
 @media (prefers-color-scheme:dark){.btn{background:var(--stock);color:var(--ink);border-color:var(--stock)}.hero .sheet,.ex-photo .sheet{outline:1px solid rgba(249,234,212,.35)}}
 
 .sheet{background:var(--sheet);color:var(--rebate);padding:14px 0 10px;box-shadow:7px 8px 0 var(--drop)}
-.hero .sheet{position:relative;z-index:2;margin:36px 0 0 -8px;width:max-content;transform:rotate(-2.4deg);transform-origin:left center}
+.proof{container-type:inline-size;position:relative;z-index:2;margin-top:36px}
+.hero .sheet{position:relative;margin:0 0 0 8px;width:max-content;transform:rotate(-2.4deg);transform-origin:left center}
 .strip{display:flex;gap:10px;padding:0 14px;position:relative}
 .strip + .strip{margin-top:12px}
 .frame{flex:0 0 auto;width:clamp(84px,22.5vw,196px);position:relative}
+/* Hero frames fill the box the sheet sits in, so the whole sheet stays on screen with a margin at any width.
+   99px = the sheet's own padding, gaps and cut line (79px) plus room for its tilt. */
+.hero .frame{width:clamp(48px,calc((100vw - 139px) / 4),220px)}
+@supports (width:1cqw){.hero .frame{width:min(220px,calc((100cqw - 99px) / 4))}}
+@container (max-width:479px){
+  .hero .strip > .frame:nth-child(2){display:none}
+  .hero .frame{width:calc((100cqw - 89px) / 3)}
+}
+@container (max-width:330px){.hero .frame .tag{font-size:10px;padding:2px 5px 3px;left:1px}}
 .frame img{aspect-ratio:3/2;object-fit:cover;width:100%;background:var(--cream)}
 .frame .no{display:flex;justify-content:space-between;padding:5px 2px 0;color:var(--rebate);font:400 10.5px/1 var(--edge)}
 .mark{position:absolute;left:-5px;top:-5px;width:calc(100% + 10px);height:calc(100% - 6px);overflow:visible;pointer-events:none}
 .mark path{fill:none;stroke-width:4.5;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .keep .mark path{stroke:var(--keep-lit)}
 .gone .mark path{stroke:var(--slash)}
-.frame .tag{position:absolute;left:3px;bottom:20px;background:var(--stock);color:var(--ink);font:500 clamp(11px,3vw,13px)/1.1 var(--hand);padding:3px 7px 4px;transform:rotate(-3deg);box-shadow:0 2px 0 rgba(0,0,0,.3);white-space:nowrap}
+.frame .tag{position:absolute;z-index:1;left:3px;bottom:20px;background:var(--stock);color:var(--ink);font:500 clamp(11px,3vw,13px)/1.1 var(--hand);padding:3px 7px 4px;transform:rotate(-3deg);box-shadow:0 2px 0 rgba(0,0,0,.3);white-space:nowrap}
 .gone .tag{background:var(--cream);transform:rotate(2deg)}
 .cut{flex:0 0 auto;width:0;border-left:3px dashed var(--slash);margin:-8px 4px 14px;position:relative}
 .cut.bare{margin:-14px 4px -14px}
@@ -112,7 +122,7 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .env-head .sum{font-size:16px;font-weight:500;max-width:36em}
 .stamp{justify-self:start;transform:rotate(-3deg);border:3px solid var(--slash-ink);color:var(--slash-ink);font:800 15px/1 var(--display);padding:6px 10px 7px;margin:2px 0 4px}
 .rows{list-style:none;margin:0;padding:0 18px 4px}
-.row{display:grid;grid-template-columns:72px 1fr;gap:4px 14px;padding:14px 0;border-top:1px solid var(--rule);align-items:start}
+.row{display:grid;grid-template-columns:72px minmax(0,1fr);gap:4px 14px;padding:14px 0;border-top:1px solid var(--rule);align-items:start}
 .row:first-child{border-top:0}
 .thumb{grid-row:span 3;position:relative;width:72px}
 .thumb.filed{position:relative}
@@ -124,6 +134,7 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .row h4{margin:0;font:700 16.5px/1.25 var(--body);text-wrap:balance}
 .row h4 i{font:400 12px/1 var(--edge);font-style:normal;margin-right:8px;color:var(--soft)}
 .row .ev{font:400 13.5px/1.5 var(--edge);color:var(--panel-text)}
+@media (max-width:430px){.row .ev .nw{white-space:normal}.row .ev{overflow-wrap:anywhere}}
 .level{justify-self:start;font:700 12.5px/1 var(--body);padding:5px 8px 6px;border-radius:2px;margin-top:2px}
 .level.pr{background:var(--panel-text);color:var(--panel)}
 .level.p{border:2px solid var(--panel-text);color:var(--panel-text)}
@@ -167,7 +178,7 @@ h2{font-size:clamp(36px,7.4vw,64px)}
 .line i{position:absolute;top:20px;font:400 12.5px/1.3 var(--edge);font-style:normal;color:var(--rebate);white-space:nowrap}
 .line i:first-of-type{left:0} .line i:last-of-type{right:0;text-align:right}
 .voice{background:var(--cream);color:var(--ink);padding:14px 14px 15px;max-width:24em;margin:0 0 20px}
-.wave{display:flex;align-items:center;gap:3px;height:34px;margin-bottom:10px}
+.wave{display:flex;align-items:center;gap:3px;height:34px;margin-bottom:10px;overflow:hidden}
 .wave i{flex:1 1 0;background:var(--ink);border-radius:1px;min-width:2px}
 .wave-old{-webkit-mask:linear-gradient(90deg,#000 0 100%) center/100% 30% no-repeat,radial-gradient(ellipse 9% 100% at 12% 50%,#000 98%,transparent),radial-gradient(ellipse 7% 80% at 31% 50%,#000 98%,transparent),radial-gradient(ellipse 11% 100% at 52% 50%,#000 98%,transparent),radial-gradient(ellipse 6% 70% at 71% 50%,#000 98%,transparent),radial-gradient(ellipse 8% 90% at 88% 50%,#000 98%,transparent);mask:linear-gradient(90deg,#000 0 100%) center/100% 30% no-repeat,radial-gradient(ellipse 9% 100% at 12% 50%,#000 98%,transparent),radial-gradient(ellipse 7% 80% at 31% 50%,#000 98%,transparent),radial-gradient(ellipse 11% 100% at 52% 50%,#000 98%,transparent),radial-gradient(ellipse 6% 70% at 71% 50%,#000 98%,transparent),radial-gradient(ellipse 8% 90% at 88% 50%,#000 98%,transparent)}
 .vname{font:600 12.5px/1.2 var(--edge);margin-bottom:6px}
@@ -231,12 +242,8 @@ footer .credit{color:var(--soft);font-size:14.5px;max-width:44em}
 @media (min-width:860px){
   body{font-size:18px}
   .hero{padding-top:40px}
-  .hero .sheet{margin:-190px 0 0 49%;transform:rotate(-3deg)}
-  .hero .frame{width:clamp(120px,11.8vw,176px)}
-  .lede{margin-top:26px;max-width:17em}
+  .lede{margin-top:26px}
   .actions{display:flex;flex-wrap:wrap}
-  .key{margin:46px 0 0 49%;max-width:26em}
-  .count{margin-top:22px}
   .row{grid-template-columns:96px 1fr 1.25fr 150px;align-items:center;gap:6px 18px}
   .thumb,.thumb img{width:96px}
   .thumb{grid-row:auto}
@@ -254,6 +261,21 @@ footer .credit{color:var(--soft);font-size:14.5px;max-width:44em}
   .ex-photo{position:sticky;top:28px}
   .ex-photo .frame{width:380px}
 }
+@media (min-width:1000px){
+  .hero-grid{display:grid;grid-template-columns:400px minmax(0,1fr);column-gap:40px;align-items:start}
+  .hero-grid > .by,.hero-grid > h1,.hero-grid > .count,.hero-grid > .plain{grid-column:1 / -1}
+  .pitch{grid-column:1}
+  .lede{max-width:17em}
+  .actions{flex-wrap:nowrap;gap:10px}
+  .actions .btn{font-size:16px;padding:16px 15px;white-space:nowrap}
+  /* the sheet's box runs past the text column into the right margin, and stops 32px short of the window edge */
+  .proof{grid-column:2;margin-top:26px;margin-right:calc(-1 * clamp(0px,(100vw - 1040px) / 2 - 20px,290px))}
+  .hero .sheet{transform:rotate(-3deg)}
+  .hero .frame{width:min(176px,calc((50vw - 139px) / 4))}
+  @supports (width:1cqw){.hero .frame{width:min(176px,calc((100cqw - 99px) / 4))}}
+  .key{margin-top:52px;max-width:26em}
+  .count{margin-top:44px}
+}
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .loop,.found .mark path{stroke-dashoffset:0!important}
@@ -263,20 +285,20 @@ footer .credit{color:var(--soft);font-size:14.5px;max-width:44em}
 <body>
 
 <header class="hero">
-  <div class="wrap">
+  <div class="wrap hero-grid">
     <p class="by">An add-on for the assistant on UGREEN's AI NAS, a home storage box. By <b>Jonathan Andrei</b></p>
     <h1><span>Already</span><span>Owned</span></h1>
+    <div class="pitch">
     <p class="lede">After a flood, the insurer wants proof you owned what you lost. The proof is usually sitting in your camera roll. Walk the room, say what you see, and this add-on is built to find it.</p>
     <div class="actions">
       <a class="btn" href="#claim">See the claim it writes</a>
       <a class="btn alt" href="#replay">Watch a practice run</a>
     </div>
-  </div>
-
-  <div class="sheet" id="hero-sheet" role="img" aria-label="A contact sheet. Photos taken before the loss are boxed in marker. Photos taken after are crossed out."></div>
-
-  <div class="wrap">
-    <p class="key">Boxed in green: taken before the loss, kept as proof. Crossed out: taken after, kept as a damage photo only. It also shows you what you forgot you owned.</p>
+    </div>
+    <div class="proof">
+      <div class="sheet" id="hero-sheet" role="img" aria-label="A contact sheet. Photos taken before the loss are boxed in marker. Photos taken after are crossed out."></div>
+      <p class="key">Boxed in green: taken before the loss, kept as proof. Crossed out: taken after, kept as a damage photo only. It also shows you what you forgot you owned.</p>
+    </div>
     <p class="count">On my real claim, <b>22</b> of the <span class="nw">27 things</span> I lost were already in photos I had taken. Searching the same library by file name found <b>0</b>.</p>
     <p class="plain">The 22 is counted by hand, photo by photo, and is the most any tool could find. A phone names a photo 20251211_160058.jpg, and it never says sofa. The add-on's own count is not measured yet, because it needs the hardware.</p>
   </div>
