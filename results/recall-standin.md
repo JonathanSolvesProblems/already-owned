@@ -24,7 +24,7 @@ This measures the Skill's search and description steps with a small model standi
 
 ## Item by item
 
-A cited photo counts when the hand count lists it for that item, or when I opened it and saw the item ([recall-standin-checks.csv](recall-standin-checks.csv)).
+A cited photo counts when the hand count lists it for that item, or when the photo, opened at full size and compared with the hand count's description of the item, shows it. Each verdict (yes, no or unclear) is in [recall-standin-checks.csv](recall-standin-checks.csv); the AI assistant that helped build this project made the first pass of these checks, and the list is mine to correct.
 
 | # | Item | Hand count | Route | First pass | Continuing | Photos that show it | Wrong photos cited |
 | --- | --- | --- | --- | --- | --- | --- | --- |
