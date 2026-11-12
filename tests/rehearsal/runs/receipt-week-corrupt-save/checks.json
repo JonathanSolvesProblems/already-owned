@@ -1,0 +1,76 @@
+{
+ "run": "receipt-week-corrupt-save",
+ "title": "A week with a new receipt and no new photo, and a save that comes back altered",
+ "covers": "test-plan cases 15, 24, 26",
+ "checks": 13,
+ "passed": 13,
+ "delegations": 15,
+ "accepted_as_first_sent": 14,
+ "results": [
+  {
+   "check": "no instruction holds a brace, a pipe, an angle bracket, a line break or a command option",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "no instruction is longer than 4,000 characters",
+   "pass": true,
+   "detail": "longest 1228"
+  },
+  {
+   "check": "no request asks an expert to read more than ten files with a model",
+   "pass": true,
+   "detail": "0 over the limit"
+  },
+  {
+   "check": "no save carries more than ten rows and exhibit lines",
+   "pass": true,
+   "detail": "line counts over the limit: []"
+  },
+  {
+   "check": "phase 1: nothing is written before the user confirmed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "the user is told about the assistant's own model before the first read",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "phase 1: a final report was given",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "every write waited for the user's approval",
+   "pass": true,
+   "detail": "4 requested, 4 answered, 0 left pending"
+  },
+  {
+   "check": "every saved page and document is read back",
+   "pass": true,
+   "detail": "not read back: []"
+  },
+  {
+   "check": "the mock altered one saved value",
+   "pass": true,
+   "detail": "{'path': '/home/me/Home Contents/Home contents list 2026-06-06.md', 'was': '699.00', 'became': '699.01'}"
+  },
+  {
+   "check": "the read-back catches the altered page and says so",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "the right rows are saved again as a later page",
+   "pass": true,
+   "detail": "['Home contents list 2026-06-06 0900.md']"
+  },
+  {
+   "check": "the changed row keeps its number",
+   "pass": true,
+   "detail": ""
+  }
+ ]
+}

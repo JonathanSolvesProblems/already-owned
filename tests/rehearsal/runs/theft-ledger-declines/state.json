@@ -1,0 +1,87 @@
+{
+ "scenario": {
+  "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+  "covers": "test-plan cases 10, 19, and the camera step",
+  "now": "2026-06-23T10:00",
+  "cameras": true,
+  "hide_photos_after": "2026-06-20T08:00",
+  "preload": {
+   "/home/me/Home Contents/Home contents list 2026-05-30.md": "Home contents list 2026-05-30\n\n| # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1 | Leather reclining sofa, three seats | brown leather, recliner | Basement | 1 | 2024-08-10 | 1,799.99 CAD | | 20240815_190211.jpg (2024-08-15) | 20240810_141500.jpg | photo and receipt | path: /home/me/Photos/Camera/20240815_190211.jpg, receipt path: /home/me/Photos/Camera/20240810_141500.jpg, receipt read from photo text |\n| 2 | Flat-screen television, about 55 inch | brand not visible, black | Basement | 1 | | | | 20240815_190211.jpg (2024-08-15) | | photo only | path: /home/me/Photos/Camera/20240815_190211.jpg |\n| 3 | Stick vacuum | Dyson V11 | Basement | 1 | 2024-09-02 | 799.99 CAD | | 20240903_121544.jpg (2024-09-03) | Dyson-V11-invoice-2024-09-02.pdf | photo and receipt | path: /home/me/Photos/Camera/20240903_121544.jpg, receipt path: /home/me/Documents/Receipts/Dyson-V11-invoice-2024-09-02.pdf |\n| 4 | Gaming chair | black and red, brand not visible | Basement | 1 | | | | 20250118_164002.jpg (2025-01-18) | | photo only | path: /home/me/Photos/Camera/20250118_164002.jpg |\n| 5 | Adjustable dumbbell | 52.5 lb | Basement | 1 | | | | 20260410_083012.jpg (2026-04-10) | | photo only | path: /home/me/Photos/Camera/20260410_083012.jpg |\n"
+  },
+  "preload_modified": "2026-05-30T18:00",
+  "decline": [
+   "claim album"
+  ],
+  "user": "There was a break-in at my place on the night of June 19 to 20, 2026. I found it at 8 am on June 20. The TV and the gaming chair were taken from the basement. Prepare my contents claim.",
+  "answers": [
+   {
+    "match": "online model|local model",
+    "answer": "The assistant is on the local model. Go on."
+   },
+   {
+    "match": "(?=.*cop(y|ies))(?=.*(leave|in place|where they are))",
+    "answer": "Leave the exhibits where they are and record their SHA-256."
+   },
+   {
+    "match": "untouched|last time|language|insurer|claim number|how.*say what was lost",
+    "answer": "The place was last known untouched at 22:00 on 2026-06-19, and I found the loss at 08:00 on 2026-06-20. Kind: theft. Room: basement. I typed what was lost: the TV and the gaming chair. English. No insurer name or claim number. Yes, include the back door camera."
+   },
+   {
+    "match": "confirm|which of these|were lost|correct|anything to (add|change)|replacement value|rows?",
+    "answer": "Only the TV and the gaming chair were taken. Nothing else was lost. The TV is worth 700 CAD and the gaming chair 300 CAD. The rows are right."
+   }
+  ],
+  "default_answer": "Yes, go on.",
+  "expect": {
+   "loss": "2026-06-19T22:00",
+   "proven": {
+    "television|tv": [
+     "20240815_190211",
+     "20260601_201500"
+    ],
+    "gaming chair": [
+     "20250118_164002"
+    ]
+   },
+   "unproven": [],
+   "never_rows": [
+    "watch",
+    "sofa",
+    "vacuum",
+    "dumbbell"
+   ],
+   "camera_events": true,
+   "no_copies": true,
+   "album_declined": true,
+   "since": "2026-05-30"
+  }
+ },
+ "name": "theft-ledger-declines",
+ "now": "2026-06-23T10:00",
+ "phase": 1,
+ "counter": 3,
+ "pending": {},
+ "folders": [
+  "/home/me",
+  "/home/me/Documents",
+  "/home/me/Documents/Receipts",
+  "/home/me/Downloads",
+  "/home/me/Scans",
+  "/home/me/Photos",
+  "/home/me/Recordings",
+  "/home/me/Home Contents",
+  "/home/me/Home Contents/Claims",
+  "/home/me/Home Contents/Claims/2026-06-19 theft"
+ ],
+ "files": {
+  "/home/me/Home Contents/Home contents list 2026-05-30.md": "Home contents list 2026-05-30\n\n| # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1 | Leather reclining sofa, three seats | brown leather, recliner | Basement | 1 | 2024-08-10 | 1,799.99 CAD | | 20240815_190211.jpg (2024-08-15) | 20240810_141500.jpg | photo and receipt | path: /home/me/Photos/Camera/20240815_190211.jpg, receipt path: /home/me/Photos/Camera/20240810_141500.jpg, receipt read from photo text |\n| 2 | Flat-screen television, about 55 inch | brand not visible, black | Basement | 1 | | | | 20240815_190211.jpg (2024-08-15) | | photo only | path: /home/me/Photos/Camera/20240815_190211.jpg |\n| 3 | Stick vacuum | Dyson V11 | Basement | 1 | 2024-09-02 | 799.99 CAD | | 20240903_121544.jpg (2024-09-03) | Dyson-V11-invoice-2024-09-02.pdf | photo and receipt | path: /home/me/Photos/Camera/20240903_121544.jpg, receipt path: /home/me/Documents/Receipts/Dyson-V11-invoice-2024-09-02.pdf |\n| 4 | Gaming chair | black and red, brand not visible | Basement | 1 | | | | 20250118_164002.jpg (2025-01-18) | | photo only | path: /home/me/Photos/Camera/20250118_164002.jpg |\n| 5 | Adjustable dumbbell | 52.5 lb | Basement | 1 | | | | 20260410_083012.jpg (2026-04-10) | | photo only | path: /home/me/Photos/Camera/20260410_083012.jpg |\n",
+  "/home/me/Home Contents/Claims/2026-06-19 theft/Contents claim 2026-06-19.md": "Contents claim 2026-06-19\n\nContents claim. theft, basement, loss window from 2026-06-19 22:00 to 2026-06-20 08:00 local time, no insurer or claim number.\n\nThis claim lists the household contents affected by the loss described here: theft from the basement during the night of 2026-06-19 to 2026-06-20, the place last known untouched at 22:00 on 2026-06-19 and the loss found at 08:00 on 2026-06-20, 2 items lost, a flat-screen television and a gaming chair, 1 row with photo and receipt, 1 row with photo only, no damage photos found. Each row names the proof that exists for it.\n\n| # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 2 | Flat-screen television, about 55 inch | black, brand and model not visible | Basement | 1 | 2024-08-01 | 699.00 CAD | 700 CAD | 20240815_190211.jpg (2024-08-15) | TV-invoice-2026-05-28.pdf | photo and receipt | path: /home/me/Photos/Camera/20240815_190211.jpg, receipt path: /home/me/Downloads/TV-invoice-2026-05-28.pdf, first seen: 2024-08-15 19:02, last seen: 2026-06-01 20:15, on the inventory since: 2026-05-30, open question: file name date 2026-05-28 differs from the printed purchase date 2024-08-01, printed date used |\n| 4 | Gaming chair | black and red, brand not visible | Basement | 1 |  |  | 300 CAD | 20250118_164002.jpg (2025-01-18) |  | photo only | path: /home/me/Photos/Camera/20250118_164002.jpg, first seen: 2025-01-18 16:40, on the inventory since: 2026-05-30, open question: condition new, average or below average not given |\n\nTotals: price paid 699.00 CAD on 1 row, 1 row without a price, replacement value 1,000 CAD on 2 rows.\n\nCamera events: 2026-06-19 22:41, back door, person unknown, snapshot snap-2241.jpg. 2026-06-20 03:12, back door, person unknown, snapshot snap-0312.jpg. 2026-06-20 03:14, back door, vehicle, snapshot snap-0314.jpg.\n\nExhibits\n\n| File | Captured | Camera | SHA-256 |\n| --- | --- | --- | --- |\n| 20240815_190211.jpg | 2024-08-15 19:02 | SM-S921W | 6e13d7f2e4551e2c9295c1edd8e9e17881a1a7108c266b27a762d9681165b95a |\n| 20250118_164002.jpg | 2025-01-18 16:40 | SM-S921W | a0403484c3ea2e3e3bd62b1560a98e50abc64fe7511858dd58d1f2fe8646a5f6 |\n| TV-invoice-2026-05-28.pdf | no capture time | no camera | 1c09b9e4dac9005d048b016b6edff5e2a327f965f4479f27001990484976d287 |\n"
+ },
+ "modified": {
+  "/home/me/Home Contents/Home contents list 2026-05-30.md": "2026-05-30T18:00",
+  "/home/me/Home Contents/Claims/2026-06-19 theft/Contents claim 2026-06-19.md": "2026-06-23T10:00"
+ },
+ "albums": [],
+ "tags": {},
+ "copies": {}
+}

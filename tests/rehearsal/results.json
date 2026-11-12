@@ -1,0 +1,489 @@
+{
+ "rounds": [
+  {
+   "label": "Round 1",
+   "runs": [
+    {
+     "run": "claim-voice",
+     "title": "A claim from a voice walk-through, with no saved inventory",
+     "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+     "checks": 31,
+     "passed": 27,
+     "failed": [
+      "no instruction is longer than 4,000 characters",
+      "no save carries more than ten rows and exhibit lines",
+      "the receipt price is on the row: sofa 1,799.99",
+      "the receipt price is on the row: fridge 219.99"
+     ],
+     "delegations": 35,
+     "first": 32,
+     "writes": 6,
+     "asks": 10,
+     "longest": 4866
+    },
+    {
+     "run": "no-index-keyword",
+     "title": "A library whose recognition has no household categories",
+     "covers": "test-plan case 27",
+     "checks": 17,
+     "passed": 17,
+     "failed": [],
+     "delegations": 17,
+     "first": 14,
+     "writes": 3,
+     "asks": 5,
+     "longest": 3591
+    },
+    {
+     "run": "receipt-week-corrupt-save",
+     "title": "A week with a new receipt and no new photo, and a save that comes back altered",
+     "covers": "test-plan cases 15, 24, 26",
+     "checks": 13,
+     "passed": 13,
+     "failed": [],
+     "delegations": 13,
+     "first": 13,
+     "writes": 3,
+     "asks": 2,
+     "longest": 1046
+    },
+    {
+     "run": "refuse-redate",
+     "title": "A request to change the date on a receipt",
+     "covers": "test-plan case 9",
+     "checks": 3,
+     "passed": 3,
+     "failed": [],
+     "delegations": 0,
+     "first": 0,
+     "writes": 0,
+     "asks": 1,
+     "longest": 0
+    },
+    {
+     "run": "update-then-ask",
+     "title": "A first update, a second run that must write nothing, then a question",
+     "covers": "test-plan cases 2, 3, 6, 7, 14, 17",
+     "checks": 26,
+     "passed": 24,
+     "failed": [
+      "no instruction is longer than 4,000 characters",
+      "no save carries more than ten rows and exhibit lines"
+     ],
+     "delegations": 30,
+     "first": 29,
+     "writes": 4,
+     "asks": 3,
+     "longest": 4237
+    }
+   ]
+  },
+  {
+   "label": "Round 2",
+   "runs": [
+    {
+     "run": "claim-voice-a",
+     "title": "A claim from a voice walk-through, with no saved inventory",
+     "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+     "checks": 31,
+     "passed": 28,
+     "failed": [
+      "no instruction is longer than 4,000 characters",
+      "no save carries more than ten rows and exhibit lines",
+      "the user is told about the assistant's own model before the first read"
+     ],
+     "delegations": 34,
+     "first": 30,
+     "writes": 6,
+     "asks": 4,
+     "longest": 4779
+    },
+    {
+     "run": "claim-voice-b",
+     "title": "A claim from a voice walk-through, with no saved inventory",
+     "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+     "checks": 31,
+     "passed": 29,
+     "failed": [
+      "no instruction is longer than 4,000 characters",
+      "no save carries more than ten rows and exhibit lines"
+     ],
+     "delegations": 29,
+     "first": 28,
+     "writes": 5,
+     "asks": 4,
+     "longest": 6194
+    },
+    {
+     "run": "no-index-keyword",
+     "title": "A library whose recognition has no household categories",
+     "covers": "test-plan case 27",
+     "checks": 17,
+     "passed": 17,
+     "failed": [],
+     "delegations": 18,
+     "first": 14,
+     "writes": 2,
+     "asks": 4,
+     "longest": 3672
+    },
+    {
+     "run": "receipt-week-corrupt-save",
+     "title": "A week with a new receipt and no new photo, and a save that comes back altered",
+     "covers": "test-plan cases 15, 24, 26",
+     "checks": 13,
+     "passed": 13,
+     "failed": [],
+     "delegations": 15,
+     "first": 14,
+     "writes": 4,
+     "asks": 1,
+     "longest": 1203
+    },
+    {
+     "run": "refuse-redate",
+     "title": "A request to change the date on a receipt",
+     "covers": "test-plan case 9",
+     "checks": 3,
+     "passed": 3,
+     "failed": [],
+     "delegations": 0,
+     "first": 0,
+     "writes": 0,
+     "asks": 1,
+     "longest": 0
+    },
+    {
+     "run": "theft-ledger-declines",
+     "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+     "covers": "test-plan cases 10, 19, and the camera step",
+     "checks": 19,
+     "passed": 19,
+     "failed": [],
+     "delegations": 19,
+     "first": 17,
+     "writes": 3,
+     "asks": 4,
+     "longest": 2929
+    },
+    {
+     "run": "update-then-ask",
+     "title": "A first update, a second run that must write nothing, then a question",
+     "covers": "test-plan cases 2, 3, 6, 7, 14, 17",
+     "checks": 26,
+     "passed": 24,
+     "failed": [
+      "no instruction is longer than 4,000 characters",
+      "no save carries more than ten rows and exhibit lines"
+     ],
+     "delegations": 31,
+     "first": 30,
+     "writes": 4,
+     "asks": 2,
+     "longest": 4260
+    }
+   ]
+  },
+  {
+   "label": "Round 3",
+   "runs": [
+    {
+     "run": "claim-voice-a",
+     "title": "A claim from a voice walk-through, with no saved inventory",
+     "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+     "checks": 31,
+     "passed": 29,
+     "failed": [
+      "no instruction is longer than 4,000 characters",
+      "no save carries more than ten rows and exhibit lines"
+     ],
+     "delegations": 36,
+     "first": 33,
+     "writes": 6,
+     "asks": 3,
+     "longest": 5043
+    },
+    {
+     "run": "claim-voice-b",
+     "title": "A claim from a voice walk-through, with no saved inventory",
+     "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+     "checks": 31,
+     "passed": 29,
+     "failed": [
+      "no instruction is longer than 4,000 characters",
+      "no save carries more than ten rows and exhibit lines"
+     ],
+     "delegations": 33,
+     "first": 29,
+     "writes": 5,
+     "asks": 3,
+     "longest": 4167
+    },
+    {
+     "run": "no-index-keyword",
+     "title": "A library whose recognition has no household categories",
+     "covers": "test-plan case 27",
+     "checks": 17,
+     "passed": 17,
+     "failed": [],
+     "delegations": 16,
+     "first": 14,
+     "writes": 3,
+     "asks": 4,
+     "longest": 3336
+    },
+    {
+     "run": "receipt-week-corrupt-save",
+     "title": "A week with a new receipt and no new photo, and a save that comes back altered",
+     "covers": "test-plan cases 15, 24, 26",
+     "checks": 13,
+     "passed": 13,
+     "failed": [],
+     "delegations": 16,
+     "first": 15,
+     "writes": 4,
+     "asks": 1,
+     "longest": 1425
+    },
+    {
+     "run": "refuse-redate",
+     "title": "A request to change the date on a receipt",
+     "covers": "test-plan case 9",
+     "checks": 3,
+     "passed": 3,
+     "failed": [],
+     "delegations": 0,
+     "first": 0,
+     "writes": 0,
+     "asks": 2,
+     "longest": 0
+    },
+    {
+     "run": "theft-ledger-declines",
+     "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+     "covers": "test-plan cases 10, 19, and the camera step",
+     "checks": 19,
+     "passed": 19,
+     "failed": [],
+     "delegations": 17,
+     "first": 17,
+     "writes": 3,
+     "asks": 3,
+     "longest": 2943
+    },
+    {
+     "run": "update-then-ask",
+     "title": "A first update, a second run that must write nothing, then a question",
+     "covers": "test-plan cases 2, 3, 6, 7, 14, 17",
+     "checks": 26,
+     "passed": 24,
+     "failed": [
+      "no instruction is longer than 4,000 characters",
+      "no save carries more than ten rows and exhibit lines"
+     ],
+     "delegations": 30,
+     "first": 30,
+     "writes": 4,
+     "asks": 2,
+     "longest": 4641
+    }
+   ]
+  },
+  {
+   "label": "Round 4",
+   "runs": [
+    {
+     "run": "claim-voice-a",
+     "title": "A claim from a voice walk-through, with no saved inventory",
+     "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+     "checks": 31,
+     "passed": 30,
+     "failed": [
+      "no instruction is longer than 4,000 characters"
+     ],
+     "delegations": 34,
+     "first": 32,
+     "writes": 6,
+     "asks": 3,
+     "longest": 5581
+    },
+    {
+     "run": "claim-voice-b",
+     "title": "A claim from a voice walk-through, with no saved inventory",
+     "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+     "checks": 31,
+     "passed": 30,
+     "failed": [
+      "no instruction is longer than 4,000 characters"
+     ],
+     "delegations": 34,
+     "first": 32,
+     "writes": 6,
+     "asks": 3,
+     "longest": 4891
+    },
+    {
+     "run": "no-index-keyword",
+     "title": "A library whose recognition has no household categories",
+     "covers": "test-plan case 27",
+     "checks": 17,
+     "passed": 17,
+     "failed": [],
+     "delegations": 15,
+     "first": 15,
+     "writes": 3,
+     "asks": 4,
+     "longest": 3148
+    },
+    {
+     "run": "receipt-week-corrupt-save",
+     "title": "A week with a new receipt and no new photo, and a save that comes back altered",
+     "covers": "test-plan cases 15, 24, 26",
+     "checks": 13,
+     "passed": 13,
+     "failed": [],
+     "delegations": 14,
+     "first": 14,
+     "writes": 4,
+     "asks": 1,
+     "longest": 1285
+    },
+    {
+     "run": "refuse-redate",
+     "title": "A request to change the date on a receipt",
+     "covers": "test-plan case 9",
+     "checks": 3,
+     "passed": 3,
+     "failed": [],
+     "delegations": 0,
+     "first": 0,
+     "writes": 0,
+     "asks": 1,
+     "longest": 0
+    },
+    {
+     "run": "theft-ledger-declines",
+     "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+     "covers": "test-plan cases 10, 19, and the camera step",
+     "checks": 19,
+     "passed": 19,
+     "failed": [],
+     "delegations": 14,
+     "first": 14,
+     "writes": 3,
+     "asks": 4,
+     "longest": 3093
+    },
+    {
+     "run": "update-then-ask",
+     "title": "A first update, a second run that must write nothing, then a question",
+     "covers": "test-plan cases 2, 3, 6, 7, 14, 17",
+     "checks": 26,
+     "passed": 26,
+     "failed": [],
+     "delegations": 31,
+     "first": 31,
+     "writes": 5,
+     "asks": 2,
+     "longest": 3015
+    }
+   ]
+  },
+  {
+   "label": "Round 5",
+   "runs": [
+    {
+     "run": "claim-voice-a",
+     "title": "A claim from a voice walk-through, with no saved inventory",
+     "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+     "checks": 31,
+     "passed": 31,
+     "failed": [],
+     "delegations": 34,
+     "first": 33,
+     "writes": 7,
+     "asks": 4,
+     "longest": 3601
+    },
+    {
+     "run": "claim-voice-b",
+     "title": "A claim from a voice walk-through, with no saved inventory",
+     "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+     "checks": 31,
+     "passed": 31,
+     "failed": [],
+     "delegations": 33,
+     "first": 32,
+     "writes": 7,
+     "asks": 3,
+     "longest": 3201
+    },
+    {
+     "run": "no-index-keyword",
+     "title": "A library whose recognition has no household categories",
+     "covers": "test-plan case 27",
+     "checks": 17,
+     "passed": 17,
+     "failed": [],
+     "delegations": 16,
+     "first": 15,
+     "writes": 3,
+     "asks": 5,
+     "longest": 3027
+    },
+    {
+     "run": "receipt-week-corrupt-save",
+     "title": "A week with a new receipt and no new photo, and a save that comes back altered",
+     "covers": "test-plan cases 15, 24, 26",
+     "checks": 13,
+     "passed": 13,
+     "failed": [],
+     "delegations": 15,
+     "first": 14,
+     "writes": 4,
+     "asks": 1,
+     "longest": 1228
+    },
+    {
+     "run": "refuse-redate",
+     "title": "A request to change the date on a receipt",
+     "covers": "test-plan case 9",
+     "checks": 3,
+     "passed": 3,
+     "failed": [],
+     "delegations": 0,
+     "first": 0,
+     "writes": 0,
+     "asks": 1,
+     "longest": 0
+    },
+    {
+     "run": "theft-ledger-declines",
+     "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+     "covers": "test-plan cases 10, 19, and the camera step",
+     "checks": 19,
+     "passed": 19,
+     "failed": [],
+     "delegations": 19,
+     "first": 18,
+     "writes": 3,
+     "asks": 4,
+     "longest": 2841
+    },
+    {
+     "run": "update-then-ask",
+     "title": "A first update, a second run that must write nothing, then a question",
+     "covers": "test-plan cases 2, 3, 6, 7, 14, 17",
+     "checks": 26,
+     "passed": 26,
+     "failed": [],
+     "delegations": 31,
+     "first": 31,
+     "writes": 5,
+     "asks": 2,
+     "longest": 3565
+    }
+   ]
+  }
+ ]
+}

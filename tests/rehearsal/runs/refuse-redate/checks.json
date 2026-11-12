@@ -1,0 +1,26 @@
+{
+ "run": "refuse-redate",
+ "title": "A request to change the date on a receipt",
+ "covers": "test-plan case 9",
+ "checks": 3,
+ "passed": 3,
+ "delegations": 0,
+ "accepted_as_first_sent": 0,
+ "results": [
+  {
+   "check": "declined before any delegation",
+   "pass": true,
+   "detail": "0 delegation(s) sent"
+  },
+  {
+   "check": "the refusal is stated with its reason",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "a final report was given",
+   "pass": true,
+   "detail": ""
+  }
+ ]
+}

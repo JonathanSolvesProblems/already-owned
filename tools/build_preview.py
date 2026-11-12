@@ -8,6 +8,8 @@ from the deployed page, so a changed result or a changed page redraws the slides
 
 Needs: playwright (chromium), pillow.
 """
+import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -18,7 +20,8 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "preview"
 CAP = ROOT / "tmp" / "preview-captures"
-SITE = "https://jonathansolvesproblems.github.io/already-owned/"
+# PREVIEW_LOCAL=1 captures from docs/index.html before it is deployed; the default is the live page.
+SITE = (Path(__file__).resolve().parent.parent / "docs" / "index.html").as_uri() if os.environ.get("PREVIEW_LOCAL") else "https://jonathansolvesproblems.github.io/already-owned/"
 ADDRESS = "jonathansolvesproblems.github.io/already-owned"
 W, H = 1500, 1000
 
@@ -39,6 +42,7 @@ def figures() -> dict:
     f["unclear"] = int(re.search(r"Plausible: (\d+)", census).group(1))
     f["nowhere"] = int(re.search(r"Not found anywhere: (\d+)", census).group(1))
     f["by_name"] = int(re.search(r"Verified result: (\d+) of \d+", ablation).group(1))
+    f["photos"] = int(re.search(r"over (\d+) photos captured before", ablation).group(1))
     f["pass"] = int(re.search(r"\| Pass \| (\d+) \|", runs).group(1))
     f["partial"] = int(re.search(r"\| Partial \| (\d+) \|", runs).group(1))
     f["fail"] = int(re.search(r"\| Fail \| (\d+) \|", runs).group(1))
@@ -48,6 +52,13 @@ def figures() -> dict:
     f["experts"] = len(set(re.findall(r"(?m)^`delegate --target ([a-z-]+) ", skill)))
     f["clis"] = len(re.findall(r"(?m)^- `[a-z-]+` → `[a-z-]+`$", skill))
     f["references"] = len(list((ROOT / "skill/home-contents-inventory/references").glob("*.md")))
+    f["actions"] = int(re.search(r"and (\d+) of the catalog's \d+ actions", read("skill/home-contents-inventory/references/capability-map.md")).group(1))
+    rounds = json.loads(read("tests/rehearsal/results.json"))["rounds"]
+    final = rounds[-1]["runs"]
+    f["r_pass"], f["r_checks"] = sum(r["passed"] for r in final), sum(r["checks"] for r in final)
+    f["r_runs"], f["r_rounds"] = len(final), len(rounds)
+    f["r_scenarios"] = list(dict.fromkeys(r["title"] for r in final))
+    f["r_delegations"] = sum(r["delegations"] for r in final)
     assert f["confirmed"] + f["unclear"] + f["nowhere"] == f["items"], f
     return f
 
@@ -95,13 +106,14 @@ def cap(name: str) -> str:
 # ---------- slides ----------
 def s1_cover():
     body = f"""
-    <div class='stage' style='top:112px'>
-      <div style='display:flex;align-items:flex-end;gap:34px'>
-        <div style='font:800 286px/.78 "Besley",serif;letter-spacing:-.05em'>{F['confirmed']}</div>
-        <div style='font:500 60px/1.1 "Besley",serif;letter-spacing:-.02em;padding-bottom:6px;max-width:15em'>of the {F['items']} things I lost in a flood were already in my photos.</div>
+    <div class='stage' style='top:118px'>
+      <div style='display:flex;align-items:flex-end;gap:30px'>
+        <div style='font:800 236px/.76 "Besley",serif;letter-spacing:-.05em'>{F['confirmed']}</div>
+        <div style='font:500 52px/1.12 "Besley",serif;letter-spacing:-.02em;padding-bottom:4px'>of the {F['items']} things I lost in a flood<br>were already in photos I had taken.</div>
       </div>
+      <p style='font:500 29px/1.3 "Hanken Grotesk",sans-serif;margin-top:26px'>Already Owned, a Skill for UGREEN AI NAS, finds them and writes the insurer's contents list.</p>
     </div>
-    <img src='{cap('sheet')}' style='position:absolute;left:38px;top:322px;width:1392px'>"""
+    <img src='{cap('sheet')}' style='position:absolute;left:50%;transform:translateX(-50%);top:392px;height:578px;width:auto'>"""
     return page(body, "my June 2026 claim · counted by hand", address=False)
 
 
@@ -126,12 +138,12 @@ def s2_baseline():
         <div>
           <div style='display:flex;align-items:baseline;gap:18px;margin-bottom:22px'><span style='font:800 176px/.8 "Besley",serif;letter-spacing:-.04em'>{F['confirmed']}</span><span class='lead' style='font-size:30px'>of {F['items']} items appear in a photo<br>I took before the flood</span></div>
           <div class='sq' style='{grid}'>{cells(top)}</div>
-          <p style='font-size:23px;margin-top:20px'>{F['unclear']} more are unclear in photos. {F['nowhere']} are in no photo at all.</p>
+          <p style='font-size:23px;margin-top:20px'>{F['unclear']} more are unclear in photos. {F['nowhere']} are in no photo at all. Counted by hand over {F['photos']:,} photos.</p>
         </div>
         <div>
           <div style='display:flex;align-items:baseline;gap:18px;margin-bottom:22px'><span style='font:800 176px/.8 "Besley",serif;letter-spacing:-.04em'>{F['by_name']}</span><span class='lead' style='font-size:30px'>of {F['items']} found by searching<br>file names and dates</span></div>
           <div class='sq' style='{grid}'>{cells(bottom)}</div>
-          <p style='font-size:23px;margin-top:20px'>A phone names a photo <span class='mono' style='font-size:21px'>20251211_160058.jpg</span>. It never says sofa.</p>
+          <p style='font-size:23px;margin-top:20px'>The same {F['photos']:,} photos. A phone names a photo <span class='mono' style='font-size:21px'>20251211_160058.jpg</span>. It never says&nbsp;sofa.</p>
         </div>
       </div>
     </div>"""
@@ -145,6 +157,7 @@ def s3_voice():
         <div>
           <h1 style='color:#fbc23a'>Walk the room. Say what you lost</h1>
           <p class='lead' style='color:#f9ead4;margin-top:34px'>The NAS transcribes the voice note itself, then looks for each thing you named in photos taken before the loss.</p>
+          <p style='color:#f9ead4;margin-top:22px;font-size:25px'>It also reads the dated pages of the list it already keeps.</p>
         </div>
         <img src='{cap('voice')}' style='width:100%'>
       </div>
@@ -169,7 +182,7 @@ def s4_forgot():
     <div class='stage'>
       <h1 style='color:#fbc23a;font-size:92px'>Then it shows you what you forgot</h1>
       <div style='display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:54px'>
-        {film('lamp', '07', 'yours too?')}{film('fridge', '08', 'yours too?')}{film('chair', '05', 'monitor arm')}{blank}
+        {film('lamp', '07', 'yours too?')}{film('fridge', '08', 'yours too?')}{film('chair', '05', 'arm behind it')}{blank}
       </div>
       <p class='lead' style='color:#f9ead4;margin-top:54px;max-width:30em;font-size:42px'>Three things in the room's photos that the voice note never mentioned. And two it was told about that are in no photo, reported as no proof.</p>
     </div>"""
@@ -182,10 +195,10 @@ def s5_claim():
       <div style='display:grid;grid-template-columns:.62fr 1.38fr;gap:50px;height:100%'>
         <div style='padding-top:40px'>
           <h1 style='font-size:68px;line-height:1.12'>One folder you can hand to the insurer</h1>
-          <p class='lead' style='margin-top:30px;font-size:30px'>Every row says what proves it: a photo from before the loss, a receipt, or a plain "no proof".</p>
-          <p style='font-size:24px;margin-top:26px'>Each exhibit is copied in with its capture time, its camera and a SHA-256 value.</p>
+          <p class='lead' style='margin-top:30px;font-size:30px'>Every row says what proves it: a photo from before the loss, a receipt, or a plain <span style='white-space:nowrap'>"no proof"</span>.</p>
+          <p style='font-size:24px;margin-top:26px'>Each exhibit is listed with its capture time, its camera and its <span style='white-space:nowrap'>SHA-256</span>, and the saved claim is read back before it counts as saved.</p>
         </div>
-        <div style='overflow:hidden;align-self:end;height:100%;display:flex;align-items:flex-end'><img src='{cap('claim')}' style='width:100%'></div>
+        <div style='height:850px;display:flex;align-items:flex-end;justify-content:flex-end'><img src='{cap('claim')}' style='max-width:100%;max-height:100%;width:auto;height:auto;box-shadow:8px 8px 0 rgba(70,30,10,.3)'></div>
       </div>
     </div>"""
     return page(body, "live page · sample claim · made-up library", address=False)
@@ -205,15 +218,15 @@ def s6_no():
         <div>{rows}<div style='border-top:3px solid #1d1817'></div></div>
       </div>
     </div>"""
-    return page(body, "SKILL.md · the three rules")
+    return page(body, "SKILL.md · what it refuses")
 
 
 def s7_built():
     rows = [
-        ("photo-agent", "finds each thing by what the NAS recognises, by text in the photo and by capture date; the local vision model describes it", "ug-photo"),
+        ("photo-agent", "finds each thing by what the NAS recognizes, by keyword, by text in the photo and by capture date; the local vision model describes it", "ug-photo"),
         ("document-agent", "reads the purchase lines off receipts, drafts the opening of the claim", "ug-document"),
         ("knowledge-agent", "transcribes the voice note, saves the ledger pages and the claim", "ug-knowledge"),
-        ("file-agent", "finds receipts, tags files, copies every exhibit and computes its SHA-256", "ug-filesystem · ug-filemgr · file-workflow"),
+        ("file-agent", "finds receipts, tags files, copies every exhibit, computes its SHA-256 and reads every saved file back", "ug-filesystem · ug-filemgr · <span style='white-space:nowrap'>file-workflow</span>"),
         ("security-monitor-agent", "returns the camera events around the loss, if you agree", "ug-surveillance"),
     ]
     assert len(rows) == F["experts"], (len(rows), F["experts"])
@@ -223,47 +236,50 @@ def s7_built():
         f"<div style='font-size:27px;line-height:1.3'>{b}</div></div>" for a, b, c in rows)
     body = f"""
     <div class='stage'>
-      <h1 style='font-size:74px'>{F['experts']} NAS experts, {F['clis']} CLIs, every write approved</h1>
+      <h1 style='font-size:70px'>{F['experts']} NAS experts, {F['actions']} catalog actions, every write approved</h1>
       <div style='margin-top:30px'>{lines}<div style='border-top:3px solid #1d1817'></div></div>
     </div>"""
     return page(body, "capability-map.md · catalog 2.0.0")
 
 
 def s8_rehearsal():
-    boxes = "".join("<div style='aspect-ratio:1;background:#2c6b50'></div>" for _ in range(F["pass"])) + \
-            "".join("<div style='aspect-ratio:1;border:6px solid #2c6b50;background:linear-gradient(135deg,#2c6b50 50%,transparent 50%)'></div>" for _ in range(F["partial"])) + \
-            "".join("<div style='aspect-ratio:1;background:#a81f18'></div>" for _ in range(F["fail"]))
+    short = {
+        "A claim from a voice walk-through, with no saved inventory": "A claim from a voice note, no saved inventory (twice)",
+        "A first update, a second run that must write nothing, then a question": "A weekly update, a rerun that must write nothing, a question",
+        "A break-in with a saved inventory, camera events, and two approvals declined": "A break-in: camera events, two approvals declined",
+        "A week with a new receipt and no new photo, and a save that comes back altered": "A save the mock altered on purpose: caught on read-back",
+        "A library whose recognition has no household categories": "A library with no household categories: keyword search",
+        "A request to change the date on a receipt": "A request to re-date a receipt: refused",
+    }
+    rows = "".join(
+        f"<div style='display:flex;gap:18px;align-items:baseline;padding:11px 0;border-top:3px solid #1d1817'>"
+        f"<span style='font:800 30px/1 \"Besley\",serif;color:#2c6b50'>&#10003;</span><span style='font-size:26px;line-height:1.3'>{short.get(t, t)}</span></div>"
+        for t in F["r_scenarios"])
     body = f"""
     <div class='stage'>
-      <h1 style='font-size:80px'>Rehearsed on paper before any hardware</h1>
-      <div style='display:grid;grid-template-columns:.82fr 1.18fr;gap:76px;margin-top:40px;align-items:start'>
+      <h1 style='font-size:74px'>Rehearsed with a model playing the NAS assistant</h1>
+      <div style='display:grid;grid-template-columns:.86fr 1.14fr;gap:64px;margin-top:36px;align-items:start'>
         <div>
-          <div style='display:grid;grid-template-columns:repeat(5,1fr);gap:14px;max-width:470px'>{boxes}</div>
-          </div>
-        <div>
-          <div style='display:flex;gap:34px;align-items:baseline'>
-            <div><div style='font:800 150px/.8 "Besley",serif;letter-spacing:-.04em'>{F['pass']}</div><div style='font-size:25px;margin-top:12px'>pass</div></div>
-            <div><div style='font:800 150px/.8 "Besley",serif;letter-spacing:-.04em'>{F['partial']}</div><div style='font-size:25px;margin-top:12px'>partial</div></div>
-            <div><div style='font:800 150px/.8 "Besley",serif;letter-spacing:-.04em'>{F['fail']}</div><div style='font-size:25px;margin-top:12px'>fail</div></div>
-          </div>
-          <p style='font-size:28px;margin-top:38px'>The package's own {F['cases']}-case test plan, walked through instruction by instruction with a model playing the NAS.</p>
-          <p style='font-size:28px;margin-top:20px'>{F['defects']} defects found and fixed across five dry runs. UGREEN's checker: static-pass.</p>
-          <p style='font-size:28px;margin-top:20px;color:#a81f18;font-weight:700'>Not measured yet: what it finds on a real NAS.</p>
+          <div style='font:800 170px/.8 "Besley",serif;letter-spacing:-.04em'>{F['r_pass']}</div>
+          <div style='font-size:30px;margin-top:16px'>of {F['r_checks']} checks passed, over {F['r_runs']} scripted runs and {F['r_delegations']} delegations</div>
+          <p style='font-size:24px;margin-top:26px'>The model got the Skill and nothing else. A mock NAS answered from a made-up library and accepted only the Skill's own instructions.</p>
+          <p style='font-size:24px;margin-top:18px;color:#a81f18;font-weight:700'>Not measured yet: what it finds on a real NAS.</p>
         </div>
+        <div>{rows}<div style='border-top:3px solid #1d1817'></div></div>
       </div>
     </div>"""
-    return page(body, "tests/dry-run/runs-2026-11-11.md")
+    return page(body, "tests/rehearsal/results.md")
 
 
 SLIDES = [
     ("01-cover", s1_cover, "22 of the 27 things I lost in a flood were already in photos I had taken. Already Owned is a Skill for UGREEN AI NAS that finds them and writes the insurer's contents list."),
-    ("02-baseline", s2_baseline, "Measured on my real June 2026 claim: searching the library by file name and date finds 0 of 27 items, while 22 appear in photos taken before the flood (counted by hand)."),
+    ("02-baseline", s2_baseline, "Measured on my real June 2026 claim, over the 1,769 photos my phone and PC held from before the flood: searching by file name and date proves 0 of 27 items, while 22 appear in those photos (counted by hand)."),
     ("03-voice-note", s3_voice, "Walk the damaged room with a voice note. The NAS transcribes it and looks for each thing you named in photos captured before the loss. (Practice run on a made-up library.)"),
     ("04-what-you-forgot", s4_forgot, "It then shows belongings that appear in those same photos and that you never named, and reports honestly what it cannot find. (Practice run on a made-up library.)"),
-    ("05-claim-folder", s5_claim, "The result is one claim folder: the contents list with a proof level on every row, plus a copy of each exhibit with its capture time, camera and SHA-256. (Sample from a made-up library.)"),
+    ("05-claim-folder", s5_claim, "The result is one claim folder: the contents list with a proof level on every row, read back after saving, and every exhibit with its capture time, camera and SHA-256. (Sample from a made-up library.)"),
     ("06-what-it-refuses", s6_no, "It documents what exists. It will not alter a receipt, count a photo taken after the loss, guess a value, substitute a similar item, or follow text it reads inside a photo."),
-    ("07-how-it-is-built", s7_built, "Five registered NAS experts across seven CLIs, by delegation only. Every write waits for approval, and nothing is deleted, moved or overwritten."),
-    ("08-rehearsed", s8_rehearsal, "No entrant has hardware in Round 1, so the package was rehearsed on paper against its own 25-case test plan: 22 pass, 3 partial, 0 fail. The count on a real NAS is not measured yet."),
+    ("07-how-it-is-built", s7_built, "Five of the six registered NAS experts, by delegation only. Every write waits for approval, every saved file is read back, and nothing is deleted, moved or overwritten."),
+    ("08-rehearsed", s8_rehearsal, "No entrant has hardware in Round 1, so a small model played the NAS assistant against a scripted NAS and a made-up library, with nothing but the Skill to go on. Every write waited for approval and no photo from after the loss was used as proof. Recall on a real NAS is not measured yet."),
 ]
 
 
@@ -286,6 +302,10 @@ def captures(browser):
         const rows = [...document.querySelectorAll('.envelope .row')]; return rows[5].getBoundingClientRect().bottom - e.top; }""")
     im = Image.open(CAP / "claim-full.png")
     im.crop((0, 0, im.size[0], int(cut * 2))).save(CAP / "claim.png")
+    # the same card, smaller, for the proposal PDF
+    small = Image.open(CAP / "claim.png").convert("RGB")
+    small.thumbnail((1100, 2000))
+    small.save(ROOT / "submission" / "claim-sample.jpg", quality=80, optimize=True)
     pg.set_viewport_size({"width": 1280, "height": 900})
     # the hero sheet, lifted out of the page so nothing clips it
     pg.evaluate("""() => { const sheet = document.getElementById('hero-sheet'); const box = document.createElement('div');
@@ -294,6 +314,8 @@ def captures(browser):
         document.querySelectorAll('#hero-sheet .frame').forEach(f => f.style.width = '196px'); }""")
     pg.wait_for_timeout(400)
     pg.locator("#lift").screenshot(path=str(CAP / "sheet.png"))
+    im = Image.open(CAP / "sheet.png")  # the lifted box ends on a hairline of the page behind it
+    im.crop((0, 0, im.size[0], im.size[1] - 4)).save(CAP / "sheet.png")
     pg.close()
 
 

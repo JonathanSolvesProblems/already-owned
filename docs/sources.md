@@ -6,12 +6,13 @@ Every number or quotation used in the proposal, the README or the replay page, w
 
 | Statement | Source |
 | --- | --- |
-| 27 items, $10,915 on the June 2026 contents list | my own claim list, written for my insurer before the Skill existed; items in `results/june-2026-items.csv` |
-| File-name-and-date search proves 0 of 27 | `results/ablation-filename-date.md`, hits checked by eye in `results/ablation-verification.md` |
+| 27 items, $10,915 CAD on the June 2026 contents list | my own claim list, written for my insurer before the Skill existed; items in `results/june-2026-items.csv` |
+| File-name-and-date search proves 0 of 27, over 1,769 pre-loss photos | `results/ablation-filename-date.md`, every raw hit checked by eye in `results/ablation-verification.md` |
 | 22 of 27 items appear in a pre-loss photo, 3 uncertain, 2 in none | `results/pre-loss-photo-census.md` |
-| 24 steps, 24 delegations, seven references, checker static-pass | `python tools/check_package.py`, and UGREEN's `check-skill.mjs` |
+| 24 steps, 25 delegation templates, 5 experts, seven references, checker static-pass | `python tools/check_package.py`, and UGREEN's `check-skill.mjs` |
+| 28 of the catalog's 78 actions | `skill/home-contents-inventory/references/capability-map.md` |
+| Model rehearsal: 140 of 140 checks over 7 runs, 5 rounds | `tests/rehearsal/results.md`, logs in `tests/rehearsal/runs/` |
 | Five paper dry runs, 69 defects found and fixed | `tests/dry-run/findings.md` (24), `verification.md` (12), `runs-2026-11-11.md` (33) |
-| 25-case test plan rehearsed on paper: 22 pass, 3 partial, 0 fail; 4 of 4 safety probes | `tests/dry-run/runs-2026-11-11.md`, last section |
 
 ## Published sources
 

@@ -1,0 +1,217 @@
+{
+ "scenario": {
+  "title": "A claim from a voice walk-through, with no saved inventory",
+  "covers": "test-plan cases 1, 4, 5, 8, 12, 13, 14, 16, 20, 21",
+  "now": "2026-06-23T10:00",
+  "user": "I had a flood on June 20, 2026 around 2 am in the basement. I recorded a voice note walking through it yesterday. Prepare my contents claim.",
+  "answers": [
+   {
+    "match": "online model|local model",
+    "answer": "The assistant is on the local model. Go on."
+   },
+   {
+    "match": "which (recording|one)|recording",
+    "answer": "The walk-through from June 21, the newest one."
+   },
+   {
+    "match": "build the list|two years",
+    "answer": "No need to build a list from all my photos. Use what I said in the voice note."
+   },
+   {
+    "match": "armchair.*(living room|different room|room)|living room",
+    "answer": "No. The armchair in the living room is a different chair. The one I lost was in the basement and I have no photo of it. The undated coffee table photo: I do not know when it was taken, so do not count it. The floor lamp and the mini-fridge were lost too. The side tables and the monitor arm were not lost. The TV is worth 700 CAD and the gaming chair 300 CAD. The coffee table was lost. Everything else is right, and I have nothing to add."
+   },
+   {
+    "match": "cop(y|ies)|leave them|in place",
+    "answer": "Copy them into the folder."
+   },
+   {
+    "match": "language|insurer|claim number|camera|how.*say what was lost|voice note|typed",
+    "answer": "English. No insurer name or claim number. No camera covers the basement. Use the voice note. The loss was at 02:00 on 2026-06-20, water, basement only."
+   },
+   {
+    "match": "confirm|which of these|were lost|correct|anything to (add|change)|replacement value|rows?",
+    "answer": "The armchair in the living room is a different chair: the one I lost was in the basement and I have no photo of it. I do not know when the undated coffee table photo was taken, so do not count it. The floor lamp and the mini-fridge were lost too. The side tables and the monitor arm were not lost. The coffee table was lost. The TV is worth 700 CAD and the gaming chair 300 CAD. Everything else is right. Yes, the receipts belong to those items."
+   }
+  ],
+  "default_answer": "Yes, go on.",
+  "expect": {
+   "loss": "2026-06-20T02:00",
+   "proven": {
+    "sofa": [
+     "20240815_190211",
+     "20240815_190230",
+     "20260410_083012",
+     "20260601_201500",
+     "2025",
+     "2026"
+    ],
+    "television|tv": [
+     "20240815_190211",
+     "20260601_201500"
+    ],
+    "gaming chair": [
+     "20250118_164002"
+    ],
+    "dumbbell": [
+     "20260410_083012"
+    ],
+    "vacuum": [
+     "20240903_121544"
+    ],
+    "power tower|pull-up": [
+     "20250412_101233"
+    ],
+    "lamp": [
+     "20240815_190230"
+    ],
+    "fridge|refrigerator": [
+     "20260601_201500"
+    ]
+   },
+   "unproven": [
+    "armchair",
+    "coffee table"
+   ],
+   "never_rows": [
+    "watch",
+    "side table",
+    "monitor arm",
+    "grey",
+    "dining"
+   ],
+   "receipts": {
+    "sofa": "1,799.99",
+    "vacuum": "799.99",
+    "power tower|pull-up": "389.00",
+    "fridge|refrigerator": "219.99"
+   },
+   "forgotten_offered": [
+    "lamp",
+    "fridge|refrigerator"
+   ],
+   "voice_exhibit": "walk-through-2026-06-21.m4a",
+   "flagged_file": "Warranty-registration-2026-01-15",
+   "not_processed": null
+  }
+ },
+ "name": "claim-voice",
+ "now": "2026-06-23T10:00",
+ "phase": 1,
+ "counter": 7,
+ "pending": {},
+ "folders": [
+  "/home/me",
+  "/home/me/Documents",
+  "/home/me/Documents/Receipts",
+  "/home/me/Downloads",
+  "/home/me/Scans",
+  "/home/me/Photos",
+  "/home/me/Recordings",
+  "/home/me/Home Contents",
+  "/home/me/Home Contents/Claims",
+  "/home/me/Home Contents/Claims/2026-06-20 water"
+ ],
+ "files": {
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20 part 1.md": "Contents claim 2026-06-20 part 1\n\nContents claim: water loss, date and time of loss 2026-06-20 02:00 NAS local time, affected room basement, no insurer and no claim number\n\nThis claim lists the household contents affected by the loss described here, basement water loss at 02:00 on 2026-06-20 from a flood described by the owner in a voice walk-through, 10 items listed, 5 with a pre-loss photo and receipt, 3 with a pre-loss photo only, 2 with no pre-loss proof. Each row names the proof that exists for it.\n\n| # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1 | Brown leather reclining sofa, 3-seat | Brown leather, reclining, three seats, brand not visible, receipt text RECLINER SOFA 3S BROWN LEATHER | basement | 1 | 2024-08-10 | 1799.99, currency not printed |  | 20240815_190211.jpg, captured 2024-08-15 19:02 | 20240810_141500.jpg | photo and receipt | path: /home/me/Photos/Camera/20240815_190211.jpg, receipt path: /home/me/Photos/Camera/20240810_141500.jpg, merchant Home Furnishings Outlet, receipt read from photo text, first seen: 2024-08-15 19:02, last seen: 2026-06-01 20:15, damage photo: 20260622_023921.jpg, open question: currency of 1799.99 not named |\n| 2 | 55 inch flat-screen television on a stand | Flat-screen, about 55 inch, on a stand, brand and model not visible | basement | 1 | 2024-08-01 | 699.00 CAD | 700 CAD from owner | 20240815_190211.jpg, captured 2024-08-15 19:02 | TV-invoice-2026-05-28.pdf | photo and receipt | path: /home/me/Photos/Camera/20240815_190211.jpg, receipt path: /home/me/Downloads/TV-invoice-2026-05-28.pdf, merchant Screen House, purchase date printed on the invoice, file name date not used, first seen: 2024-08-15 19:02, last seen: 2026-06-01 20:15, damage photo: 20260622_023921.jpg |\n| 3 | Gaming chair, black and red | Black and red gaming chair, brand and model not visible | basement | 1 |  |  | 300 CAD from owner | 20250118_164002.jpg, captured 2025-01-18 16:40 |  | photo only | path: /home/me/Photos/Camera/20250118_164002.jpg, first seen: 2025-01-18 16:40, damage photo: 20260621_093406.jpg, replacement value from owner |\n| 4 | Dyson V11 Torque Drive stick vacuum | Dyson V11 stick vacuum on a wall dock, readable text dyson V11 | basement | 1 | 2024-09-02 | 799.99 CAD |  | 20240903_121544.jpg, captured 2024-09-03 12:15 | Dyson-V11-invoice-2024-09-02.pdf | photo and receipt | path: /home/me/Photos/Camera/20240903_121544.jpg, receipt path: /home/me/Documents/Receipts/Dyson-V11-invoice-2024-09-02.pdf, merchant Dyson Canada, first seen: 2024-09-03 12:15, damage photo: 20260622_121507.jpg |\n",
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20 part 2.md": "Contents claim 2026-06-20 part 2\n\n| # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 5 | Floor lamp, round base | Round base, brand and model not visible | basement | 1 |  |  |  | 20240815_190230.jpg, captured 2024-08-15 19:02 |  | photo only | path: /home/me/Photos/Camera/20240815_190230.jpg, first seen: 2024-08-15 19:02, damage photo: 20260622_121507.jpg, owner confirms lost |\n| 6 | Danby 3.3 cu ft compact refrigerator, black | Black, Danby 3.3 cu ft compact refrigerator | basement | 1 | 2025-11-22 | 219.99, currency not printed |  | 20260601_201500.jpg, captured 2026-06-01 20:15 | mini-fridge-receipt-2025-11-22.jpg | photo and receipt | path: /home/me/Photos/Camera/20260601_201500.jpg, receipt path: /home/me/Scans/mini-fridge-receipt-2025-11-22.jpg, merchant Appliance Depot, date and price read from receipt photo text, first seen: 2026-06-01 20:15, damage photo: 20260622_182035.jpg, open question: currency of 219.99 not named |\n| 7 | Coffee table, wooden with curved legs | Wooden, curved legs, brand and model not visible | basement | 1 |  |  |  |  |  | none | damage photo: 20260621_093406.jpg, no pre-loss photo found, undated photo IMG_0042.jpg not counted at owner request, owner confirms lost |\n| 8 | Wooden armchair, basement | Wooden, colour and material not recorded | basement | 1 |  |  |  |  |  | none | no pre-loss photo of the basement armchair, living room armchair photo 20250610_111500.jpg is a different chair per owner and not used, owner confirms basement armchair lost |\n| 9 | Adjustable dumbbell | Adjustable, 52.5 lb, readable text 52.5 LB | basement | 1 |  |  |  | 20260410_083012.jpg, captured 2026-04-10 08:30 |  | photo only | path: /home/me/Photos/Camera/20260410_083012.jpg, first seen: 2026-04-10 08:30 |\n| 10 | Power tower, black steel pull-up and dip station | Black steel, pull-up and dip station, readable text POWER TOWER | basement | 1 | 2025-04-08 | 389.00 CAD |  | 20250412_101233.jpg, captured 2025-04-12 10:12 | Order-confirmation-2025-04-08.pdf | photo and receipt | path: /home/me/Photos/Camera/20250412_101233.jpg, receipt path: /home/me/Downloads/Order-confirmation-2025-04-08.pdf, merchant Northway Fitness, first seen: 2025-04-12 10:12, rusted at base per owner voice note, not visible in a photo |\n\nTotals: Price paid, CAD: 1887.99 over 3 rows, plus two rows in no printed currency (1799.99 and 219.99) not totalled, 5 rows with no price paid. Replacement value, CAD: 1000.00 over 2 rows, 8 rows with no replacement value.\n",
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20 part 3.md": "Contents claim 2026-06-20 part 3\n\nExhibits\n\n| File | Captured | Camera | SHA-256 |\n| --- | --- | --- | --- |\n| 20240815_190211.jpg | 2024-08-15 19:02 | SM-S921W | 6e13d7f2e4551e2c9295c1edd8e9e17881a1a7108c266b27a762d9681165b95a |\n| 20250118_164002.jpg | 2025-01-18 16:40 | SM-S921W | a0403484c3ea2e3e3bd62b1560a98e50abc64fe7511858dd58d1f2fe8646a5f6 |\n| 20240903_121544.jpg | 2024-09-03 12:15 | SM-S921W | b04282162620db950ec030eb3e1dc7a461852ce8787df9e52ae99914eb386ef2 |\n| 20240815_190230.jpg | 2024-08-15 19:02 | SM-S921W | 54f593ef655f04538c16f7c8d84b8ca59045d32a29512b1b66d86d87bf6f83f2 |\n| 20260601_201500.jpg | 2026-06-01 20:15 | SM-S921W | a86c686bcedd9af27a82c5993afff27ea856e6c57246081f802ff663cbcc9adc |\n| 20260410_083012.jpg | 2026-04-10 08:30 | SM-S921W | 602566d7e1e89e26068972072d08e5500454b4f773c73b54831971f5b4f3bcb3 |\n| 20250412_101233.jpg | 2025-04-12 10:12 | SM-S921W | cc9b82399880295854226089f2e019026a8f3fa3c5516dd2fdeb625c9684ec44 |\n| 20240810_141500.jpg | 2024-08-10 14:15 | camera not recorded | 6e65ba1a998b268c9fc34795d0def43632059d9fc1a852a5daab86ca43c08a6f |\n| Dyson-V11-invoice-2024-09-02.pdf | no capture time | none | a048ce6cd23c8dae842013f4e372450379aaff0570374bb12ef464aa65fb4b48 |\n| TV-invoice-2026-05-28.pdf | no capture time | none | 1c09b9e4dac9005d048b016b6edff5e2a327f965f4479f27001990484976d287 |\n",
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20 part 4.md": "Contents claim 2026-06-20 part 4\n\nExhibits\n\n| File | Captured | Camera | SHA-256 |\n| --- | --- | --- | --- |\n| mini-fridge-receipt-2025-11-22.jpg | no capture time | none | 555de688f33dcdd47e409a39093fbc81a19601c65c5733f801572d6deb1e4969 |\n| Order-confirmation-2025-04-08.pdf | no capture time | none | db24eedbf4caa5b02e75b304800347c5f2ec7ff3080bade0c1709140563022af |\n| 20260621_093406.jpg | 2026-06-21 09:34 | SM-S921W | 44e9e075392e30ec39f066b9de9c02507dde9c9c553cd1464eb108b315c665b5 |\n| 20260622_023921.jpg | 2026-06-22 02:39 | SM-S921W | 53708d503e646026f6e4b77576fab5ad636916d91f0d7426837a7e6bce45ec9b |\n| 20260622_121507.jpg | 2026-06-22 12:15 | SM-S921W | 20945bfe5239135424d0e4454892b3513390fda7a829bd53f4d408efb68603de |\n| 20260622_182035.jpg | 2026-06-22 18:20 | SM-S921W | 31b66bbfdcdc359fd6a794eece813d5abc1445a60bbfc17db7ebbc294746bc12 |\n| walk-through-2026-06-21.m4a | modified 2026-06-21 10:05, not a capture time | none | 71773f0a1547fc5928819a41fc0a76b5a61741632ae3d8e62ebec4462f194c6f |\n"
+ },
+ "modified": {
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20 part 1.md": "2026-06-23T10:00",
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20 part 2.md": "2026-06-23T10:00",
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20 part 3.md": "2026-06-23T10:00",
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20 part 4.md": "2026-06-23T10:00"
+ },
+ "albums": [
+  {
+   "id": "alb-01",
+   "name": "Claim 2026-06-20",
+   "paths": [
+    "/home/me/Photos/Camera/20240815_190211.jpg",
+    "/home/me/Photos/Camera/20250118_164002.jpg",
+    "/home/me/Photos/Camera/20240903_121544.jpg",
+    "/home/me/Photos/Camera/20240815_190230.jpg",
+    "/home/me/Photos/Camera/20260601_201500.jpg",
+    "/home/me/Photos/Camera/20260410_083012.jpg",
+    "/home/me/Photos/Camera/20250412_101233.jpg",
+    "/home/me/Photos/Camera/20260621_093406.jpg",
+    "/home/me/Photos/Camera/20260622_023921.jpg",
+    "/home/me/Photos/Camera/20260622_121507.jpg",
+    "/home/me/Photos/Camera/20260622_182035.jpg"
+   ]
+  }
+ ],
+ "tags": {},
+ "copies": {
+  "/home/me/Home Contents/Claims/2026-06-20 water/20240815_190211.jpg": {
+   "from": "/home/me/Photos/Camera/20240815_190211.jpg",
+   "sha": "6e13d7f2e4551e2c9295c1edd8e9e17881a1a7108c266b27a762d9681165b95a"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20250118_164002.jpg": {
+   "from": "/home/me/Photos/Camera/20250118_164002.jpg",
+   "sha": "a0403484c3ea2e3e3bd62b1560a98e50abc64fe7511858dd58d1f2fe8646a5f6"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20240903_121544.jpg": {
+   "from": "/home/me/Photos/Camera/20240903_121544.jpg",
+   "sha": "b04282162620db950ec030eb3e1dc7a461852ce8787df9e52ae99914eb386ef2"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20240815_190230.jpg": {
+   "from": "/home/me/Photos/Camera/20240815_190230.jpg",
+   "sha": "54f593ef655f04538c16f7c8d84b8ca59045d32a29512b1b66d86d87bf6f83f2"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20260601_201500.jpg": {
+   "from": "/home/me/Photos/Camera/20260601_201500.jpg",
+   "sha": "a86c686bcedd9af27a82c5993afff27ea856e6c57246081f802ff663cbcc9adc"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20260410_083012.jpg": {
+   "from": "/home/me/Photos/Camera/20260410_083012.jpg",
+   "sha": "602566d7e1e89e26068972072d08e5500454b4f773c73b54831971f5b4f3bcb3"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20250412_101233.jpg": {
+   "from": "/home/me/Photos/Camera/20250412_101233.jpg",
+   "sha": "cc9b82399880295854226089f2e019026a8f3fa3c5516dd2fdeb625c9684ec44"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20240810_141500.jpg": {
+   "from": "/home/me/Photos/Camera/20240810_141500.jpg",
+   "sha": "6e65ba1a998b268c9fc34795d0def43632059d9fc1a852a5daab86ca43c08a6f"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/Dyson-V11-invoice-2024-09-02.pdf": {
+   "from": "/home/me/Documents/Receipts/Dyson-V11-invoice-2024-09-02.pdf",
+   "sha": "a048ce6cd23c8dae842013f4e372450379aaff0570374bb12ef464aa65fb4b48"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/TV-invoice-2026-05-28.pdf": {
+   "from": "/home/me/Downloads/TV-invoice-2026-05-28.pdf",
+   "sha": "1c09b9e4dac9005d048b016b6edff5e2a327f965f4479f27001990484976d287"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/mini-fridge-receipt-2025-11-22.jpg": {
+   "from": "/home/me/Scans/mini-fridge-receipt-2025-11-22.jpg",
+   "sha": "555de688f33dcdd47e409a39093fbc81a19601c65c5733f801572d6deb1e4969"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/Order-confirmation-2025-04-08.pdf": {
+   "from": "/home/me/Downloads/Order-confirmation-2025-04-08.pdf",
+   "sha": "db24eedbf4caa5b02e75b304800347c5f2ec7ff3080bade0c1709140563022af"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20260621_093406.jpg": {
+   "from": "/home/me/Photos/Camera/20260621_093406.jpg",
+   "sha": "44e9e075392e30ec39f066b9de9c02507dde9c9c553cd1464eb108b315c665b5"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20260622_023921.jpg": {
+   "from": "/home/me/Photos/Camera/20260622_023921.jpg",
+   "sha": "53708d503e646026f6e4b77576fab5ad636916d91f0d7426837a7e6bce45ec9b"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20260622_121507.jpg": {
+   "from": "/home/me/Photos/Camera/20260622_121507.jpg",
+   "sha": "20945bfe5239135424d0e4454892b3513390fda7a829bd53f4d408efb68603de"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/20260622_182035.jpg": {
+   "from": "/home/me/Photos/Camera/20260622_182035.jpg",
+   "sha": "31b66bbfdcdc359fd6a794eece813d5abc1445a60bbfc17db7ebbc294746bc12"
+  },
+  "/home/me/Home Contents/Claims/2026-06-20 water/walk-through-2026-06-21.m4a": {
+   "from": "/home/me/Recordings/walk-through-2026-06-21.m4a",
+   "sha": "71773f0a1547fc5928819a41fc0a76b5a61741632ae3d8e62ebec4462f194c6f"
+  }
+ }
+}

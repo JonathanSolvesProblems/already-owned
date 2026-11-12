@@ -8,7 +8,7 @@ Eight images for the project page gallery, 1500 x 1000, in upload order. Built b
 
 2. `02-baseline.png`
 
-   Measured on my real June 2026 claim: searching the library by file name and date finds 0 of 27 items, while 22 appear in photos taken before the flood (counted by hand).
+   Measured on my real June 2026 claim, over the 1,769 photos my phone and PC held from before the flood: searching by file name and date proves 0 of 27 items, while 22 appear in those photos (counted by hand).
 
 3. `03-voice-note.png`
 
@@ -20,7 +20,7 @@ Eight images for the project page gallery, 1500 x 1000, in upload order. Built b
 
 5. `05-claim-folder.png`
 
-   The result is one claim folder: the contents list with a proof level on every row, plus a copy of each exhibit with its capture time, camera and SHA-256. (Sample from a made-up library.)
+   The result is one claim folder: the contents list with a proof level on every row, read back after saving, and every exhibit with its capture time, camera and SHA-256. (Sample from a made-up library.)
 
 6. `06-what-it-refuses.png`
 
@@ -28,8 +28,8 @@ Eight images for the project page gallery, 1500 x 1000, in upload order. Built b
 
 7. `07-how-it-is-built.png`
 
-   Five registered NAS experts across seven CLIs, by delegation only. Every write waits for approval, and nothing is deleted, moved or overwritten.
+   Five of the six registered NAS experts, by delegation only. Every write waits for approval, every saved file is read back, and nothing is deleted, moved or overwritten.
 
 8. `08-rehearsed.png`
 
-   No entrant has hardware in Round 1, so the package was rehearsed on paper against its own 25-case test plan: 22 pass, 3 partial, 0 fail. The count on a real NAS is not measured yet.
+   No entrant has hardware in Round 1, so a small model played the NAS assistant against a scripted NAS and a made-up library, with nothing but the Skill to go on. Every write waited for approval and no photo from after the loss was used as proof. Recall on a real NAS is not measured yet.

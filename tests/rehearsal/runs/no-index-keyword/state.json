@@ -1,0 +1,85 @@
+{
+ "scenario": {
+  "title": "A library whose recognition has no household categories",
+  "covers": "test-plan case 27",
+  "now": "2026-06-23T10:00",
+  "no_household_index": true,
+  "user": "I had a flood on 2026-06-20 at 02:00 in the basement. I lost the power tower and the Dyson vacuum. Prepare my contents claim.",
+  "answers": [
+   {
+    "match": "online model|local model",
+    "answer": "The assistant is on the local model. Go on."
+   },
+   {
+    "match": "build the list|two years",
+    "answer": "No. Only the two things I named."
+   },
+   {
+    "match": "cop(y|ies)|leave them|in place",
+    "answer": "Leave them where they are and record their SHA-256."
+   },
+   {
+    "match": "language|insurer|claim number|camera|how.*say what was lost|voice note|typed",
+    "answer": "English. No insurer name or claim number. No camera. I typed what was lost: the power tower and the Dyson vacuum. Loss at 02:00 on 2026-06-20, water, basement."
+   },
+   {
+    "match": "confirm|which of these|were lost|correct|anything to (add|change)|replacement value|rows?",
+    "answer": "Only the power tower and the Dyson vacuum were lost. Nothing else. The rows are right."
+   }
+  ],
+  "default_answer": "Yes, go on.",
+  "expect": {
+   "loss": "2026-06-20T02:00",
+   "proven": {
+    "power tower|pull-up": [
+     "20250412_101233"
+    ],
+    "vacuum": [
+     "20240903_121544"
+    ]
+   },
+   "unproven": [],
+   "never_rows": [
+    "watch",
+    "sofa"
+   ],
+   "no_copies": true
+  }
+ },
+ "name": "no-index-keyword",
+ "now": "2026-06-23T10:00",
+ "phase": 1,
+ "counter": 3,
+ "pending": {},
+ "folders": [
+  "/home/me",
+  "/home/me/Documents",
+  "/home/me/Documents/Receipts",
+  "/home/me/Downloads",
+  "/home/me/Scans",
+  "/home/me/Photos",
+  "/home/me/Recordings",
+  "/home/me/Home Contents",
+  "/home/me/Home Contents/Claims",
+  "/home/me/Home Contents/Claims/2026-06-20 water"
+ ],
+ "files": {
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20.md": "Contents claim 2026-06-20\n\nContents claim. water loss, loss on 2026-06-20 at 02:00 local time, affected room basement, no insurer or claim number given\n\nThis claim lists the household contents affected by the loss described here: water loss in the basement at 02:00 on 2026-06-20, 2 rows in the claim, both with a pre-loss photo and a receipt, no replacement values yet. Each row names the proof that exists for it.\n\n| # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1 | Power tower, pull-up and dip station | black steel, brand not printed | basement | 1 | 2025-04-08 | 389.00 CAD |  | 20250412_101233.jpg, captured 2025-04-12 10:12 | Order-confirmation-2025-04-08.pdf | photo and receipt | path: /home/me/Photos/Camera/20250412_101233.jpg, receipt path: /home/me/Downloads/Order-confirmation-2025-04-08.pdf, first seen: 2025-04-12 10:12, open question: replacement value and condition |\n| 2 | Dyson V11 Torque Drive stick vacuum | Dyson V11, stick vacuum, colour not visible | basement | 1 | 2024-09-02 | 799.99 CAD |  | 20240903_121544.jpg, captured 2024-09-03 12:15 | Dyson-V11-invoice-2024-09-02.pdf | photo and receipt | path: /home/me/Photos/Camera/20240903_121544.jpg, receipt path: /home/me/Documents/Receipts/Dyson-V11-invoice-2024-09-02.pdf, first seen: 2024-09-03 12:15, damage photo: 20260622_121507.jpg, open question: replacement value and condition |\n\nTotals: price paid 1,188.99 CAD over 2 rows, replacement value none, 2 rows without a value\n\nExhibits\n\n| File | Captured | Camera | SHA-256 |\n| --- | --- | --- | --- |\n| /home/me/Photos/Camera/20250412_101233.jpg | captured 2025-04-12 10:12 | camera SM-S921W | SHA-256 cc9b82399880295854226089f2e019026a8f3fa3c5516dd2fdeb625c9684ec44 |\n| /home/me/Photos/Camera/20240903_121544.jpg | captured 2024-09-03 12:15 | camera SM-S921W | SHA-256 b04282162620db950ec030eb3e1dc7a461852ce8787df9e52ae99914eb386ef2 |\n| /home/me/Photos/Camera/20260622_121507.jpg | captured 2026-06-22 12:15 | camera SM-S921W | SHA-256 20945bfe5239135424d0e4454892b3513390fda7a829bd53f4d408efb68603de |\n| /home/me/Downloads/Order-confirmation-2025-04-08.pdf | captured not applicable, receipt | camera not applicable | SHA-256 db24eedbf4caa5b02e75b304800347c5f2ec7ff3080bade0c1709140563022af |\n| /home/me/Documents/Receipts/Dyson-V11-invoice-2024-09-02.pdf | captured not applicable, receipt | camera not applicable | SHA-256 a048ce6cd23c8dae842013f4e372450379aaff0570374bb12ef464aa65fb4b48 |\n"
+ },
+ "modified": {
+  "/home/me/Home Contents/Claims/2026-06-20 water/Contents claim 2026-06-20.md": "2026-06-23T10:00"
+ },
+ "albums": [
+  {
+   "id": "alb-01",
+   "name": "Claim 2026-06-20",
+   "paths": [
+    "/home/me/Photos/Camera/20250412_101233.jpg",
+    "/home/me/Photos/Camera/20240903_121544.jpg",
+    "/home/me/Photos/Camera/20260622_121507.jpg"
+   ]
+  }
+ ],
+ "tags": {},
+ "copies": {}
+}

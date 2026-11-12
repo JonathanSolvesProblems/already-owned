@@ -1,0 +1,111 @@
+{
+ "scenario": {
+  "title": "A first update, a second run that must write nothing, then a question",
+  "covers": "test-plan cases 2, 3, 6, 7, 14, 17",
+  "now": "2026-06-01T21:00",
+  "user": "Update my home inventory.",
+  "phases": [
+   {
+    "now": "2026-06-02T08:00",
+    "user": "Update my home inventory."
+   },
+   {
+    "now": "2026-06-02T08:30",
+    "user": "What do I own in the basement?"
+   }
+  ],
+  "answers": [
+   {
+    "match": "online model|local model",
+    "answer": "The assistant is on the local model. Go on."
+   },
+   {
+    "match": "how far back|date range|first run",
+    "answer": "Two years back, from 2024-06-01 to today."
+   },
+   {
+    "match": "confirm|which of these|were lost|correct|anything to (add|change)|replacement value|rows?",
+    "answer": "All rows are right. Drop the USB cable. The warranty registration is not a belonging, leave it out. The TV is worth 700 CAD. For rows with no room shown: the coffee table is in the basement. The undated photo: I do not know when it was taken. Same items, not duplicates. Nothing else to change."
+   }
+  ],
+  "default_answer": "Yes, go on.",
+  "expect": {
+   "min_rows": 8,
+   "must_rows": [
+    "sofa",
+    "television|tv",
+    "vacuum",
+    "gaming chair",
+    "dumbbell",
+    "fridge|refrigerator",
+    "washer|washing"
+   ],
+   "never_rows": [
+    "watch"
+   ],
+   "flagged_file": "Warranty-registration-2026-01-15"
+  }
+ },
+ "name": "update-then-ask",
+ "now": "2026-06-02T08:30",
+ "phase": 3,
+ "counter": 5,
+ "pending": {},
+ "folders": [
+  "/home/me",
+  "/home/me/Documents",
+  "/home/me/Documents/Receipts",
+  "/home/me/Downloads",
+  "/home/me/Scans",
+  "/home/me/Photos",
+  "/home/me/Recordings",
+  "/home/me/Home Contents"
+ ],
+ "files": {
+  "/home/me/Home Contents/Home contents list 2026-06-01 part 1.md": "Home contents list 2026-06-01 part 1\n\n| # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 1 | Brown leather reclining sofa, 3-seat | brown leather, reclining, three seats | Basement | 1 | 2024-08-10 | 1,799.99 currency not printed |  | 20240815_190211.jpg, captured 2024-08-15 19:02 | 20240810_141500.jpg | photo and receipt | path: /home/me/Photos/Camera/20240815_190211.jpg, receipt path: /home/me/Photos/Camera/20240810_141500.jpg, receipt read from photo text, merchant Home Furnishings Outlet, open question: currency of price |\n| 2 | Dyson V11 stick vacuum | Dyson V11, colour not visible | Basement | 1 | 2024-09-02 | 799.99 CAD |  | 20240903_121544.jpg, captured 2024-09-03 12:15 | Dyson-V11-invoice-2024-09-02.pdf | photo and receipt | path: /home/me/Photos/Camera/20240903_121544.jpg, receipt path: /home/me/Documents/Receipts/Dyson-V11-invoice-2024-09-02.pdf, merchant Dyson Canada |\n| 3 | Mini-fridge, black | black mini-fridge, brand not visible in photo | Basement | 1 | 2025-11-22 | 219.99 currency not printed |  | 20260601_201500.jpg, captured 2026-06-01 20:15 | mini-fridge-receipt-2025-11-22.jpg | photo and receipt | path: /home/me/Photos/Camera/20260601_201500.jpg, receipt path: /home/me/Scans/mini-fridge-receipt-2025-11-22.jpg, receipt read from photo text, receipt reads Danby 3.3 cu ft compact refrigerator, merchant Appliance Depot, open question: currency of price |\n| 4 | Power tower pull-up and dip station | black steel, POWER TOWER printed | Basement | 1 | 2025-04-08 | 389.00 CAD |  | 20250412_101233.jpg, captured 2025-04-12 10:12 | Order-confirmation-2025-04-08.pdf | photo and receipt | path: /home/me/Photos/Camera/20250412_101233.jpg, receipt path: /home/me/Downloads/Order-confirmation-2025-04-08.pdf, merchant Northway Fitness |\n| 5 | Adjustable dumbbell | 52.5 LB readable, colour not visible | Basement | 1 |  |  |  | 20260410_083012.jpg, captured 2026-04-10 08:30 |  | photo only | path: /home/me/Photos/Camera/20260410_083012.jpg |\n| 6 | Floor lamp, round base | colour and material not visible | Basement | 1 |  |  |  | 20240815_190230.jpg, captured 2024-08-15 19:02 |  | photo only | path: /home/me/Photos/Camera/20240815_190230.jpg |\n| 7 | Flat-screen television, about 55 inch | brand and model not visible | Basement | 1 |  |  | 700 CAD | 20240815_190211.jpg, captured 2024-08-15 19:02 |  | photo only | path: /home/me/Photos/Camera/20240815_190211.jpg, also seen in 20260601_201500.jpg, replacement value given by owner |\n| 8 | Wooden side tables, curved legs | two tables, wood, curved legs | Basement | 2 |  |  |  | 20240815_190211.jpg, captured 2024-08-15 19:02 |  | photo only | path: /home/me/Photos/Camera/20240815_190211.jpg |\n| 9 | Coffee table, curved legs | not visible | Basement | 1 |  |  |  | IMG_0042.jpg, capture date not known to owner |  | none | path: /home/me/Photos/Camera/IMG_0042.jpg, undated photo, owner does not know when it was taken |\n| 10 | Dining table | not visible | Dining room | 1 |  |  |  | 20251204_142223.jpg, captured 2025-12-04 14:22 |  | photo only | path: /home/me/Photos/Camera/20251204_142223.jpg |\n",
+  "/home/me/Home Contents/Home contents list 2026-06-01 part 2.md": "Home contents list 2026-06-01 part 2\n\n| # | Item | Description | Room | Qty | Purchase date | Price paid | Replacement value | Pre-loss photo | Receipt | Proof level | Notes |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| 11 | Dining chairs, set of four | not visible | Dining room | 4 |  |  |  | 20251204_142223.jpg, captured 2025-12-04 14:22 |  | photo only | path: /home/me/Photos/Camera/20251204_142223.jpg, question answered by owner: four chairs |\n| 12 | Gaming chair, black and red | desk chair, material not visible | Basement | 1 |  |  |  | 20250118_164002.jpg, captured 2025-01-18 16:40 |  | photo only | path: /home/me/Photos/Camera/20250118_164002.jpg |\n| 13 | Wooden armchair, patterned seat | wood, patterned seat | Living room | 1 |  |  |  | 20250610_111500.jpg, captured 2025-06-10 11:15 |  | photo only | path: /home/me/Photos/Camera/20250610_111500.jpg |\n| 14 | Washer, Amana | Amana, brand readable, colour and model not visible | Laundry room | 1 |  |  |  | 20260517_142210.jpg, captured 2026-05-17 14:22 |  | photo only | path: /home/me/Photos/Camera/20260517_142210.jpg, photo shows a washer and dryer pair, two rows confirmed by owner |\n| 15 | Dryer, Amana | Amana, brand readable, part of a pair | Laundry room | 1 |  |  |  | 20260517_142210.jpg, captured 2026-05-17 14:22 |  | photo only | path: /home/me/Photos/Camera/20260517_142210.jpg, photo shows a washer and dryer pair, two rows confirmed by owner |\n"
+ },
+ "modified": {
+  "/home/me/Home Contents/Home contents list 2026-06-01 part 1.md": "2026-06-01T21:00",
+  "/home/me/Home Contents/Home contents list 2026-06-01 part 2.md": "2026-06-01T21:00"
+ },
+ "albums": [
+  {
+   "id": "alb-01",
+   "name": "Home contents 2026-06-01",
+   "paths": [
+    "/home/me/Photos/Camera/20240815_190211.jpg",
+    "/home/me/Photos/Camera/20240903_121544.jpg",
+    "/home/me/Photos/Camera/20260601_201500.jpg",
+    "/home/me/Photos/Camera/20250412_101233.jpg",
+    "/home/me/Photos/Camera/20260410_083012.jpg",
+    "/home/me/Photos/Camera/20240815_190230.jpg",
+    "/home/me/Photos/Camera/IMG_0042.jpg",
+    "/home/me/Photos/Camera/20251204_142223.jpg",
+    "/home/me/Photos/Camera/20250118_164002.jpg",
+    "/home/me/Photos/Camera/20250610_111500.jpg",
+    "/home/me/Photos/Camera/20260517_142210.jpg"
+   ]
+  }
+ ],
+ "tags": {
+  "home-contents": [
+   "/home/me/Photos/Camera/20240815_190211.jpg",
+   "/home/me/Photos/Camera/20240903_121544.jpg",
+   "/home/me/Photos/Camera/20260601_201500.jpg",
+   "/home/me/Photos/Camera/20250412_101233.jpg",
+   "/home/me/Photos/Camera/20260410_083012.jpg",
+   "/home/me/Photos/Camera/20240815_190230.jpg",
+   "/home/me/Photos/Camera/IMG_0042.jpg",
+   "/home/me/Photos/Camera/20251204_142223.jpg",
+   "/home/me/Photos/Camera/20250118_164002.jpg",
+   "/home/me/Photos/Camera/20250610_111500.jpg",
+   "/home/me/Photos/Camera/20260517_142210.jpg",
+   "/home/me/Photos/Camera/20240810_141500.jpg",
+   "/home/me/Documents/Receipts/Dyson-V11-invoice-2024-09-02.pdf",
+   "/home/me/Scans/mini-fridge-receipt-2025-11-22.jpg",
+   "/home/me/Downloads/Order-confirmation-2025-04-08.pdf"
+  ]
+ },
+ "copies": {}
+}

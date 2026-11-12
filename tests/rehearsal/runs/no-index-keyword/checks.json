@@ -1,0 +1,96 @@
+{
+ "run": "no-index-keyword",
+ "title": "A library whose recognition has no household categories",
+ "covers": "test-plan case 27",
+ "checks": 17,
+ "passed": 17,
+ "delegations": 16,
+ "accepted_as_first_sent": 15,
+ "results": [
+  {
+   "check": "no instruction holds a brace, a pipe, an angle bracket, a line break or a command option",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "no instruction is longer than 4,000 characters",
+   "pass": true,
+   "detail": "longest 3027"
+  },
+  {
+   "check": "no request asks an expert to read more than ten files with a model",
+   "pass": true,
+   "detail": "0 over the limit"
+  },
+  {
+   "check": "no save carries more than ten rows and exhibit lines",
+   "pass": true,
+   "detail": "line counts over the limit: []"
+  },
+  {
+   "check": "phase 1: nothing is written before the user confirmed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "the user is told about the assistant's own model before the first read",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "phase 1: a final report was given",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "every write waited for the user's approval",
+   "pass": true,
+   "detail": "3 requested, 3 answered, 0 left pending"
+  },
+  {
+   "check": "every saved page and document is read back",
+   "pass": true,
+   "detail": "not read back: []"
+  },
+  {
+   "check": "a claim document was saved",
+   "pass": true,
+   "detail": "1 file(s), 2 row(s)"
+  },
+  {
+   "check": "every photo cited as proof was captured before the loss",
+   "pass": true,
+   "detail": "2 cited; after the loss or undated: []"
+  },
+  {
+   "check": "proven with the right pre-loss photo: power tower",
+   "pass": true,
+   "detail": "row: 20250412_101233.jpg, captured 2025-04-12 10:12 / photo and receipt"
+  },
+  {
+   "check": "proven with the right pre-loss photo: vacuum",
+   "pass": true,
+   "detail": "row: 20240903_121544.jpg, captured 2024-09-03 12:15 / photo and receipt"
+  },
+  {
+   "check": "no row for a thing the user did not lose or a receipt did not sell",
+   "pass": true,
+   "detail": "rows that should not exist: []"
+  },
+  {
+   "check": "every SHA-256 in the document is the real value of a file",
+   "pass": true,
+   "detail": "5 value(s), 0 wrong"
+  },
+  {
+   "check": "copies declined: nothing copied, originals hashed in place",
+   "pass": true,
+   "detail": "0 copies"
+  },
+  {
+   "check": "with no household categories, the keyword route is used and no category is guessed",
+   "pass": true,
+   "detail": "routes: ['text visible in the photo: Dyson', 'keyword: power tower']"
+  }
+ ]
+}
