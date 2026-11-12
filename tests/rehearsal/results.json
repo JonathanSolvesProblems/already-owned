@@ -155,7 +155,7 @@
     },
     {
      "run": "theft-ledger-declines",
-     "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+     "title": "A break-in with a saved inventory and camera events; the copies turned down, the album declined",
      "covers": "test-plan cases 10, 19, and the camera step",
      "checks": 19,
      "passed": 19,
@@ -260,7 +260,7 @@
     },
     {
      "run": "theft-ledger-declines",
-     "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+     "title": "A break-in with a saved inventory and camera events; the copies turned down, the album declined",
      "covers": "test-plan cases 10, 19, and the camera step",
      "checks": 19,
      "passed": 19,
@@ -363,7 +363,7 @@
     },
     {
      "run": "theft-ledger-declines",
-     "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+     "title": "A break-in with a saved inventory and camera events; the copies turned down, the album declined",
      "covers": "test-plan cases 10, 19, and the camera step",
      "checks": 19,
      "passed": 19,
@@ -459,7 +459,7 @@
     },
     {
      "run": "theft-ledger-declines",
-     "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+     "title": "A break-in with a saved inventory and camera events; the copies turned down, the album declined",
      "covers": "test-plan cases 10, 19, and the camera step",
      "checks": 19,
      "passed": 19,

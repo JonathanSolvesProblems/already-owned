@@ -52,6 +52,8 @@ def figures() -> dict:
     f["experts"] = len(set(re.findall(r"(?m)^`delegate --target ([a-z-]+) ", skill)))
     f["clis"] = len(re.findall(r"(?m)^- `[a-z-]+` → `[a-z-]+`$", skill))
     f["references"] = len(list((ROOT / "skill/home-contents-inventory/references").glob("*.md")))
+    rc = json.loads(read("results/recall-standin.json"))["summary"]
+    f["rc_proven"], f["rc_searchable"] = rc["proven"], rc["searchable"]
     f["actions"] = int(re.search(r"and (\d+) of the catalog's \d+ actions", read("skill/home-contents-inventory/references/capability-map.md")).group(1))
     rounds = json.loads(read("tests/rehearsal/results.json"))["rounds"]
     final = rounds[-1]["runs"]
@@ -114,40 +116,32 @@ def s1_cover():
       <p style='font:500 29px/1.3 "Hanken Grotesk",sans-serif;margin-top:26px'>Already Owned, a Skill for UGREEN AI NAS, finds them and writes the insurer's contents list.</p>
     </div>
     <img src='{cap('sheet')}' style='position:absolute;left:50%;transform:translateX(-50%);top:392px;height:578px;width:auto'>"""
-    return page(body, "my June 2026 claim · counted by hand", address=False)
+    return page(body, "my June 2026 claim · drawings stand in for my photos", address=False)
 
 
 def s2_baseline():
     def cells(kinds):
-        out = []
-        for k in kinds:
-            if k == "yes":
-                out.append("<div class='cell' style='background:#f9ead4;border:5px solid #141010;outline:5px solid #2c6b50'></div>")
-            elif k == "maybe":
-                out.append("<div class='cell' style='border:4px dashed #2c6b50'></div>")
-            else:
-                out.append("<div class='cell' style='border:4px dashed #a81f18'></div>")
-        return "".join(out)
-    top = ["yes"] * F["confirmed"] + ["maybe"] * F["unclear"] + ["no"] * F["nowhere"]
-    bottom = ["yes"] * F["by_name"] + ["no"] * (F["items"] - F["by_name"])
-    grid = "display:grid;grid-template-columns:repeat(9,1fr);gap:16px 14px"
+        style = {"yes": "background:#f9ead4;border:5px solid #141010;outline:5px solid #2c6b50",
+                 "maybe": "border:4px dashed #2c6b50", "no": "border:4px dashed #a81f18"}
+        return "".join(f"<div class='cell' style='{style[k]}'></div>" for k in kinds)
+    hand = ["yes"] * F["confirmed"] + ["maybe"] * F["unclear"] + ["no"] * F["nowhere"]
+    skill = ["yes"] * F["rc_proven"] + ["no"] * (F["items"] - F["rc_proven"])
+    name = ["yes"] * F["by_name"] + ["no"] * (F["items"] - F["by_name"])
+    grid = "display:grid;grid-template-columns:repeat(7,1fr);gap:11px 10px"
+    col = lambda n, label, kinds, note: (
+        f"<div><div style='font:800 150px/.8 \"Besley\",serif;letter-spacing:-.04em'>{n}</div>"
+        f"<div class='lead' style='font-size:25px;margin:16px 0 18px;min-height:2.7em'>{label}</div>"
+        f"<div class='sq' style='{grid}'>{cells(kinds)}</div><p style='font-size:19px;margin-top:16px;line-height:1.35'>{note}</p></div>")
     body = f"""
     <div class='stage'>
-      <h1 style='font-size:76px'>The proof was there. Its file names were not</h1>
-      <div style='display:grid;grid-template-columns:1fr 1fr;gap:70px;margin-top:40px'>
-        <div>
-          <div style='display:flex;align-items:baseline;gap:18px;margin-bottom:22px'><span style='font:800 176px/.8 "Besley",serif;letter-spacing:-.04em'>{F['confirmed']}</span><span class='lead' style='font-size:30px'>of {F['items']} items appear in a photo<br>I took before the flood</span></div>
-          <div class='sq' style='{grid}'>{cells(top)}</div>
-          <p style='font-size:23px;margin-top:20px'>{F['unclear']} more are unclear in photos. {F['nowhere']} are in no photo at all. Counted by hand over {F['photos']:,} photos.</p>
-        </div>
-        <div>
-          <div style='display:flex;align-items:baseline;gap:18px;margin-bottom:22px'><span style='font:800 176px/.8 "Besley",serif;letter-spacing:-.04em'>{F['by_name']}</span><span class='lead' style='font-size:30px'>of {F['items']} found by searching<br>file names and dates</span></div>
-          <div class='sq' style='{grid}'>{cells(bottom)}</div>
-          <p style='font-size:23px;margin-top:20px'>The same {F['photos']:,} photos. A phone names a photo <span class='mono' style='font-size:21px'>20251211_160058.jpg</span>. It never says&nbsp;sofa.</p>
-        </div>
+      <h1 style='font-size:68px'>The proof was in {F['photos']:,} photos. Their file names did not say so</h1>
+      <div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:52px;margin-top:34px'>
+        {col(F['confirmed'], f"of {F['items']} items in a photo from before the flood, counted by hand", hand, f"{F['unclear']} more unclear, {F['nowhere']} in no photo.")}
+        {col(F['rc_proven'], f"of {F['items']} proven by the Skill's own search, a small local model standing in for the NAS", skill, f"{F['confirmed'] - F['rc_searchable']} of the {F['confirmed']} are boxes and bags the Skill asks you to itemize.")}
+        {col(F['by_name'], f"of {F['items']} found by searching file names and dates", name, "A phone names a photo 20251211_160058.jpg. It never says&nbsp;sofa.")}
       </div>
     </div>"""
-    return page(body, "results/pre-loss-photo-census.md · ablation-filename-date.md")
+    return page(body, "results/ · census, recall-standin, ablation")
 
 
 def s3_voice():
@@ -184,7 +178,7 @@ def s4_forgot():
       <div style='display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:54px'>
         {film('lamp', '07', 'yours too?')}{film('fridge', '08', 'yours too?')}{film('chair', '05', 'arm behind it')}{blank}
       </div>
-      <p class='lead' style='color:#f9ead4;margin-top:54px;max-width:30em;font-size:42px'>Three things in the room's photos that the voice note never mentioned. And two it was told about that are in no photo, reported as no proof.</p>
+      <p class='lead' style='color:#f9ead4;margin-top:54px;max-width:30em;font-size:42px'>Three things in those photos that the voice note never mentioned: a lamp, a mini-fridge and the monitor arm behind the chair. And two it was told about that are in no photo, reported as no proof.</p>
     </div>"""
     return page(body, "live page · practice run · made-up library", dark=True, extra_css="body{background:#141010}")
 
@@ -246,7 +240,7 @@ def s8_rehearsal():
     short = {
         "A claim from a voice walk-through, with no saved inventory": "A claim from a voice note, no saved inventory (twice)",
         "A first update, a second run that must write nothing, then a question": "A weekly update, a rerun that must write nothing, a question",
-        "A break-in with a saved inventory, camera events, and two approvals declined": "A break-in: camera events, two approvals declined",
+        "A break-in with a saved inventory and camera events; the copies turned down, the album declined": "A break-in: camera events, copies turned down, album declined",
         "A week with a new receipt and no new photo, and a save that comes back altered": "A save the mock altered on purpose: caught on read-back",
         "A library whose recognition has no household categories": "A library with no household categories: keyword search",
         "A request to change the date on a receipt": "A request to re-date a receipt: refused",
@@ -262,7 +256,7 @@ def s8_rehearsal():
         <div>
           <div style='font:800 170px/.8 "Besley",serif;letter-spacing:-.04em'>{F['r_pass']}</div>
           <div style='font-size:30px;margin-top:16px'>of {F['r_checks']} checks passed, over {F['r_runs']} scripted runs and {F['r_delegations']} delegations</div>
-          <p style='font-size:24px;margin-top:26px'>The model got the Skill and nothing else. A mock NAS answered from a made-up library and accepted only the Skill's own instructions.</p>
+          <p style='font-size:24px;margin-top:26px'>The model got the Skill and a short brief, nothing else. A mock NAS answered from a made-up library and accepted only the Skill's own instructions.</p>
           <p style='font-size:24px;margin-top:18px;color:#a81f18;font-weight:700'>Not measured yet: what it finds on a real NAS.</p>
         </div>
         <div>{rows}<div style='border-top:3px solid #1d1817'></div></div>
@@ -273,13 +267,13 @@ def s8_rehearsal():
 
 SLIDES = [
     ("01-cover", s1_cover, "22 of the 27 things I lost in a flood were already in photos I had taken. Already Owned is a Skill for UGREEN AI NAS that finds them and writes the insurer's contents list."),
-    ("02-baseline", s2_baseline, "Measured on my real June 2026 claim, over the 1,769 photos my phone and PC held from before the flood: searching by file name and date proves 0 of 27 items, while 22 appear in those photos (counted by hand)."),
+    ("02-baseline", s2_baseline, f"My real June 2026 claim, over the {F['photos']:,} photos my phone and PC held from before the flood: 22 of 27 items appear in them (counted by hand); the Skill's own search, with a small local model standing in for the NAS, proved {F['rc_proven']}; searching by file name and date proves 0."),
     ("03-voice-note", s3_voice, "Walk the damaged room with a voice note. The NAS transcribes it and looks for each thing you named in photos captured before the loss. (Practice run on a made-up library.)"),
     ("04-what-you-forgot", s4_forgot, "It then shows belongings that appear in those same photos and that you never named, and reports honestly what it cannot find. (Practice run on a made-up library.)"),
     ("05-claim-folder", s5_claim, "The result is one claim folder: the contents list with a proof level on every row, read back after saving, and every exhibit with its capture time, camera and SHA-256. (Sample from a made-up library.)"),
     ("06-what-it-refuses", s6_no, "It documents what exists. It will not alter a receipt, count a photo taken after the loss, guess a value, substitute a similar item, or follow text it reads inside a photo."),
     ("07-how-it-is-built", s7_built, "Five of the six registered NAS experts, by delegation only. Every write waits for approval, every saved file is read back, and nothing is deleted, moved or overwritten."),
-    ("08-rehearsed", s8_rehearsal, "No entrant has hardware in Round 1, so a small model played the NAS assistant against a scripted NAS and a made-up library, with nothing but the Skill to go on. Every write waited for approval and no photo from after the loss was used as proof. Recall on a real NAS is not measured yet."),
+    ("08-rehearsed", s8_rehearsal, "No entrant has hardware in Round 1, so a small model played the NAS assistant against a scripted NAS and a made-up library, with only the Skill and a short brief to go on. Every write waited for approval and no photo from after the loss was used as proof. Recall on a real NAS is not measured yet."),
 ]
 
 

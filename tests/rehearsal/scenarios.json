@@ -154,7 +154,7 @@
   }
  },
  "theft-ledger-declines": {
-  "title": "A break-in with a saved inventory, camera events, and two approvals declined",
+  "title": "A break-in with a saved inventory and camera events; the copies turned down, the album declined",
   "covers": "test-plan cases 10, 19, and the camera step",
   "now": "2026-06-23T10:00",
   "cameras": true,

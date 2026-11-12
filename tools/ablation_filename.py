@@ -5,9 +5,10 @@ recognition index, no text recognition, no vision model.
 
 Usage:
   python tools/ablation_filename.py photos.csv [more.csv ...] --before 2026-06-20T00:00
-      [--items results/june-2026-items.csv] [--out my-baseline.md]
+      [--items results/june-2026-items.csv] [--out my-baseline.md] [--verification checked.md]
 
-Each photo list is a CSV with the columns path and taken (ISO date and time). Several lists are
+Each photo list is a CSV with the columns path and taken (the capture time, written 2026-06-17T06:38:12,
+2026-06-17 06:38 or 2026:06:17 06:38:12; a row with no capture time is left out). Several lists are
 merged, and a photo that appears in two of them is counted once.
 
 The items file has one row per claim line: number, item, keywords (pipe separated). A keyword hits
@@ -27,20 +28,37 @@ from datetime import datetime
 sys.stdout.reconfigure(encoding="utf-8")
 
 
+def when(text):
+    """A capture time as written by a camera or a census: 2026-06-17T06:38:12, 2026-06-17 06:38, 2026:06:17 06:38:12."""
+    m = re.match(r"\s*(\d{4})[-:](\d{2})[-:](\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2}))?)?", text or "")
+    if not m:
+        return None
+    y, mo, d, h, mi, s = (int(v) if v else 0 for v in m.groups())
+    return datetime(y, mo, d, h, mi, s)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("census", nargs="+")
     ap.add_argument("--before", default="2026-06-20T00:00")
     ap.add_argument("--items", default="results/june-2026-items.csv")
     ap.add_argument("--out", default="my-baseline.md")
+    ap.add_argument("--verification", help="a Markdown file of hits checked by eye, appended to the report")
     args = ap.parse_args()
+    before = when(args.before)
+    if before is None:
+        sys.exit(f"--before is not a date and time: {args.before}")
 
-    photos, seen = [], set()
+    photos, seen, undated = [], set(), 0
     for census in args.census:
         with open(census, encoding="utf-8") as f:
             for r in csv.DictReader(f):
                 key = (r.get("md5_64k") or r["path"], r.get("bytes"))
-                if r["taken"] < args.before and key not in seen:
+                taken = when(r.get("taken", ""))
+                if taken is None:
+                    undated += 1
+                    continue
+                if taken < before and key not in seen:
                     seen.add(key)
                     photos.append(r["path"].replace("\\", "/"))
     names = [(os.path.basename(p), os.path.dirname(p)) for p in photos]
@@ -70,7 +88,8 @@ def main():
     with open(args.out, "w", encoding="utf-8") as f:
         f.write("# Baseline: the same items searched by file name and date only\n\n")
         f.write(f"Run {datetime.now():%Y-%m-%d} with `tools/ablation_filename.py` over {len(photos)} photos captured before "
-                f"{args.before.replace('T', ' ')}, from {len(args.census)} photo list(s), each photo counted once. "
+                f"{args.before.replace('T', ' ')}, from {len(args.census)} photo list(s), each photo counted once"
+                f"{f'; {undated} photo(s) with no capture time were left out' if undated else ''}. "
                 "This is what a NAS without recognition offers: a search by name and by date.\n\n")
         f.write(f"Method: for each of the {len(items)} items, a case-insensitive search of its keywords in the photo file names, "
                 "and separately in the folder names, with no recognition index, no text recognition and no vision model. "
@@ -85,9 +104,8 @@ def main():
                 "file name carries no content. Date alone cannot pick an item either, because nothing says which "
                 "day a given belonging was photographed. Finding belongings in an unlabelled library needs the "
                 "recognition index, the text in the photo and the vision model, which is what the Skill delegates to.\n")
-        note = os.path.join(out_dir, "ablation-verification.md")
-        if os.path.exists(note):
-            with open(note, encoding="utf-8") as n:
+        if args.verification:
+            with open(args.verification, encoding="utf-8") as n:
                 f.write("\n" + n.read())
     print(f"{hits_total} of {len(items)} items with a raw hit, over {len(photos)} photos; written to {args.out}")
 

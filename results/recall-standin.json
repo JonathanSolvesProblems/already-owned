@@ -1,0 +1,33 @@
+{
+ "summary": {
+  "model": "qwen3.5:4b",
+  "photos": 1749,
+  "descriptions": 537,
+  "confirmed": 22,
+  "searchable": 18,
+  "proven": 11,
+  "proven_outside_census": [
+   14
+  ],
+  "right_photos": 28,
+  "wrong_photos": 55,
+  "unclear_photos": 11,
+  "unchecked": 0,
+  "continued_pages": 4,
+  "continued": {
+   "model": "qwen3.5:4b",
+   "photos": 1749,
+   "descriptions": 537,
+   "confirmed": 22,
+   "searchable": 18,
+   "proven": 13,
+   "proven_outside_census": [
+    14
+   ],
+   "right_photos": 32,
+   "wrong_photos": 81,
+   "unclear_photos": 14,
+   "unchecked": 0
+  }
+ }
+}

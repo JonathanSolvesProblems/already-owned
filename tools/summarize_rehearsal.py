@@ -54,7 +54,7 @@ def main(args):
     lines += [f"## {final_label}: the package as submitted", "",
               f"**{total_p} of {total_c} checks passed over {len(final)} runs of {len({r['title'] for r in final})} scenarios.** "
               f"{sum(r['delegations'] for r in final)} delegations and {sum(r['writes'] for r in final)} write approvals in all; "
-              f"{sum(r['first'] for r in final)} of {sum(r['delegations'] for r in final)} instructions were accepted as first sent, the rest corrected by the model and sent again. "
+              f"{sum(r['first'] for r in final)} of {sum(r['delegations'] for r in final)} instructions were accepted as first sent; the rest were rejected by the mock as not matching a template. "
               f"The longest instruction was {max(r['longest'] for r in final):,} characters.", "",
               "| Run | Scenario | Test-plan cases | Checks | Delegations | Accepted as first sent | Failed checks |",
               "| --- | --- | --- | --- | --- | --- | --- |"]
@@ -73,7 +73,7 @@ def main(args):
     lines += ["## Notes", "",
               "- Round 1 had a sixth run, the break-in. It is left out: the scripted user answered a question about the camera window with its answer about the exhibit copies, a fault in the mock's script that was fixed before round 2.",
               "- The checks were tightened as the Skill was: the ten-line and 4,000-character checks were added when the Skill set those limits, and every round above is scored with today's checks.",
-              "- After the last round, the only change to the package is the AI-tools sentence in `references/disclosures.md`, which no step reads.", ""]
+              "- After the last round, the package changed in two places no step reads: the AI-tools sentences in `references/disclosures.md`, and the part count in the example of `references/sample-claim.md`, brought in line with the six-row limit.", ""]
     (OUT / "results.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
     (OUT / "results.json").write_text(json.dumps({"rounds": [{"label": l, "runs": r} for l, _, r in rounds]}, indent=1) + "\n", encoding="utf-8")
 

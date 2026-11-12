@@ -8,7 +8,7 @@ Eight images for the project page gallery, 1500 x 1000, in upload order. Built b
 
 2. `02-baseline.png`
 
-   Measured on my real June 2026 claim, over the 1,769 photos my phone and PC held from before the flood: searching by file name and date proves 0 of 27 items, while 22 appear in those photos (counted by hand).
+   My real June 2026 claim, over the 1,769 photos my phone and PC held from before the flood: 22 of 27 items appear in them (counted by hand); the Skill's own search, with a small local model standing in for the NAS, proved 11; searching by file name and date proves 0.
 
 3. `03-voice-note.png`
 
@@ -32,4 +32,4 @@ Eight images for the project page gallery, 1500 x 1000, in upload order. Built b
 
 8. `08-rehearsed.png`
 
-   No entrant has hardware in Round 1, so a small model played the NAS assistant against a scripted NAS and a made-up library, with nothing but the Skill to go on. Every write waited for approval and no photo from after the loss was used as proof. Recall on a real NAS is not measured yet.
+   No entrant has hardware in Round 1, so a small model played the NAS assistant against a scripted NAS and a made-up library, with only the Skill and a short brief to go on. Every write waited for approval and no photo from after the loss was used as proof. Recall on a real NAS is not measured yet.

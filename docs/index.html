@@ -263,8 +263,12 @@ footer .credit{color:var(--soft);font-size:14.5px;max-width:44em}
 }
 @media (min-width:1000px){
   .hero-grid{display:grid;grid-template-columns:400px minmax(0,1fr);column-gap:40px;align-items:start}
-  .hero-grid > .by,.hero-grid > h1,.hero-grid > .count,.hero-grid > .plain{grid-column:1 / -1}
-  .pitch{grid-column:1}
+  .hero-grid > .by,.hero-grid > h1,.hero-grid > .plain{grid-column:1 / -1}
+  /* the number sits under the buttons, beside the sheet, so it is in the first screen */
+  .pitch{grid-column:1;grid-row:3}
+  .hero-grid > .proof{grid-row:3 / span 2}
+  .hero-grid > .count{grid-column:1;grid-row:4;font-size:25px;line-height:1.38;max-width:15em}
+  .hero-grid > .plain{grid-row:5;margin-top:34px}
   .lede{max-width:17em}
   .actions{flex-wrap:nowrap;gap:10px}
   .actions .btn{font-size:16px;padding:16px 15px;white-space:nowrap}
@@ -274,7 +278,7 @@ footer .credit{color:var(--soft);font-size:14.5px;max-width:44em}
   .hero .frame{width:min(176px,calc((50vw - 139px) / 4))}
   @supports (width:1cqw){.hero .frame{width:min(176px,calc((100cqw - 99px) / 4))}}
   .key{margin-top:52px;max-width:26em}
-  .count{margin-top:44px}
+  .hero-grid > .count{margin-top:34px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -429,7 +433,7 @@ const SHOTS = [
  { name:'Every write waits for your yes', writes:[
    ['file-agent','Create the folder Home Contents / Claims / 2026-06-20 water'],
    ['file-agent','Copy 17 exhibits into it, the voice note included, and compute the SHA-256 of each original and each copy (the NAS may ask once per file)'],
-   ['knowledge-agent','Save the claim in two parts, each read back and compared with what you confirmed'],
+   ['knowledge-agent','Save the claim in parts of six rows, then the exhibit list, each read back and compared with what you confirmed'],
    ['photo-agent','Create the album Claim 2026-06-20 with 13 photos']] }
 ];
 let approved = 0;
@@ -442,7 +446,7 @@ function folderHtml(){
   if (!approved) return '<div class="folder empty"><p class="path">Home Contents / Claims /</p><p>Nothing written yet.</p></div>';
   const lines = [
     approved >= 2 ? '<li>walk-through-2026-06-21.m4a, your own account</li><li>16 more exhibits, each with capture time, camera and SHA-256. All 17 pairs match.</li>' : '',
-    approved >= 3 ? '<li>Contents claim 2026-06-20 part 1.md and part 2.md, read back: every value matches</li>' : '',
+    approved >= 3 ? '<li>Contents claim 2026-06-20 part 1.md to part 7.md, each read back: every value matches</li>' : '',
     approved >= 4 ? '<li>Album "Claim 2026-06-20" in Photos, 13 photos</li>' : ''
   ].join('');
   const done = approved >= 4 ? `<p class="said">Saved. 12 of 26 items are proven by a photo from before the loss, 3 of them with a receipt too. 14 say no proof. Nothing was deleted, moved or overwritten.</p><a class="btn" href="#claim">Open the claim</a>` : '';
@@ -524,7 +528,7 @@ function rows(){
     return `<li class="row">${thumb}<h4><i>${String(r[0]).padStart(2,'0')}</i>${r[1]}</h4><p class="ev">${ev}</p><span class="level ${r[2]}">${LABEL[r[2]]}</span></li>`;
   }).join('');
   const c = k => ROWS.filter(r => r[2] === k).length;
-  $('sum').textContent = `${c('pr') + c('p')} of ${ROWS.length} rows are proven by a photo from before the loss, ${c('pr')} of them with a receipt too. ${c('x')} say no proof rather than guess. This made-up library is thin on purpose, to show every kind of row.`;
+  $('sum').textContent = 'Each row says what proves it: a photo from before the loss, a receipt, or a plain no proof instead of a guess. This made-up library is thin on purpose, to show every kind of row.';
   $('totals').textContent = 'Price paid 2,988.98 CAD over 3 rows. Replacement value 2,800 CAD over 3 rows. 21 rows have neither, and no value was estimated.';
   $('more').textContent = all ? 'Show six rows' : 'Show all 26 rows';
 }

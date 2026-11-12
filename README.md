@@ -1,6 +1,6 @@
 # Already Owned
 
-**After a flood, the insurer wants proof you owned every item you lost. Photos I had already taken show 22 of the 27 items I lost in mine. Searching the same 1,769 photos by file name finds 0. This Skill for UGREEN AI NAS finds them, shows you what you forgot, and writes the insurer's contents list.**
+**After a flood, the insurer wants proof you owned every item you lost. Photos I had already taken show 22 of the 27 items I lost in mine. Searching the same 1,769 photos by file name finds 0. This Skill for UGREEN AI NAS is built to find them, show you what you forgot, and write the insurer's contents list. Run on those photos with a small local model standing in for the NAS, its search proved 11 of the 22, and 13 when asked to keep looking.**
 
 [![Already Owned: a contact sheet where photos taken before the loss are boxed in marker and photos taken after are crossed out](preview/01-cover.png)](https://jonathansolvesproblems.github.io/already-owned/)
 
@@ -8,7 +8,8 @@ A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hac
 
 | | |
 | --- | --- |
-| Try it without a NAS | **[Replay a full claim run](https://jonathansolvesproblems.github.io/already-owned/)** in the browser, on a phone or a desktop |
+| Try it without a NAS | **[Walk through a practice claim](https://jonathansolvesproblems.github.io/already-owned/)** in the browser, on a phone or a desktop |
+| Recall on my real photos, local stand-in for the NAS | **11 of 22** hand-counted items proven by the Skill's own search and caps (13 when asked to keep looking), 1,749 photos, a 4B vision model on my computer ([results](results/recall-standin.md)) |
 | Rehearsed with a model as the assistant | **140 of 140 checks** passed over 7 runs of 6 scenarios against a scripted NAS ([results](tests/rehearsal/results.md)) |
 | Official checker | `static-pass`, 0 errors, 0 warnings (`uliya-skill-kit` 0.7.3, catalog 2.0.0) |
 | Baseline, measured | file-name-and-date search proves **0 of 27** items of my real claim, over 1,769 photos |
@@ -18,7 +19,7 @@ A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hac
 
 ## How to run it
 
-Everything below runs from a clean clone with Python 3.9 or later and no other dependency.
+Everything below runs from a clean clone with Python 3.9 or later and no other dependency (use `python3` where `python` is not Python 3).
 
 ```
 git clone https://github.com/JonathanSolvesProblems/already-owned
@@ -26,7 +27,7 @@ cd already-owned
 python tools/check_package.py
 ```
 
-`check_package.py` checks the package against the Round 1 limits (name, description length, linked references, file sizes, no scripts, required sections, single-line delegations to registered experts, approval on every write) and prints the counts quoted above.
+`check_package.py` checks the package against the Round 1 limits (name, description length, linked references, file sizes, no scripts, required sections, single-line delegations to registered experts, approval on every write) and prints the step, delegation, expert and reference counts.
 
 Replay the scripted reference claim against the mock NAS, then score it:
 
@@ -78,13 +79,19 @@ What it never does:
 
 ![One folder you can hand to the insurer](preview/05-claim-folder.png)
 
-## How I tested it without a NAS
+## Before the hardware: a scripted rehearsal
 
 A small, fast model played the NAS assistant. It was given the Skill package and a [short brief](tests/rehearsal/assistant-brief.md) and nothing else, and could act only through [tools/mock_nas.py](tools/mock_nas.py): a scripted NAS whose five experts answer from a [made-up library](tests/rehearsal/library.json) and whose user answers from a [script](tests/rehearsal/scenarios.json). The mock accepts an instruction only if it is one of the Skill's templates with every slot filled. [tools/check_rehearsal.py](tools/check_rehearsal.py) then scores what was sent, what was saved and what the user was told.
 
 Final round, on the package as submitted: **140 of 140 checks passed over 7 runs of 6 scenarios.** In every run no write happened without approval and no photo from after the loss was used as proof; a receipt whose text asked the assistant to approve every pending write was reported and ignored; and a price the mock deliberately altered on save was caught on read-back and saved again. Each round's failures were gaps in the Skill's wording, fixed before the next round; the table of rounds is in [tests/rehearsal/results.md](tests/rehearsal/results.md). Before that, five paper dry runs found 69 defects ([tests/dry-run/](tests/dry-run/)).
 
-This is a fixture test. It shows the instructions can be followed as written. It says nothing about recall on a real library.
+It shows the instructions can be followed as written. Recall is the next section.
+
+## Recall on my real photos, with a local stand-in for the NAS
+
+The rehearsal says nothing about what the search finds, so I ran the Skill's claim search on my own library. A small vision model on my own computer (qwen3.5:4b, about four billion parameters, through Ollama) played two parts of the NAS: it tagged each of the 1,749 photos captured before the loss with object categories, as the recognition index would, and it answered the Skill's own question for each candidate photo. The Skill's routes and caps were applied as written, then its second look at the photos already returned. Nothing left the computer.
+
+**It proved 11 of the 22 items my hand count found on the first pass, and 13 when asked to keep looking**, each with a photo that shows the item; 4 of the 22 are boxes, bags, bedding and stored items, which the Skill never searches and asks the owner to itemize. It also cited 81 photos that do not show the item, which is why every row and its photo go to the owner to confirm. Most misses came from the eight-latest cap, not from recognition. Item by item, with every cited photo and how it was checked: [results/recall-standin.md](results/recall-standin.md). The NAS's own index will tag photos differently; this is the closest measurement possible before the hardware.
 
 ## What is measured and what is not
 
@@ -93,6 +100,7 @@ This is a fixture test. It shows the instructions can be followed as written. It
 | File-name-and-date search proves 0 of 27 items | Measured over 1,769 pre-loss photos from my phone and PC, every raw hit opened and checked by eye | [results/ablation-filename-date.md](results/ablation-filename-date.md) |
 | 22 of 27 items appear in a pre-loss photo | Counted by hand, photo by photo | [results/pre-loss-photo-census.md](results/pre-loss-photo-census.md) |
 | A model can follow the Skill as written | 140 of 140 checks over 7 scripted runs | [tests/rehearsal/results.md](tests/rehearsal/results.md) |
+| The Skill's search finds the items, with a local stand-in for the NAS | 11 of 22 proven on my real photos | [results/recall-standin.md](results/recall-standin.md) |
 | The Skill finds N of 27 on a real NAS | **Not measured yet.** It needs the hardware. Pass: every cited photo predates the loss, and at least 15 of the 22 are proven | [the test plan](skill/home-contents-inventory/references/test-plan.md) |
 
 The replay page is a simulation with a made-up library and says so on the page. The 27-item list, the 0 and the 22 are real.
@@ -122,8 +130,10 @@ Where the model decides, in [SKILL.md](skill/home-contents-inventory/SKILL.md) a
 - Recall depends on the NAS recognition index. Two of my 27 items appear in no photo at all, and no Skill can prove those.
 - Each described photo costs one pass of the vision model, so every request is small: the eight latest matches and the earliest one per search, twelve damage photos per request, and a question before a run over twelve kinds of belongings.
 - A photo shows the item was there, not what it cost: a photo-only row leaves the value to you.
+- The NAS may ask once per copied file, so a large claim can mean many approvals; the Skill asks first whether to copy the exhibits or record their SHA-256 in place.
+- Exhibit photos can show faces or papers. You confirm every row and its photo before the pack is saved; check that none shows something you would not send.
 - Skills cannot run on a schedule, so the weekly update is started by the user.
-- An instruction to the NAS is kept to fifteen lines and 4,000 characters, so a long list is saved in parts. Whether the platform accepts longer instructions is untested.
+- An instruction to the NAS carries at most ten lines, six rows for a claim, so a long list is saved in parts. Whether the platform accepts longer instructions is untested.
 - Camera evidence needs a camera that covers the room.
 - Nothing here has run on a real NAS yet. Round 1 gives no hardware access.
 - The illustrations on the replay page are made with AI and stand in for my own photos, which stay on my drive.

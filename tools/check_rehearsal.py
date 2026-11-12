@@ -197,7 +197,10 @@ def check(run_dir):
 
 
 def main():
-    runs = sys.argv[1:]
+    import glob
+    # Windows shells pass a * through unexpanded, so the patterns are expanded here.
+    runs = [r for arg in sys.argv[1:] for r in (sorted(glob.glob(arg)) or [arg])]
+    runs = [r for r in runs if (Path(r) / "log.jsonl").exists()]
     if not runs:
         sys.exit(__doc__)
     total = passed = 0
@@ -212,7 +215,7 @@ def main():
         for r in res:
             print(("  PASS  " if r["pass"] else "  FAIL  ") + r["check"] + (f"   [{r['detail']}]" if r["detail"] and not r["pass"] else ""))
         first = sum(1 for e in dele if e.get("template"))
-        print(f"  measure: {first} of {len(dele)} instructions accepted as first sent; {len(dele) - first} rejected and sent again")
+        print(f"  measure: {first} of {len(dele)} instructions accepted as first sent; {len(dele) - first} rejected by the mock")
         summary.append({"run": Path(run).name, "title": scen["title"], "covers": scen.get("covers", ""), "checks": len(res), "passed": ok, "delegations": len(dele),
                         "accepted_as_first_sent": first, "results": res})
         (Path(run) / "checks.json").write_text(json.dumps(summary[-1], indent=1, ensure_ascii=False) + "\n", encoding="utf-8")

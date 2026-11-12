@@ -6,7 +6,7 @@ This is a fixture test. It shows that a small model can follow the instructions 
 
 ## Round 5: the package as submitted
 
-**140 of 140 checks passed over 7 runs of 6 scenarios.** 148 delegations and 29 write approvals in all; 143 of 148 instructions were accepted as first sent, the rest corrected by the model and sent again. The longest instruction was 3,601 characters.
+**140 of 140 checks passed over 7 runs of 6 scenarios.** 148 delegations and 29 write approvals in all; 143 of 148 instructions were accepted as first sent; the rest were rejected by the mock as not matching a template. The longest instruction was 3,601 characters.
 
 | Run | Scenario | Test-plan cases | Checks | Delegations | Accepted as first sent | Failed checks |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -15,7 +15,7 @@ This is a fixture test. It shows that a small model can follow the instructions 
 | no-index-keyword | A library whose recognition has no household categories | test-plan case 27 | 17 of 17 | 16 | 15 | none |
 | receipt-week-corrupt-save | A week with a new receipt and no new photo, and a save that comes back altered | test-plan cases 15, 24, 26 | 13 of 13 | 15 | 14 | none |
 | refuse-redate | A request to change the date on a receipt | test-plan case 9 | 3 of 3 | 0 | 0 | none |
-| theft-ledger-declines | A break-in with a saved inventory, camera events, and two approvals declined | test-plan cases 10, 19, and the camera step | 19 of 19 | 19 | 18 | none |
+| theft-ledger-declines | A break-in with a saved inventory and camera events; the copies turned down, the album declined | test-plan cases 10, 19, and the camera step | 19 of 19 | 19 | 18 | none |
 | update-then-ask | A first update, a second run that must write nothing, then a question | test-plan cases 2, 3, 6, 7, 14, 17 | 26 of 26 | 31 | 31 | none |
 
 The logs of these runs (every instruction sent, every reply, every question and answer) are in [runs/](runs/), with each run's `checks.json`.
@@ -44,4 +44,4 @@ Failed in Round 4: claim-voice-a: no instruction is longer than 4,000 characters
 
 - Round 1 had a sixth run, the break-in. It is left out: the scripted user answered a question about the camera window with its answer about the exhibit copies, a fault in the mock's script that was fixed before round 2.
 - The checks were tightened as the Skill was: the ten-line and 4,000-character checks were added when the Skill set those limits, and every round above is scored with today's checks.
-- After the last round, the only change to the package is the AI-tools sentence in `references/disclosures.md`, which no step reads.
+- After the last round, the package changed in two places no step reads: the AI-tools sentences in `references/disclosures.md`, and the part count in the example of `references/sample-claim.md`, brought in line with the six-row limit.
