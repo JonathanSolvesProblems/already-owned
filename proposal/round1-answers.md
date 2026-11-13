@@ -6,7 +6,7 @@ The PDF of this proposal is [already-owned-round1.pdf](already-owned-round1.pdf)
 
 ## 1. One sentence: What does the Skill do?
 
-You walk the damaged room recording a voice note; the Skill finds each thing you name, and the belongings you forgot, in NAS photos taken before the loss, and writes the insurer's contents claim with that proof.
+After a flood, fire or theft, you walk the room recording a voice note; it finds each thing you name, and what you forgot, in pre-loss NAS photos, and writes the insurer's contents claim with that proof.
 
 ## 2. Who is the target user and problem?
 
@@ -16,7 +16,7 @@ Homeowners and renters. Water damaged my home twice in seven months; the insurer
 
 ![A sample contents claim](../preview/05-claim-folder.png)
 
-From a voice note or typed list, it writes the insurer's contents table: per item, a pre-loss photo and capture date, any receipt price, and a proof level or "no proof". You confirm every row. An optional weekly update keeps a dated ledger.
+After a loss, it writes the insurer's contents table: per item, a pre-loss photo and capture date, any receipt price, and a proof level or "no proof". You confirm every row. Before any loss, weekly updates keep a dated ledger you can query.
 
 ## 4. What is the Core User Flow?
 
@@ -50,7 +50,7 @@ Implemented: package, checker static-pass. Recall, a local 4B vision model stand
 
 ## 10. Are there any known limitations of your Project?
 
-Recall depends on the NAS index: the stand-in never tagged 2 of the missed items; 4 more are boxes you itemize. A photo proves ownership, not price. Copies may need one approval each, so large claims hash exhibits in place.
+Recall depends on the NAS index: of 7 still missed, 2 went untagged, 1 lacked a category, 4 are boxes you itemize. A photo proves ownership, not price. Copies may need one approval each, so large claims hash exhibits in place.
 
 ## Third-party components
 
