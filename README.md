@@ -2,7 +2,7 @@
 
 **After a flood, the insurer wants proof you owned every item you lost. Photos I had already taken show 22 of the 27 items I lost in mine. Searching the same 1,769 photos by file name finds 0. This Skill for UGREEN AI NAS is built to find them, show you what you forgot, and write the insurer's contents list. Run on those photos with a small local model standing in for the NAS, its search proved 13 of the 22 ($6,945 of the $10,915 claimed), 15 when asked to keep looking, and found one my hand count had missed.**
 
-**[Try a practice claim in your browser](https://jonathansolvesproblems.github.io/already-owned/)**, no NAS needed.
+**[Try a practice claim in your browser](https://jonathansolvesproblems.github.io/already-owned/)**, no NAS needed. **[Watch the 2-minute demo](https://www.youtube.com/watch?v=NHLW5l4Xgto)**, or [read the write-up](https://jonathanandrei.com/blog/already-owned-flood-claim-from-pre-loss-photos-ugreen-nas/).
 
 [![Already Owned: a contact sheet where photos taken before the loss are boxed in marker and photos taken after are crossed out](preview/01-cover.png)](https://jonathansolvesproblems.github.io/already-owned/)
 
@@ -18,6 +18,12 @@ A Skill for UGREEN AI NAS (`home-contents-inventory`), entered in the UGREEN Hac
 | Ceiling, counted by hand | **22 of 27** items appear in a photo captured before the loss, 3 more uncertain, 2 in no photo (the search later found one of the 2) |
 | The Skill's count on a NAS | **not measured yet**: it is the first thing I run on one |
 | Package | `SKILL.md` plus seven references, Markdown only, 25 delegation templates, 5 expert agents, 28 catalog actions |
+
+## Demo
+
+[![Demo video: 22 of 27 in old photos](https://i.ytimg.com/vi/NHLW5l4Xgto/maxresdefault.jpg)](https://www.youtube.com/watch?v=NHLW5l4Xgto)
+
+Two minutes: my June 2026 claim, the Skill on the practice page, then what its search found on my real photos. The longer story is in the [write-up](https://jonathanandrei.com/blog/already-owned-flood-claim-from-pre-loss-photos-ugreen-nas/).
 
 ## How to run it
 
@@ -61,6 +67,8 @@ Water damaged my home twice in seven months. Each time the insurer wanted a list
 
 The proof existed. It was in my own camera roll: the sofa in the background of a photo from December, the dumbbells under the pull-up bar, the washer in a laundry-room shot. Nothing in a phone's file names says so. `20251211_160058.jpg` does not contain the word sofa.
 
+![22 of 27 items in a photo from before the flood, 13 of those proven by the Skill's own search, 0 found by file names and dates](preview/02-baseline.png)
+
 A former adjuster described the list insurers ask for to The New York Times in 2025: "They want a model number. They want the price. The quantity." ([sources](docs/sources.md))
 
 ## What the Skill does
@@ -71,6 +79,8 @@ Three modes, chosen from what you say.
 - **Update**, about weekly. "Update my home inventory." It finds belongings in the photos added since last time, pairs them with receipts, asks you to confirm once, then adds a dated page to the inventory, plus a dated album and a file tag. The inventory is a ledger: each run saves only what changed and rewrites nothing, so the date an item was first written down is evidence in its own right.
 - **Ask**. "What do I own in the basement?" Answered from the ledger. No search, no write.
 
+<img src="preview/03-voice-note.png" width="49%" alt="Walk the room and say what you lost: the NAS transcribes the voice note and looks for each thing named in photos from before the loss"> <img src="preview/04-what-you-forgot.png" width="49%" alt="Then it shows you what you forgot: a lamp, a mini-fridge and a monitor arm the voice note never mentioned">
+
 What it never does:
 
 - count a photo captured after the loss as proof of ownership (it is filed as a damage photo);
@@ -79,13 +89,15 @@ What it never does:
 - write without approval, or delete, move or overwrite anything;
 - follow text it reads inside a photo or a receipt, or alter a receipt when asked.
 
-![One folder you can hand to the insurer](preview/05-claim-folder.png)
+<img src="preview/05-claim-folder.png" width="49%" alt="One folder you can hand to the insurer: every row says what proves it, every exhibit has its capture time, camera and SHA-256"> <img src="preview/06-what-it-refuses.png" width="49%" alt="What it refuses: re-dating a receipt, counting a photo from after the loss, guessing a value, using a similar item's photo, following text inside a receipt">
 
 ## Before the hardware: a scripted rehearsal
 
 A small, fast model played the NAS assistant. It was given the Skill package and a [short brief](tests/rehearsal/assistant-brief.md) and nothing else, and could act only through [tools/mock_nas.py](tools/mock_nas.py): a scripted NAS whose five experts answer from a [made-up library](tests/rehearsal/library.json) and whose user answers from a [script](tests/rehearsal/scenarios.json). The mock accepts an instruction only if it is one of the Skill's templates with every slot filled. [tools/check_rehearsal.py](tools/check_rehearsal.py) then scores what was sent, what was saved and what the user was told.
 
 Final round, on the package as submitted: **140 of 140 checks passed over 7 runs of 6 scenarios.** In every run no write happened without approval and no photo from after the loss was used as proof; a receipt whose text asked the assistant to approve every pending write was reported and ignored; and a price the mock deliberately altered on save was caught on read-back and saved again. (One of the 140 checks only confirms that the mock did alter that price.) Each round's failures were gaps in the Skill's wording, fixed before the next round; the table of rounds is in [tests/rehearsal/results.md](tests/rehearsal/results.md). Before that, five paper dry runs found 69 defects ([tests/dry-run/](tests/dry-run/)).
+
+![140 of 140 checks passed over 7 scripted runs, with a model playing the NAS assistant](preview/08-rehearsed.png)
 
 It shows the instructions can be followed as written. Recall is the next section.
 
